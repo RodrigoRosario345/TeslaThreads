@@ -24,8 +24,8 @@ export function ProductItem({ product }: ProductItemProps) {
                 className="rounded-sm"
                 src={`/products/${imagen}`}
                 alt={product.title}
-                width={400}
-                height={400}
+                width={500}
+                height={500}
                 loading="eager"
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}

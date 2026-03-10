@@ -36,9 +36,9 @@ export function Header() {
                         <li>Item 3</li>
                     </ul>
                 </div>
-                <div className="flex items-center gap-1">
-                    <IoSearch className="p-2 size-8 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
-                    <FaCartShopping className="p-2 size-8 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                <div className="flex items-center">
+                    <IoSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                    <FaCartShopping className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
                     <button className="p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" onClick={toggleSidebar}>
                         Menu
                     </button>
