@@ -1,4 +1,4 @@
-import { SeedData } from "@/interfaces/product.model";
+import { SeedData } from "@/interfaces";
 import { ProductItem } from "../ProductItem/ProductItem";
 
 export interface ProductListProps extends SeedData { }

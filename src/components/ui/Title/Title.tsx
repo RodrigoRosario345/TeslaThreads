@@ -1,4 +1,4 @@
-import { firstLetterUpperCase } from "@/Helpers";
+import { firstLetterUpperCase } from "@/helpers";
 
 export interface TitleProps {
     title: string;

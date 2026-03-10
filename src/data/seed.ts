@@ -1,4 +1,4 @@
-import { SeedData } from "@/interfaces/product.model";
+import { SeedData } from "@/interfaces";
 
 export const initialData: SeedData = {
     products: [

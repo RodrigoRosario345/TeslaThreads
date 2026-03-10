@@ -1,6 +1,6 @@
 "use client";
 
-import { SeedProduct } from "@/interfaces/product.model";
+import { SeedProduct } from "@/interfaces";
 import Image from "next/image";
 import { useState } from "react";
 
