@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -8,3 +7,15 @@
   }
 }
 
+@theme {
+  --animate-carrusel: animate-carrusel 3s linear 3s infinite;
+
+  @keyframes animate-carrusel {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}

@@ -2,6 +2,7 @@
 
 import { SeedProduct } from "@/interfaces";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export interface ProductItemProps {
@@ -19,19 +20,21 @@ export function ProductItem({ product }: ProductItemProps) {
     };
 
     return (
-        <article className="space-y-1 cursor-pointer">
-            <Image
-                className="rounded-sm"
-                src={`/products/${imagen}`}
-                alt={product.title}
-                width={500}
-                height={500}
-                loading="eager"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            />
-            <h2 className="font-bold">{product.title}</h2>
-            <p className="text-sm font-semibold">${product.price.toFixed(2)}</p>
-        </article>
+        <Link href={`/product/${product.slug}`}>
+            <article className="space-y-1 cursor-pointer">
+                <Image
+                    className="rounded-sm"
+                    src={`/products/${imagen}`}
+                    alt={product.title}
+                    width={500}
+                    height={500}
+                    loading="eager"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                />
+                <h2 className="font-bold">{product.title}</h2>
+                <p className="text-sm font-semibold">${product.price.toFixed(2)}</p>
+            </article>
+        </Link>
     );
 }
