@@ -3,3 +3,4 @@ export * from './ui/Sidebar/Sidebar';
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';
 export * from './ui/Title/Title';
+export { default } from './ui/Carrusel/Carrusel';

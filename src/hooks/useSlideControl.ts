@@ -1,26 +1,32 @@
 import { useState } from "react";
 
-export type SlideIndex = 1 | 2 | 3 | 4;
+type SlideControl = (initialSlide: number, MAX_SLIDES: number, MIN_SLIDE?: number) => {
+    currentSlide: number;
+    nextSlide: () => void;
+    prevSlide: () => void;
+    goToSlide: (slide: number) => void;
+    isFirstSlide: boolean;
+    isLastSlide: boolean;
+    setCurrentSlide: React.Dispatch<React.SetStateAction<number>>;
+};
 
-const MAX_SLIDES = 4;
-const MIN_SLIDE = 1;
-
-export const useSlideControl = (initialSlide: SlideIndex = 1) => {
-    const [currentSlide, setCurrentSlide] = useState<SlideIndex>(initialSlide);
+export const useSlideControl: SlideControl = (initialSlide, MAX_SLIDES, MIN_SLIDE = 0) => {
+    const [currentSlide, setCurrentSlide] = useState<number>(initialSlide);
 
     const nextSlide = () => {
-        setCurrentSlide((prev) => Math.min(prev + 1, MAX_SLIDES) as SlideIndex);
+        setCurrentSlide((prev) => Math.min(prev + 1, MAX_SLIDES));
     };
 
     const prevSlide = () => {
-        setCurrentSlide((prev) => Math.max(prev - 1, MIN_SLIDE) as SlideIndex);
+        setCurrentSlide((prev) => Math.max(prev - 1, MIN_SLIDE));
     };
 
-    const goToSlide = (slide: SlideIndex) => {
+    const goToSlide = (slide: number) => {
         setCurrentSlide(slide);
     };
 
     return {
+        setCurrentSlide,
         currentSlide,
         nextSlide,
         prevSlide,
