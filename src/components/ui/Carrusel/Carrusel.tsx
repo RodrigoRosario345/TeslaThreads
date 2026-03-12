@@ -6,7 +6,8 @@ import { DEFAULT_ITEMS } from "@/data/carousel";
 import { CarouselItem } from "./CarouselItem";
 import { CarouselProps } from "@/interfaces";
 import { useSlideControl } from "@/hooks";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { CarouselIndicators } from "./CarouselIndicators";
+import { CarouselNavButtons } from "./CarouselNavButtons";
 
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
@@ -195,53 +196,21 @@ export default function Carousel({
                     />
                 ))}
             </motion.div>
-            <div
-                className="hidden group-hover:flex w-full justify-center absolute z-20 bottom-7 left-1/2 -translate-x-1/2 "
-            >
-                <div className="my-4 flex w-37.5 justify-between px-8">
-                    {items.map((_, index) => (
-                        <motion.div
-                            key={index}
-                            className={`h-2 w-2 rounded-full cursor-pointer transition-colors duration-150 ${activeIndex === index ? "bg-white" : "bg-[#333333]"}`}
-                            animate={{
-                                scale: activeIndex === index ? 1.2 : 1,
-                            }}
-                            onClick={() => setPosition(loop ? index + 1 : index)}
-                            transition={{ duration: 0.15 }}
-                        />
-                    ))}
-                </div>
-            </div>
 
 
-            <motion.div
-                className={`absolute top-1/2 left-0 -translate-y-1/2  p-2 rounded-full bg-black/30 cursor-pointer`}
-                whileHover={{
-                    scale: 1.15,
-                    transition: { duration: 0.15 },
-                }}
-                animate={{
-                    translate: !isFirstSlide ? "50%" : "-100%",
-                    opacity: !isFirstSlide ? 1 : 0,
-                    transition: { duration: 0.15 },
-                }}
-            >
-                <IoIosArrowBack color="white" size="24px" />
-            </motion.div>
-            <motion.div
-                className={`absolute top-1/2 right-0 -translate-y-1/2 p-2 rounded-full bg-black/30 cursor-pointer`}
-                whileHover={{
-                    scale: 1.15,
-                    transition: { duration: 0.15 },
-                }}
-                animate={{
-                    translate: !isLastSlide ? "-50%" : "100%",
-                    opacity: !isLastSlide ? 1 : 0,
-                    transition: { duration: 0.15 },
-                }}
-            >
-                <IoIosArrowForward color="white" size="24px" />
-            </motion.div>
+            <CarouselIndicators
+                totalItems={items.length}
+                activeIndex={activeIndex}
+                loop={loop}
+                onSelect={setPosition}
+            />
+
+            <CarouselNavButtons
+                isFirstSlide={isFirstSlide}
+                isLastSlide={isLastSlide}
+                onPrev={prevSlide}
+                onNext={nextSlide}
+            />
         </div >
     );
 }

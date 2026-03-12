@@ -28,7 +28,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                         autoplay={false}
                         autoplayDelay={5000}
                         pauseOnHover={false}
-                        loop={true}
+                        loop={false}
                         round={false}
                     />
                 ) : (
