@@ -34,7 +34,7 @@ export default function Carousel({
     }, [items, loop]);
 
     const { currentSlide: position, nextSlide, prevSlide, setCurrentSlide: setPosition, isFirstSlide, isLastSlide } = useSlideControl(loop ? 1 : 0, itemsForRender.length - 1);
-    console.log("position", position, "isFirstSlide", isFirstSlide, "itemsForRender.length", itemsForRender.length);
+    // console.log("position", position, "isFirstSlide", isFirstSlide, "itemsForRender.length", itemsForRender.length);
     // const [position, setPosition] = useState<number>(loop ? 1 : 0);
     const x = useMotionValue(0);
     const [isHovered, setIsHovered] = useState<boolean>(false);

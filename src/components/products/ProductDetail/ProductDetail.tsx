@@ -1,6 +1,7 @@
 import Carousel from "@/components";
 import { SeedProduct } from "@/interfaces";
 import Image from "next/image";
+import { ProductSizeQuantity } from "./ProductSizeQuantity";
 
 export interface ProductDetailProps {
     product: SeedProduct;
@@ -8,7 +9,7 @@ export interface ProductDetailProps {
 
 export function ProductDetail({ product }: ProductDetailProps) {
     return (
-        <article className="">
+        <article className="flex gap-12">
             <div className="">
                 {product.images.length > 0 ? (
                     // <div className="w-max flex">
@@ -35,8 +36,12 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     <p>No images available</p>
                 )}
             </div>
-            <h2>{product.title}</h2>
-            <p>${product.price.toFixed(2)}</p>
+            <div>
+                <h2 className="text-3xl font-semibold">{product.title}</h2>
+                <p className="text-xl font-semibold">${product.price.toFixed(2)}</p>
+                <ProductSizeQuantity sizes={product.sizes} inStock={product.inStock} />
+                <p className="text-sm">{product.description}</p>
+            </div>
         </article>
     );
 }
