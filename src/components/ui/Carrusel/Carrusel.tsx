@@ -170,13 +170,13 @@ export default function Carousel({
                 className="flex size-full"
                 drag={isAnimating ? false : "x"}
                 {...dragProps}
-                // style={{
-                //     width: itemWidth,
-                //     gap: `${GAP}px`,
-                //     perspective: 1000,
-                //     perspectiveOrigin: `${position * trackItemOffset + itemWidth / 2}px 50%`,
-                //     x,
-                // }}
+                style={{
+                    // width: itemWidth,
+                    // gap: `${GAP}px`,
+                    // perspective: 1000,
+                    // perspectiveOrigin: `${position * trackItemOffset + itemWidth / 2}px 50%`,
+                    x,
+                }}
                 onDragEnd={handleDragEnd}
                 animate={{ x: -(position * trackItemOffset) }}
                 transition={effectiveTransition}

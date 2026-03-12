@@ -21,14 +21,9 @@ export function CarouselNavButtons({
     return (
         <>
             <motion.div
-                className="hidden group-hover:block absolute top-1/2 left-0 -translate-y-1/2 -translate-x-full p-2 rounded-full bg-black/30 cursor-pointer"
+                className={`hidden group-hover:block absolute top-1/2 left-0 p-2 rounded-full bg-black/30 -translate-y-1/2 ${loop || !isFirstSlide ? "translate-x-1/2 scale-100" : "-translate-x-full scale-0"} transition-all duration-150 cursor-pointer`}
                 whileHover={{
                     scale: 1.15,
-                    transition,
-                }}
-                animate={{
-                    translate: loop || !isFirstSlide ? "50%" : "-100%",
-                    opacity: loop || !isFirstSlide ? 1 : 0,
                     transition,
                 }}
                 onClick={onPrev}
@@ -42,7 +37,7 @@ export function CarouselNavButtons({
                     transition,
                 }}
                 animate={{
-                    translate: loop || !isLastSlide ? "-50%" : "100%",
+                    translateX: loop || !isLastSlide ? "0%" : "100%",
                     opacity: loop || !isLastSlide ? 1 : 0,
                     transition,
                 }}
