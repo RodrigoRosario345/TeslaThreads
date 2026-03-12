@@ -35,8 +35,8 @@ export function ProductSizeQuantity({
     };
 
     return (
-        <div>
-            <p className="font-semibold">Size </p>
+        <div className="space-y-1">
+            <p className="font-semibold text-sm">Size </p>
             {sizes.length > 0 ? (
                 <div className="flex gap-5">
                     {sizes.map((size, index) => (
@@ -61,12 +61,17 @@ export function ProductSizeQuantity({
             ) : (
                 <p>No sizes available</p>
             )}
-            <p className="font-semibold mt-4">Quantity </p>
+            <p className="font-semibold mt-4 text-sm">Quantity </p>
             <div className="flex items-center gap-2 ">
                 <FaMinus className={quantity > 1 ? "cursor-pointer" : "cursor-not-allowed text-gray-300"} onClick={handleDecrease} />
-                <span className="px-6 py-1 bg-gray-100 rounded font-semibold">
-                    {quantity}
-                </span>
+                <input
+                    type="text"
+                    min="1"
+                    max={inStock}
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+                    className="w-20 py-2 bg-gray-100 rounded font-semibold text-center focus:outline-none focus:ring-1 focus:ring-gray-300"
+                />
                 <FaPlus className={quantity < inStock ? "cursor-pointer" : "cursor-not-allowed text-gray-300"} onClick={handleIncrease} />
             </div>
         </div>

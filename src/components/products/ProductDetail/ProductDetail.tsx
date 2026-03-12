@@ -36,11 +36,15 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     <p>No images available</p>
                 )}
             </div>
-            <div>
-                <h2 className="text-3xl font-semibold">{product.title}</h2>
+            <div className="space-y-4">
+                <h2 className="text-3xl mb-2 font-semibold">{product.title}</h2>
                 <p className="text-xl font-semibold">${product.price.toFixed(2)}</p>
                 <ProductSizeQuantity sizes={product.sizes} inStock={product.inStock} />
-                <p className="text-sm">{product.description}</p>
+                <div className="text-sm">
+                    <p className="font-semibold mb-4">Description</p>
+                    <p>{product.description}</p>
+                </div>
+
             </div>
         </article>
     );
