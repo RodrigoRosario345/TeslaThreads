@@ -33,7 +33,7 @@ export default function Carousel({
         return [items[items.length - 1], ...items, items[0]];
     }, [items, loop]);
 
-    const { currentSlide: position, nextSlide, prevSlide, setCurrentSlide: setPosition, isFirstSlide, isLastSlide } = useSlideControl(loop ? 1 : 0, itemsForRender.length - 1, loop ? 1 : 0);
+    const { currentSlide: position, nextSlide, prevSlide, setCurrentSlide: setPosition, isFirstSlide, isLastSlide } = useSlideControl(loop ? 1 : 0, itemsForRender.length - 1);
     console.log("position", position, "isFirstSlide", isFirstSlide, "itemsForRender.length", itemsForRender.length);
     // const [position, setPosition] = useState<number>(loop ? 1 : 0);
     const x = useMotionValue(0);
@@ -61,7 +61,7 @@ export default function Carousel({
         if (pauseOnHover && isHovered) return undefined;
 
         const timer = setInterval(() => {
-            nextSlide();
+            setPosition(prev => Math.min(prev + 1, itemsForRender.length - 1))
         }, autoplayDelay);
 
         return () => clearInterval(timer);
@@ -208,6 +208,7 @@ export default function Carousel({
             <CarouselNavButtons
                 isFirstSlide={isFirstSlide}
                 isLastSlide={isLastSlide}
+                loop={loop}
                 onPrev={prevSlide}
                 onNext={nextSlide}
             />
