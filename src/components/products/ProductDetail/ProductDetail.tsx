@@ -41,7 +41,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 <p className="text-xl font-semibold">${product.price.toFixed(2)}</p>
                 <ProductSizeQuantity sizes={product.sizes} inStock={product.inStock} />
                 <div className="text-sm">
-                    <p className="font-semibold mb-4">Description</p>
+                    <p className="font-semibold mb-3">Description</p>
                     <p>{product.description}</p>
                 </div>
 
