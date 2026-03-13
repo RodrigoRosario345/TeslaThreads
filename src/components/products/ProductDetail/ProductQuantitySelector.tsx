@@ -14,12 +14,14 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
 
     const handleIncrease = () => {
         if (numericQuantity < inStock) {
+            setIsValidQuantity(true);
             onQuantityChange((numericQuantity + 1).toString());
         }
     };
 
     const handleDecrease = () => {
         if (numericQuantity > 1) {
+            setIsValidQuantity(true);
             onQuantityChange((numericQuantity - 1).toString());
         }
     };
@@ -28,25 +30,29 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
 
         if (event.target.value === "") {
             onQuantityChange("");
+            setIsValidQuantity(true);
             return;
         }
 
         const rawValue = Number(event.target.value);
 
         if (Number.isNaN(rawValue)) {
+            setIsValidQuantity(false);
             return;
         }
 
         if (rawValue < 1) {
             onQuantityChange("1");
+
             return;
         }
 
         if (rawValue > inStock) {
             onQuantityChange(inStock.toString());
+            setIsValidQuantity(false);
             return;
         }
-
+        setIsValidQuantity(true);
         onQuantityChange(rawValue.toString());
     };
 
@@ -70,7 +76,7 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
                     type="text"
                     value={quantity}
                     onChange={handleInputChange}
-                    className="w-20 py-2 bg-gray-100 rounded font-semibold text-center focus:outline-none focus:ring-1 focus:ring-gray-300"
+                    className={`w-20 py-2 bg-gray-100 rounded font-semibold text-center focus:outline-none  transition-colors ${!isValidQuantity ? 'border border-red-500' : 'focus:ring-1 focus:ring-gray-300 '}`}
                 />
 
                 <button
@@ -87,6 +93,7 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
                     <FaPlus />
                 </button>
             </div>
+            {!isValidQuantity && <p className="text-red-500 text-sm">Please enter a valid quantity.</p>}
         </div>
     );
 }
