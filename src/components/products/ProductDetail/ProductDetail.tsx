@@ -17,7 +17,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
     return (
         <article className="w-full flex flex-col lg:flex-row gap-12">
-            <div className="w-full lg:w-[65%] aspect-square relative">
+            <div className="w-full lg:w-[65%]">
                 {product.images.length > 0 ? (
                     <Carousel<string>
                         items={product.images}
@@ -28,11 +28,10 @@ export function ProductDetail({ product }: ProductDetailProps) {
                                 )}
                                 <Image
                                     key={index}
-                                    fill={true}
+                                    fill
                                     src={`/products/${item}`}
                                     alt={product.title}
                                     objectFit="cover"
-                                    preload
                                     draggable={false}
                                     onLoadingComplete={() => setIsLoading(false)}
                                 />

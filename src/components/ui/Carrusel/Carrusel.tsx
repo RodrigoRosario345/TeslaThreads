@@ -2,15 +2,12 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, PanInfo, useMotionValue } from "motion/react";
-import { DEFAULT_ITEMS } from "@/data/carousel";
 import { CarouselItem } from "./CarouselItem";
-import type {
-    CarouselItem as CarouselItemType,
-    CarouselProps,
-} from "@/interfaces";
+import type { CarouselProps } from "@/interfaces";
 import { useSlideControl } from "@/hooks";
 import { CarouselIndicators } from "./CarouselIndicators";
 import { CarouselNavButtons } from "./CarouselNavButtons";
+import { CarouselImgsIndicators } from "./CarouselImgsIndicators";
 
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
@@ -183,59 +180,69 @@ export default function Carousel<T>({
                 : Math.min(position, items.length - 1);
 
     return (
-        <div
-            ref={containerRef}
-            className={`size-full group relative overflow-hidden border-[#222] ${round && "rounded-3xl"}`}
-            style={{
-                borderWidth: `${CONTAINER_BORDER}px`,
-                // width: `${baseWidth}px`,
-                // height: `${baseWidth}px`,
-            }}
-        >
-            <motion.div
-                className="flex size-full z-50"
-                drag={isAnimating ? false : "x"}
-                {...dragProps}
+        <>
+            <div
+                ref={containerRef}
+                className={`w-full group aspect-square relative overflow-hidden border-[#222] ${round && "rounded-3xl"}`}
                 style={{
-                    // width: itemWidth,
-                    // gap: `${GAP}px`,
-                    // perspective: 1000,
-                    // perspectiveOrigin: `${position * trackItemOffset + itemWidth / 2}px 50%`,
-                    x,
+                    borderWidth: `${CONTAINER_BORDER}px`,
+                    // width: `${baseWidth}px`,
+                    // height: `${baseWidth}px`,
                 }}
-                onDragEnd={handleDragEnd}
-                animate={{ x: -(position * trackItemOffset) }}
-                transition={effectiveTransition}
-                onAnimationStart={handleAnimationStart}
-                onAnimationComplete={handleAnimationComplete}
             >
-                {itemsForRender.map((item, index: number) => (
-                    <CarouselItem<T>
-                        key={`${(item as { id?: string }).id ?? index}-${index}`}
-                        item={item as T extends { id?: string } ? T : never}
-                        index={index}
-                        round={round}
-                        transition={effectiveTransition}
-                    >
-                        {renderChildrenItem(item, index)}
-                    </CarouselItem>
-                ))}
-            </motion.div>
+                <motion.div
+                    className="flex size-full z-50"
+                    drag={isAnimating ? false : "x"}
+                    {...dragProps}
+                    style={{
+                        // width: itemWidth,
+                        // gap: `${GAP}px`,
+                        // perspective: 1000,
+                        // perspectiveOrigin: `${position * trackItemOffset + itemWidth / 2}px 50%`,
+                        x,
+                    }}
+                    onDragEnd={handleDragEnd}
+                    animate={{ x: -(position * trackItemOffset) }}
+                    transition={effectiveTransition}
+                    onAnimationStart={handleAnimationStart}
+                    onAnimationComplete={handleAnimationComplete}
+                >
+                    {itemsForRender.map((item, index: number) => (
+                        <CarouselItem<T>
+                            key={`${(item as { id?: string }).id ?? index}-${index}`}
+                            item={item as T extends { id?: string } ? T : never}
+                            index={index}
+                            round={round}
+                            transition={effectiveTransition}
+                        >
+                            {renderChildrenItem(item, index)}
+                        </CarouselItem>
+                    ))}
+                </motion.div>
 
-            <CarouselIndicators
-                totalItems={items.length}
-                activeIndex={activeIndex}
-                loop={loop}
-                onSelect={setPosition}
-            />
+                <CarouselIndicators
+                    totalItems={items.length}
+                    activeIndex={activeIndex}
+                    loop={loop}
+                    onSelect={setPosition}
+                />
 
-            <CarouselNavButtons
-                isFirstSlide={isFirstSlide}
-                isLastSlide={isLastSlide}
-                loop={loop}
-                onPrev={prevSlide}
-                onNext={nextSlide}
-            />
-        </div>
+                <CarouselNavButtons
+                    isFirstSlide={isFirstSlide}
+                    isLastSlide={isLastSlide}
+                    loop={loop}
+                    onPrev={prevSlide}
+                    onNext={nextSlide}
+                />
+            </div>
+            {items.length > 0 && (
+                <CarouselImgsIndicators
+                    imgs={itemsForRender as unknown as string[]}
+                    activeIndex={activeIndex}
+                    loop={loop}
+                    onSelect={setPosition}
+                />
+            )}
+        </>
     );
 }

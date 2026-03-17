@@ -40,10 +40,6 @@ export function CarouselItem<T>({
             transition={transition}
         >
             {children}
-            {/* <div className="p-5">
-                <div className="mb-1 font-black text-lg text-white">{item.title}</div>
-                <p className="text-sm text-white">{item.description}</p>
-            </div> */}
         </motion.div>
     );
 }

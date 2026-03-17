@@ -27,6 +27,5 @@ export function CarouselIndicators({
                 />
             ))}
         </div>
-
     );
 }
