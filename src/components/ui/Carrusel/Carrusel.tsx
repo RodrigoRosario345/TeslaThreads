@@ -1,10 +1,13 @@
-'use client';
+"use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, PanInfo, useMotionValue } from "motion/react";
 import { DEFAULT_ITEMS } from "@/data/carousel";
 import { CarouselItem } from "./CarouselItem";
-import type { CarouselItem as CarouselItemType, CarouselProps } from "@/interfaces";
+import type {
+    CarouselItem as CarouselItemType,
+    CarouselProps,
+} from "@/interfaces";
 import { useSlideControl } from "@/hooks";
 import { CarouselIndicators } from "./CarouselIndicators";
 import { CarouselNavButtons } from "./CarouselNavButtons";
@@ -19,13 +22,13 @@ const SPRING_OPTIONS = { type: "spring" as const, stiffness: 300, damping: 30 };
 export default function Carousel<T>({
     items,
     renderChildrenItem,
-    baseWidth = 300,
     autoplay = false,
     autoplayDelay = 3000,
     pauseOnHover = false,
     loop = false,
     round = false,
 }: CarouselProps<T>): React.JSX.Element {
+    const [baseWidth, setBaseWidth] = useState<number>(0);
     const itemWidth = baseWidth - CONTAINER_PADING * 2 - CONTAINER_BORDER * 2;
     const trackItemOffset = itemWidth + GAP;
     const itemsForRender = useMemo(() => {
@@ -34,7 +37,14 @@ export default function Carousel<T>({
         return [items[items.length - 1], ...items, items[0]];
     }, [items, loop]);
 
-    const { currentSlide: position, nextSlide, prevSlide, setCurrentSlide: setPosition, isFirstSlide, isLastSlide } = useSlideControl(loop ? 1 : 0, itemsForRender.length - 1);
+    const {
+        currentSlide: position,
+        nextSlide,
+        prevSlide,
+        setCurrentSlide: setPosition,
+        isFirstSlide,
+        isLastSlide,
+    } = useSlideControl(loop ? 1 : 0, itemsForRender.length - 1);
     // console.log("position", position, "isFirstSlide", isFirstSlide, "itemsForRender.length", itemsForRender.length);
     // const [position, setPosition] = useState<number>(loop ? 1 : 0);
     const x = useMotionValue(0);
@@ -43,6 +53,21 @@ export default function Carousel<T>({
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const updateBaseWidth = () => {
+            const containerWidth = containerRef.current?.offsetWidth || 0;
+            setBaseWidth(containerWidth);
+        };
+
+        updateBaseWidth();
+        window.addEventListener("resize", updateBaseWidth);
+
+        return () => {
+            window.removeEventListener("resize", updateBaseWidth);
+        };
+    }, []);
+
     useEffect(() => {
         if (pauseOnHover && containerRef.current) {
             const container = containerRef.current;
@@ -62,7 +87,7 @@ export default function Carousel<T>({
         if (pauseOnHover && isHovered) return undefined;
 
         const timer = setInterval(() => {
-            setPosition(prev => Math.min(prev + 1, itemsForRender.length - 1))
+            setPosition((prev) => Math.min(prev + 1, itemsForRender.length - 1));
         }, autoplayDelay);
 
         return () => clearInterval(timer);
@@ -160,15 +185,15 @@ export default function Carousel<T>({
     return (
         <div
             ref={containerRef}
-            className={`group relative overflow-hidden border-[#222] ${round && "rounded-3xl"}`}
+            className={`size-full group relative overflow-hidden border-[#222] ${round && "rounded-3xl"}`}
             style={{
                 borderWidth: `${CONTAINER_BORDER}px`,
-                width: `${baseWidth}px`,
-                height: `${baseWidth}px`,
+                // width: `${baseWidth}px`,
+                // height: `${baseWidth}px`,
             }}
         >
             <motion.div
-                className="flex size-full"
+                className="flex size-full z-50"
                 drag={isAnimating ? false : "x"}
                 {...dragProps}
                 style={{
@@ -190,13 +215,12 @@ export default function Carousel<T>({
                         item={item as T extends { id?: string } ? T : never}
                         index={index}
                         round={round}
-                        transition={effectiveTransition}>
+                        transition={effectiveTransition}
+                    >
                         {renderChildrenItem(item, index)}
                     </CarouselItem>
-
                 ))}
             </motion.div>
-
 
             <CarouselIndicators
                 totalItems={items.length}
@@ -212,6 +236,6 @@ export default function Carousel<T>({
                 onPrev={prevSlide}
                 onNext={nextSlide}
             />
-        </div >
+        </div>
     );
 }

@@ -9,7 +9,6 @@ export interface CarouselItem {
 export interface CarouselProps<T> {
     items: T[];
     renderChildrenItem: (item: T, index: number) => ReactNode;
-    baseWidth?: number;
     autoplay?: boolean;
     autoplayDelay?: number;
     pauseOnHover?: boolean;

@@ -2,7 +2,7 @@ import type { CarouselItem } from "@/interfaces";
 import { motion, useTransform } from "motion/react";
 
 interface CarouselItemProps<T> {
-    item: T extends {id?: string} ? T : never;
+    item: T extends { id?: string } ? T : never;
     index: number;
     itemWidth?: number;
     round: boolean;
@@ -27,10 +27,10 @@ export function CarouselItem<T>({
 
     return (
         <motion.div
-            className={`size-full relative shrink-0 flex flex-col ${round
-                ? "items-center justify-center text-center bg-[#060010] rounded-3xl"
-                : "items-start justify-between bg-[#222]"
-                } overflow-hidden cursor-grab active:cursor-grabbing`}
+            className={`size-full relative inset-0 shrink-0 flex flex-col ${round
+                ? "items-center justify-center text-center rounded-3xl"
+                : "items-start justify-between"
+                } overflow-hidden cursor-grab active:cursor-grabbing `}
             // style={{
             //     width: itemWidth,
             //     height: itemWidth,

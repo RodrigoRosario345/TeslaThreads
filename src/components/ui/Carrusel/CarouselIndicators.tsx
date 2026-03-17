@@ -14,7 +14,7 @@ export function CarouselIndicators({
     onSelect,
 }: CarouselIndicatorsProps) {
     return (
-        <div className="mx-auto absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 p-4 z-10">
+        <div className="mx-auto absolute bottom-5 left-1/2 -translate-x-1/2 hidden group-hover:flex items-center justify-center gap-2 p-4 z-10">
             {Array.from({ length: totalItems }).map((_, index) => (
                 <motion.div
                     key={index}
