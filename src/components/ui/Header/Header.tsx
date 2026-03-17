@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import Link from "next/link";
-import { IoSearch } from "react-icons/io5";
-import { FaCartShopping } from "react-icons/fa6";
+import { IoCartOutline } from "react-icons/io5";
 import { Sidebar } from "../Sidebar/Sidebar";
+import { IoIosSearch } from "react-icons/io";
 
 export function Header() {
 
@@ -37,9 +37,9 @@ export function Header() {
                     </ul>
                 </div>
                 <div className="flex items-center">
-                    <IoSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
-                    <FaCartShopping className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
-                    <button className="p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" onClick={toggleSidebar}>
+                    <IoIosSearch  className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                    <IoCartOutline  className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                    <button className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" onClick={toggleSidebar}>
                         Menu
                     </button>
                 </div>

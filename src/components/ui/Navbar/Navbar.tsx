@@ -18,7 +18,7 @@ export function Navbar({ onToggleVisibility }: NavbarProps) {
             onMouseLeave={() => onToggleVisibility(false)}
         >
             {OPTIONS_NAVBAR.map((option) => (
-                <Link key={option.name} href={option.href} className="p-2 rounded-md transition-all hover:bg-gray-100"
+                <Link key={option.name} href={option.href} className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100"
                     onMouseEnter={() => onToggleVisibility(true)}
                     >
                     {option.name}

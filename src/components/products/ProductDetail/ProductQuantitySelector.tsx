@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
 export interface ProductQuantitySelectorProps {
@@ -7,8 +7,11 @@ export interface ProductQuantitySelectorProps {
     onQuantityChange: (nextQuantity: string) => void;
 }
 
-export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }: ProductQuantitySelectorProps) {
-
+export function ProductQuantitySelector({
+    quantity,
+    inStock,
+    onQuantityChange,
+}: ProductQuantitySelectorProps) {
     const numericQuantity = Number(quantity);
     const [isValidQuantity, setIsValidQuantity] = useState<boolean>(true);
 
@@ -27,7 +30,6 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
         if (event.target.value === "") {
             onQuantityChange("");
             setIsValidQuantity(true);
@@ -43,7 +45,7 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
 
         if (rawValue < 1) {
             onQuantityChange("1");
-
+            setIsValidQuantity(false);
             return;
         }
 
@@ -56,6 +58,25 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
         onQuantityChange(rawValue.toString());
     };
 
+    const handleInputBlur = () => {
+        if (quantity === "") {
+            onQuantityChange("1");
+            setIsValidQuantity(true);
+        }
+    };
+
+    useEffect(() => {
+        if (isValidQuantity) return;
+
+        setTimeout(() => {
+            setIsValidQuantity(true);
+        }, 2000);
+
+
+    }, [isValidQuantity]);
+
+
+
     return (
         <div className="space-y-2">
             <p className="font-semibold text-sm">Quantity </p>
@@ -63,7 +84,9 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
                 <button
                     type="button"
                     className={
-                        numericQuantity > 1 ? "cursor-pointer" : "cursor-not-allowed text-gray-300"
+                        numericQuantity > 1
+                            ? "cursor-pointer"
+                            : "cursor-not-allowed text-gray-300"
                     }
                     onClick={handleDecrease}
                     disabled={numericQuantity <= 1}
@@ -76,7 +99,8 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
                     type="text"
                     value={quantity}
                     onChange={handleInputChange}
-                    className={`w-20 py-2 bg-gray-100 rounded font-semibold text-center focus:outline-none  transition-colors ${!isValidQuantity ? 'border border-red-500' : 'focus:ring-1 focus:ring-gray-300 '}`}
+                    onBlur={handleInputBlur}
+                    className={`w-20 py-2 bg-gray-100 rounded font-semibold text-center focus:outline-none  transition-colors ${!isValidQuantity ? "border border-red-500" : "focus:ring-1 focus:ring-gray-300 "}`}
                 />
 
                 <button
@@ -93,7 +117,9 @@ export function ProductQuantitySelector({ quantity, inStock, onQuantityChange }:
                     <FaPlus />
                 </button>
             </div>
-            {!isValidQuantity && <p className="text-red-500 text-sm">Please enter a valid quantity.</p>}
+            {!isValidQuantity && (
+                <p className="text-red-500 text-sm">Please enter a valid quantity.</p>
+            )}
         </div>
     );
 }
