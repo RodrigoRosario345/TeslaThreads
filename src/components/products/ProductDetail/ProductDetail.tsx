@@ -16,7 +16,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     return (
-        <article className="w-full flex flex-col lg:flex-row gap-12">
+        <article className="w-full flex flex-col lg:flex-row gap-6 sm:gap-12">
             <div className="w-full lg:w-[65%]">
                 {product.images.length > 0 ? (
                     <Carousel<string>

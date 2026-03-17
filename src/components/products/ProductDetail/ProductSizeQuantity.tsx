@@ -42,13 +42,13 @@ export function ProductSizeQuantity({ sizes, inStock }: ProductSizeQuantityProps
                 onSizeChange={handleSizeChange}
             />
 
+            {isInValidSize && <p className="text-red-500 text-sm">Please select a size.</p>}
+            
             <ProductQuantitySelector
                 quantity={quantity}
                 inStock={inStock}
                 onQuantityChange={handleQuantityChange}
             />
-
-            {isInValidSize && <p className="text-red-500 text-sm">Please select a size.</p>}
 
             <button
                 className="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-800 transition-colors cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
