@@ -20,7 +20,7 @@ export function Header() {
 
     return (
         <>
-            <header className="w-full sticky top-0 left-0 h-12 flex justify-between items-center px-4 bg-white shadow-sm ">
+            <header className="w-full sticky top-0 left-0 h-12 flex justify-between items-center px-4 bg-white shadow-sm z-100">
                 <Link href="/" className="text-xl font-bold">
                     TESLA THREADS
                 </Link>

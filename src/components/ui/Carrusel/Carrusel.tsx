@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, PanInfo, useMotionValue } from "motion/react";
 import { DEFAULT_ITEMS } from "@/data/carousel";
 import { CarouselItem } from "./CarouselItem";
-import { CarouselProps } from "@/interfaces";
+import type { CarouselItem as CarouselItemType, CarouselProps } from "@/interfaces";
 import { useSlideControl } from "@/hooks";
 import { CarouselIndicators } from "./CarouselIndicators";
 import { CarouselNavButtons } from "./CarouselNavButtons";
@@ -16,15 +16,16 @@ const CONTAINER_BORDER = 0;
 const GAP = 0;
 const SPRING_OPTIONS = { type: "spring" as const, stiffness: 300, damping: 30 };
 
-export default function Carousel({
-    items = DEFAULT_ITEMS,
+export default function Carousel<T>({
+    items,
+    renderChildrenItem,
     baseWidth = 300,
     autoplay = false,
     autoplayDelay = 3000,
     pauseOnHover = false,
     loop = false,
     round = false,
-}: CarouselProps): React.JSX.Element {
+}: CarouselProps<T>): React.JSX.Element {
     const itemWidth = baseWidth - CONTAINER_PADING * 2 - CONTAINER_BORDER * 2;
     const trackItemOffset = itemWidth + GAP;
     const itemsForRender = useMemo(() => {
@@ -183,17 +184,16 @@ export default function Carousel({
                 onAnimationStart={handleAnimationStart}
                 onAnimationComplete={handleAnimationComplete}
             >
-                {itemsForRender.map((item, index) => (
-                    <CarouselItem
-                        key={`${item?.id ?? index}-${index}`}
-                        item={item}
+                {itemsForRender.map((item, index: number) => (
+                    <CarouselItem<T>
+                        key={`${(item as { id?: string }).id ?? index}-${index}`}
+                        item={item as T extends { id?: string } ? T : never}
                         index={index}
-                        itemWidth={itemWidth}
                         round={round}
-                        trackItemOffset={trackItemOffset}
-                        x={x}
-                        transition={effectiveTransition}
-                    />
+                        transition={effectiveTransition}>
+                        {renderChildrenItem(item, index)}
+                    </CarouselItem>
+
                 ))}
             </motion.div>
 
