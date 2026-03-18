@@ -4,14 +4,13 @@ import Carousel from "@/components";
 import { SeedProduct } from "@/interfaces";
 import Image from "next/image";
 import { ProductSizeQuantity } from "./ProductSizeQuantity";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 export interface ProductDetailProps {
     product: SeedProduct;
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
-
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -45,7 +44,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <div className="space-y-4 w-full lg:w-[35%]">
                 <h2 className="text-3xl mb-2 font-semibold">{product.title}</h2>
                 <p className="text-xl font-semibold">${product.price.toFixed(2)}</p>
-                <ProductSizeQuantity sizes={product.sizes} inStock={product.inStock} />
+                <ProductSizeQuantity product={product} />
                 <div className="text-sm">
                     <p className="font-semibold mb-3">Description</p>
                     <p>{product.description}</p>

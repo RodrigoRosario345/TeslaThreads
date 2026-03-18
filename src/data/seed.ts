@@ -1,7 +1,6 @@
-import { SeedData } from "@/interfaces";
+import { SeedData, SeedProduct } from "@/interfaces";
 
-export const initialData: SeedData = {
-    products: [
+const products: Omit<SeedProduct, "id">[] = [
         {
             description: "Introducing the Tesla Chill Collection. The Men’s Chill Crew Neck Sweatshirt has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The sweatshirt features a subtle thermoplastic polyurethane T logo on the chest and a Tesla wordmark below the back collar. Made from 60% cotton and 40% recycled polyester.",
             images: [
@@ -784,5 +783,11 @@ export const initialData: SeedData = {
             title: "Kids Corp Jacket",
             gender: 'kid'
         },
-    ]
-}
+    ];
+
+export const initialData: SeedData = {
+    products: products.map((product, index) => ({
+        id: `product-${index + 1}`,
+        ...product,
+    })),
+};

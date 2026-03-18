@@ -1,19 +1,23 @@
 "use client";
 
-import { ValidSizes } from "@/interfaces";
+import { SeedProduct, ValidSizes } from "@/interfaces";
 import { useState } from "react";
 import { ProductQuantitySelector } from "./ProductQuantitySelector";
 import { ProductSizeSelector } from "./ProductSizeSelector";
+import { Button } from "@/components";
+import { useCartStore } from "@/store";
 
 export interface ProductSizeQuantityProps {
-    sizes: ValidSizes[];
-    inStock: number;
+    product: SeedProduct;
 }
 
-export function ProductSizeQuantity({ sizes, inStock }: ProductSizeQuantityProps) {
+export function ProductSizeQuantity({
+    product: { id, title, price, sizes, inStock },
+}: ProductSizeQuantityProps) {
     const [selectedSize, setSelectedSize] = useState<ValidSizes | null>(null);
     const [quantity, setQuantity] = useState<string>("1");
     const [isInValidSize, setIsInValidSize] = useState<boolean>(false);
+    const addItemToCart = useCartStore((state) => state.addItem);
 
     const handleSizeChange = (size: ValidSizes) => {
         setSelectedSize(size);
@@ -30,9 +34,14 @@ export function ProductSizeQuantity({ sizes, inStock }: ProductSizeQuantityProps
             return;
         }
         setIsInValidSize(false);
-        alert(`Added ${quantity} of size ${selectedSize} to cart!`);
+        addItemToCart({
+            id,
+            title,
+            price,
+            quantity: parseInt(quantity),
+            size: selectedSize,
+        });
     };
-
 
     return (
         <div className="space-y-5">
@@ -42,20 +51,19 @@ export function ProductSizeQuantity({ sizes, inStock }: ProductSizeQuantityProps
                 onSizeChange={handleSizeChange}
             />
 
-            {isInValidSize && <p className="text-red-500 text-sm">Please select a size.</p>}
-            
+            {isInValidSize && (
+                <p className="text-red-500 text-sm">Please select a size.</p>
+            )}
+
             <ProductQuantitySelector
                 quantity={quantity}
                 inStock={inStock}
                 onQuantityChange={handleQuantityChange}
             />
 
-            <button
-                className="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-800 transition-colors cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed"
-                onClick={handleAddToCart}
-            >
+            <Button buttonStyle="primary" onClick={handleAddToCart}>
                 Add to Cart
-            </button>
+            </Button>
         </div>
     );
 }

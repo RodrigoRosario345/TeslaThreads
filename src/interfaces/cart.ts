@@ -1,8 +1,11 @@
+import { ValidSizes } from "./product";
+
 interface CartItem {
     id: string;
-    name: string;
+    title: string;
     price: number;
     quantity: number;
+    size: ValidSizes;
 }
 
 export interface CartStore{
