@@ -8,5 +8,5 @@ export { default } from './ui/Carrusel/Carrusel';
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';
 
-export * from './cart/CartList/CartList';
+export * from './cart/CartContainer/CartContainer';
 export * from './cart/CartEmpty/CartEmpty';
