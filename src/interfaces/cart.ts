@@ -1,6 +1,6 @@
 import { ValidSizes } from "./product";
 
-interface CartItem {
+export interface CartItem {
     id: string;
     title: string;
     price: number;
