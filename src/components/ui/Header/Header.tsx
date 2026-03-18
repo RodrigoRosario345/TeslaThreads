@@ -6,11 +6,15 @@ import Link from "next/link";
 import { IoCartOutline } from "react-icons/io5";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { IoIosSearch } from "react-icons/io";
+import { useCartStore } from "@/store";
 
 export function Header() {
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+    const itemsLength = useCartStore((state) => state.items.length);
+
+
     const toggleVisibility = (newState: boolean) => {
         setIsVisible(newState);
     }
@@ -38,8 +42,13 @@ export function Header() {
                 </div>
                 <div className="flex items-center">
                     <IoIosSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
-                    <Link href="/cart" className="rounded-md transition-all hover:bg-gray-100 cursor-pointer">
+                    <Link href="/cart" className="relative rounded-md transition-all hover:bg-gray-100 cursor-pointer">
                         <IoCartOutline className="size-9 p-2" />
+                        {itemsLength > 0 && (
+                            <span className="absolute top-0.5 right-0 bg-blue-600 text-white text-xs rounded-full size-4 flex items-center justify-center">
+                                {itemsLength}
+                            </span>
+                        )}
                     </Link>
                     <button className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" onClick={toggleSidebar}>
                         Menu
