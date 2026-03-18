@@ -37,8 +37,10 @@ export function Header() {
                     </ul>
                 </div>
                 <div className="flex items-center">
-                    <IoIosSearch  className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
-                    <IoCartOutline  className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                    <IoIosSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                    <Link href="/cart" className="rounded-md transition-all hover:bg-gray-100 cursor-pointer">
+                        <IoCartOutline className="size-9 p-2" />
+                    </Link>
                     <button className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" onClick={toggleSidebar}>
                         Menu
                     </button>
