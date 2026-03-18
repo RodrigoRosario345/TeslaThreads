@@ -14,7 +14,9 @@ interface ButtonProps {
 }
 export function Button({ className, children, buttonStyle }: ButtonProps) {
 
-    const buttonClass = buttonStyle ? BUTTON_STYLES[buttonStyle] : className;
-
-    return (<button className={buttonClass}>{children}</button>);
+    return (
+        <button className={`${buttonStyle ? BUTTON_STYLES[buttonStyle] : ''} ${className}`}>
+            {children}
+        </button>
+    );
 }
