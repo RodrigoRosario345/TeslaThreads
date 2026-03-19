@@ -8,10 +8,12 @@ interface CartListProps {
 export function CartList({ addedProducts }: CartListProps) {
 
     return (
-        <ul className="w-full">
-            {addedProducts.map((product) => (
-                <CartItem key={product.id} product={product} />
-            ))}
-        </ul>
+        <div>
+            <ul className="w-full space-y-3">
+                {addedProducts.map((product) => (
+                    <CartItem key={product.id} product={product} />
+                ))}
+            </ul>
+        </div>
     );
 }
