@@ -16,7 +16,7 @@ export function CartItem({ product }: CartItemProps) {
                 objectFit="cover"
             />
             <div className="flex flex-col gap-1 w-full">
-                <h3 className="flex justify-between font-semibold gap-[30%]">
+                <h3 className="flex justify-between font-semibold gap-10 lg:gap-30">
                     <span>{product.title}</span>
                     <span>${product.price.toFixed(2)}</span>
                 </h3>
