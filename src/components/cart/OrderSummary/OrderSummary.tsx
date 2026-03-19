@@ -8,17 +8,17 @@ export interface OrderSummaryProps {
 export function OrderSummary({ shipping, subtotal }: OrderSummaryProps) {
     const total = subtotal + shipping;
     return (
-        <div className="p-8 rounded-md shadow-lg bg-gray-50 w-full max-w-sm">
-            <h2 className="text-lg font-medium mb-4">Order Summary</h2>
-            <p>
+        <div className="p-8 rounded-md shadow-lg  w-full max-w-sm space-y-4">
+            <h2 className="text-lg font-bold">Order Summary</h2>
+            <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Shipping</span>
                 <span>${shipping.toFixed(2)}</span>
             </p>
-            <p>
+            <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Subtotal</span>
                 <span>${subtotal.toFixed(2)}</span>
             </p>
-            <p>
+            <p className="flex justify-between items-center text-lg font-bold">
                 <span>Total</span>
                 <span>${total.toFixed(2)}</span>
             </p>

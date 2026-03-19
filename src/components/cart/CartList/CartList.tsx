@@ -8,7 +8,7 @@ interface CartListProps {
 export function CartList({ addedProducts }: CartListProps) {
 
     return (
-        <ul>
+        <ul className="w-full">
             {addedProducts.map((product) => (
                 <CartItem key={product.id} product={product} />
             ))}
