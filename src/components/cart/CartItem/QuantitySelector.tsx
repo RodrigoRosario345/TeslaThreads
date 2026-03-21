@@ -20,14 +20,14 @@ export function QuantitySelector({ idItem, quantitySelected, quantities }: Quant
     };
 
     return (
-        <div className="flex flex-col w-max text-sm relative" >
+        <div className="flex flex-col w-max relative" >
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex gap-1 items-center px-1 rounded-sm cursor-pointer focus:outline-none focus:border focus:border-dashed focus:border-gray-400"
+                className="w-full flex gap-1 items-center px-1 rounded-sm cursor-pointer border border-transparent focus:outline-none  focus:border-dashed focus:border-gray-400"
             >
                 <span>{quantitySelected}</span>
-                {isOpen ? <IoIosArrowDown size={18} /> : <IoIosArrowUp size={18} />}
+                {isOpen ? <IoIosArrowDown size={16} /> : <IoIosArrowUp size={16} />}
             </button>
 
             {isOpen && (

@@ -1,12 +1,18 @@
 import type { CartItem } from "@/interfaces";
 import Image from "next/image";
 import { QuantitySelector } from "./QuantitySelector";
+import { Button } from "@/components";
+import { useCartStore } from "@/store";
 
 export interface CartItemProps {
     product: CartItem;
 }
 
 export function CartItem({ product }: CartItemProps) {
+
+    const removeItem = useCartStore((state) => state.removeItem);
+
+
     return (
         <li className="w-full flex gap-5 text-sm">
             <Image
@@ -31,6 +37,13 @@ export function CartItem({ product }: CartItemProps) {
                             quantities={[1, 2, 3, 4, 5]}
                         />
                     }
+                    <Button
+                        className="ml-10 pb-px border-b hover:border-b-2 cursor-pointer"
+                        onClick={() => removeItem(product.id)}
+                    >
+
+                        Remove
+                    </Button>
                 </p>
             </div>
         </li>
