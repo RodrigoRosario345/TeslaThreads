@@ -9,7 +9,9 @@ export const useCartStore = create<CartStore>()(
             addItem: (item) =>
                 set(
                     (state) => {
-                        const existingItemIndex = state.items.findIndex((i) => i.id === item.id);
+                        const existingItemIndex = state.items.findIndex(
+                            (i) => i.id === item.id,
+                        );
 
                         if (existingItemIndex !== -1) {
                             const updatedItems = [...state.items];
@@ -19,9 +21,19 @@ export const useCartStore = create<CartStore>()(
 
                         return { items: [...state.items, item] };
                     },
-
                     false,
                     "addItem",
+                ),
+            replaceQuantity: (id, quantity) =>
+                set(
+                    (state) => {
+                        const updatedItems = state.items.map((item) =>
+                            item.id === id ? { ...item, quantity } : item,
+                        );
+                        return { items: updatedItems };
+                    },
+                    false,
+                    "replaceQuantity",
                 ),
             removeItem: (id) =>
                 set(

@@ -1,5 +1,6 @@
 import type { CartItem } from "@/interfaces";
 import Image from "next/image";
+import { QuantitySelector } from "./QuantitySelector";
 
 export interface CartItemProps {
     product: CartItem;
@@ -21,7 +22,16 @@ export function CartItem({ product }: CartItemProps) {
                     <span>${product.price.toFixed(2)}</span>
                 </h3>
                 <p>Size: {product.size}</p>
-                <p>Quantity: {product.quantity}</p>
+                <p className="flex gap-1">
+                    Quantity:
+                    {
+                        <QuantitySelector
+                            idItem={product.id}
+                            quantitySelected={product.quantity}
+                            quantities={[1, 2, 3, 4, 5]}
+                        />
+                    }
+                </p>
             </div>
         </li>
     );
