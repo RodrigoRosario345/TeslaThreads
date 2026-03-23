@@ -27,7 +27,7 @@ export function ControllerInput<T extends FieldValues, TT>({
     classNameLabel = "",
     classNameInput = "",
 }: ControllerInputProps<T, TT>) {
-    const { field, error, hasError, colorState } = useControllerField(name, control, required)
+    const { field, error, hasError } = useControllerField(name, control);
 
     return (
         <div className={`flex-1 flex flex-col gap-2 ${classNameContainer}`}>
@@ -42,7 +42,6 @@ export function ControllerInput<T extends FieldValues, TT>({
                 type={type}
                 placeholder={placeholder}
                 className={`${hasError ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""} ${classNameInput}`}
-                color={colorState}
                 disabled={disabled}
                 value={field.value || ""}
                 aria-invalid={hasError}

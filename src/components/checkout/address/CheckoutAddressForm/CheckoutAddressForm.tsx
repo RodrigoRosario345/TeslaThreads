@@ -6,6 +6,16 @@ import { CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput, schemaCheckout
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+const FIELDS = [
+    { name: "firstName", label: "First Name", placeholder: "Enter first name" },
+    { name: "lastName", label: "Last Name", placeholder: "Enter last name" },
+    { name: "addressLine1", label: "Address Line 1", placeholder: "Enter address line 1" },
+    { name: "addressLine2", label: "Address Line 2 (Optional)", placeholder: "Enter address line 2" },
+    { name: "postalCode", label: "Postal Code", placeholder: "Enter postal code" },
+    { name: "city", label: "City", placeholder: "Enter city" },
+    { name: "country", label: "Country", placeholder: "Enter country" },
+    { name: "phoneNumber", label: "Phone Number", placeholder: "Enter phone number" },
+] as const;
 export function CheckoutAddressForm() {
 
     const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({

@@ -2,21 +2,21 @@ import z from "zod";
 
 export const schemaCheckoutAddress = z.object({
     firstName: z
-        .string()
+        .string("First name is required")
         .min(3, "First name must be at least 3 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
             "First name can only contain letters, spaces, apostrophes, and hyphens",
         ),
     lastName: z
-        .string()
+        .string("Last name is required")
         .min(3, "Last name must be at least 3 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
             "Last name can only contain letters, spaces, apostrophes, and hyphens",
         ),
     addressLine1: z
-        .string()
+        .string("Address Line 1 is required")
         .min(5, "Address Line 1 must be at least 5 characters long")
         .regex(
             /^[a-zA-Z0-9\s,'-]+$/,
@@ -24,29 +24,28 @@ export const schemaCheckoutAddress = z.object({
         ),
     addressLine2: z.string().optional(),
     postalCode: z
-        .string()
+        .string("Postal code is required")
         .min(4, "Postal code must be at least 4 characters long")
         .regex(
             /^[a-zA-Z0-9\s-]+$/,
             "Postal code can only contain letters, numbers, spaces, and hyphens",
         ),
     city: z
-        .string()
+        .string("City is required")
         .min(2, "City must be at least 2 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
             "City can only contain letters, spaces, apostrophes, and hyphens",
         ),
-
     country: z
-        .string()
+        .string("Country is required")
         .min(2, "Country must be at least 2 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
             "Country can only contain letters, spaces, apostrophes, and hyphens",
         ),
     phoneNumber: z
-        .string()
+        .string("Phone number is required")
         .min(7, "Phone number must be at least 7 characters long")
         .regex(
             /^[0-9\s-]+$/,
