@@ -12,7 +12,6 @@ export function CartItem({ product }: CartItemProps) {
 
     const removeItem = useCartStore((state) => state.removeItem);
 
-
     return (
         <li className="w-full flex gap-5 text-sm">
             <Image
@@ -38,6 +37,7 @@ export function CartItem({ product }: CartItemProps) {
                         />
                     }
                     <Button
+                        type="button"
                         className="ml-10 pb-px border-b hover:border-b-2 cursor-pointer"
                         onClick={() => removeItem(product.id)}
                     >

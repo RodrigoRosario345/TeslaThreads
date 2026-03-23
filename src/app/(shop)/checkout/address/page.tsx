@@ -1,7 +1,10 @@
+import { CheckoutAddressForm, Title } from "@/components";
+
 export default function AddressPage() {
     return (
-        <div>
-            <h1>Address Page</h1>
-        </div>
+        <section className="mx-auto w-full max-w-xl lg:max-w-5xl">
+            <Title title="Delivery Address" />
+            <CheckoutAddressForm />
+        </section>
     );
 }

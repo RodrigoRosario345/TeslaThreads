@@ -10,3 +10,8 @@ export * from './products/ProductDetail/ProductDetail';
 
 export * from './cart/CartContainer/CartContainer';
 export * from './cart/CartEmpty/CartEmpty';
+
+export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
+
+export * from './forms/controllers/ControllerInput/ControllerInput';
+// export * from './forms/controllers/ControllerSelect/ControllerSelect';
