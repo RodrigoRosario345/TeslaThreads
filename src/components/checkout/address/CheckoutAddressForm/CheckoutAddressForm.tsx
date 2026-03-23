@@ -6,11 +6,7 @@ import { CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput, schemaCheckout
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-export interface CheckoutAddressFormProps {
-
-}
-
-export function CheckoutAddressForm({ }: CheckoutAddressFormProps) {
+export function CheckoutAddressForm() {
 
     const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
         mode: "onChange",
@@ -23,11 +19,11 @@ export function CheckoutAddressForm({ }: CheckoutAddressFormProps) {
 
     return (
         <form
-            className="m-auto flex max-w-xl flex-col gap-4 bg-gray-800 p-6 rounded-lg"
+            className="w-full space-y-4"
             onSubmit={handleSubmit(onSubmit)}
         >
-            <h1 className="text-lg font-semibold text-white">Create New Movie</h1>
-            <div className="flex gap-2.5">
+            <h1 className="text-lg font-semibold ">Delivery Address</h1>
+            <div className="w-full flex gap-2.5">
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
                     name="firstName"
@@ -41,8 +37,49 @@ export function CheckoutAddressForm({ }: CheckoutAddressFormProps) {
                     placeholder="Enter last name"
                 />
             </div>
-
-            <Button className="cursor-pointer" type="submit">
+            <div className="w-full flex gap-2.5">
+                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                    control={control}
+                    name="addressLine1"
+                    label="Address Line 1"
+                    placeholder="Enter address line 1"
+                />
+                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                    control={control}
+                    name="addressLine2"
+                    label="Address Line 2 (Optional)"
+                    placeholder="Enter address line 2"
+                />
+            </div>
+            <div className="w-full flex gap-2.5">
+                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                    control={control}
+                    name="postalCode"
+                    label="Postal Code"
+                    placeholder="Enter postal code"
+                />
+                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                    control={control}
+                    name="city"
+                    label="City"
+                    placeholder="Enter city"
+                />
+            </div>
+            <div className="w-full flex gap-2.5">
+                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                    control={control}
+                    name="country"
+                    label="Country"
+                    placeholder="Enter country"
+                />
+                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                    control={control}
+                    name="phoneNumber"
+                    label="Phone Number"
+                    placeholder="Enter phone number"
+                />
+            </div>
+            <Button className="w-full" buttonStyle="primary" type="submit">
                 Next
             </Button>
         </form>

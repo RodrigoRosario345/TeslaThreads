@@ -12,5 +12,4 @@ export interface BaseControllerProps<T extends FieldValues, TT> {
     disabled?: boolean;
     helperText?: string;
     required?: boolean;
-    className?: string;
 }

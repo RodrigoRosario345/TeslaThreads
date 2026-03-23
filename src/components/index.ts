@@ -3,7 +3,7 @@ export * from './ui/Header/Header';
 export * from './ui/Sidebar/Sidebar';
 export * from './ui/Button/Button';
 export { default } from './ui/Carrusel/Carrusel';
-
+export * from './ui/fields/Input/Input';
 
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';
