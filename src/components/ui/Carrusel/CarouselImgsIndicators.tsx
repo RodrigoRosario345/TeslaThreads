@@ -26,7 +26,7 @@ export function CarouselImgsIndicators({
                         alt={`Indicator Image ${index}`}
                         fill
                         objectFit="cover"
-                        className={activeIndex === index ? "blur-none" : "blur-[2px]"}
+                        className={activeIndex === index ? "contrast-125" : "opacity-50"}
                     />
                 </div>
             ))}

@@ -36,6 +36,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                                 />
                             </>
                         )}
+                        autoplay
+                        autoplayDelay={5000}
                     />
                 ) : (
                     <p>No images available</p>

@@ -8,15 +8,16 @@ const BUTTON_STYLES = {
 type ButtonStyle = keyof typeof BUTTON_STYLES;
 
 interface ButtonProps {
+    type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
     className?: string;
     children?: React.ReactNode;
     buttonStyle?: ButtonStyle;
     onClick?: () => void;
 }
-export function Button({ className, children, buttonStyle, onClick }: ButtonProps) {
+export function Button({ type, className, children, buttonStyle, onClick }: ButtonProps) {
 
     return (
-        <button className={`${buttonStyle ? BUTTON_STYLES[buttonStyle] : ''} ${className}`} onClick={onClick}>
+        <button type={type} className={`${buttonStyle ? BUTTON_STYLES[buttonStyle] : ''} ${className}`} onClick={onClick}>
             {children}
         </button>
     );
