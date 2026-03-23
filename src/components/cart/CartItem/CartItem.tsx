@@ -28,7 +28,7 @@ export function CartItem({ product }: CartItemProps) {
                     <span>${product.price.toFixed(2)}</span>
                 </h3>
                 <p>Size: {product.size}</p>
-                <p className="flex gap-1">
+                <div className="flex gap-1">
                     Quantity:
                     {
                         <QuantitySelector
@@ -44,7 +44,7 @@ export function CartItem({ product }: CartItemProps) {
 
                         Remove
                     </Button>
-                </p>
+                </div>
             </div>
         </li>
     );

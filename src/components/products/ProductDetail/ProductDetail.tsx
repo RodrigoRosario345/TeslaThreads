@@ -16,7 +16,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
     return (
         <article className="w-full flex flex-col lg:flex-row gap-6 sm:gap-12">
-            <div className="w-full lg:w-[65%]">
+            <div className="w-[calc(100%+3rem)] sm:w-full lg:w-[65%] -mx-6 sm:mx-0 relative">
                 {product.images.length > 0 ? (
                     <Carousel<string>
                         items={product.images}
