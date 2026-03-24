@@ -24,9 +24,9 @@ export function CarouselImgsIndicators({
                     <Image
                         src={`/products/${img}`}
                         alt={`Indicator Image ${index}`}
+                        sizes="max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         fill
-                        objectFit="cover"
-                        className={activeIndex === index ? "contrast-125" : "opacity-50"}
+                        className={`object-cover transition-opacity ${activeIndex === index ? "opacity-100" : "opacity-50"}`}
                     />
                 </div>
             ))}

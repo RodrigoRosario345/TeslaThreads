@@ -28,7 +28,6 @@ export function ProductItem({ product }: ProductItemProps) {
                     alt={product.title}
                     width={500}
                     height={500}
-                    loading="eager"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />

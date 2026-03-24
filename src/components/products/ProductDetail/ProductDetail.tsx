@@ -27,12 +27,14 @@ export function ProductDetail({ product }: ProductDetailProps) {
                                 )}
                                 <Image
                                     key={index}
+                                    sizes="max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     fill
                                     src={`/products/${item}`}
                                     alt={product.title}
-                                    objectFit="cover"
                                     draggable={false}
-                                    onLoadingComplete={() => setIsLoading(false)}
+                                    loading="eager"
+                                    onLoad={() => setIsLoading(false)}
+                                    className="object-cover"
                                 />
                             </>
                         )}
