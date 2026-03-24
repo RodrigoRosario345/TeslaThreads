@@ -2,9 +2,17 @@
 
 
 import { Button, ControllerInput } from "@/components";
+import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
 import { CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput, schemaCheckoutAddress } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
+const COUNTRY_OPTIONS = [
+    { value: "us", label: "United States" },
+    { value: "ca", label: "Canada" },
+    { value: "uk", label: "United Kingdom" },
+];
+
 
 export function CheckoutAddressForm() {
 
@@ -66,11 +74,12 @@ export function CheckoutAddressForm() {
                 />
             </div>
             <div className="w-full flex flex-wrap gap-2.5">
-                <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                <ControllerSelect<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
                     name="country"
                     label="Country"
-                    placeholder="Enter country"
+                    placeholder="Select country"
+                    options={COUNTRY_OPTIONS}
                 />
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}

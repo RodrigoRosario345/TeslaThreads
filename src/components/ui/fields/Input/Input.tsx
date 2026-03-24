@@ -26,7 +26,7 @@ export function Input({
             ref={ref}
             type={type}
             placeholder={placeholder}
-            className={`w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+            className={`w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
             disabled={disabled}
             value={value}
             aria-invalid={ariaInvalid}
