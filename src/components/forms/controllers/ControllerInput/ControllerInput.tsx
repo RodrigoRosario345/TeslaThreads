@@ -30,7 +30,7 @@ export function ControllerInput<T extends FieldValues, TT>({
     const { field, error, hasError } = useControllerField(name, control);
 
     return (
-        <div className={`flex-1 flex flex-col gap-2 ${classNameContainer}`}>
+        <div className={`flex-1 basis-3xs flex flex-col gap-2 ${classNameContainer}`}>
             <label htmlFor={name} className={`block text-sm font-medium ${hasError ? "text-red-500" : "text-gray-700"} ${classNameLabel}`}>
                 {label}
                 {required && <span className="text-red-500 ml-1">*</span>}
@@ -49,7 +49,7 @@ export function ControllerInput<T extends FieldValues, TT>({
             />
 
             {hasError && (
-                <p className={`-mt-1 text-sm ${hasError ? "text-red-500" : ""}`} id={`${name}-error`} role="alert">
+                <p className={`-mt-0.5 text-xs ${hasError ? "text-red-500" : ""}`} id={`${name}-error`} role="alert">
                     {error?.message}
                 </p>
             )}

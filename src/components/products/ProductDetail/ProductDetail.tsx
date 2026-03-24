@@ -44,8 +44,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 )}
             </div>
             <div className="space-y-4 w-full lg:w-[35%]">
-                <h2 className="text-3xl mb-2 font-semibold">{product.title}</h2>
-                <p className="text-xl font-semibold">${product.price.toFixed(2)}</p>
+                <h2 className="text-lg md:text-xl lg:text-2xl mb-2 font-semibold">{product.title}</h2>
+                <p className="text-base md:text-lg lg:text-xl font-semibold">${product.price.toFixed(2)}</p>
                 <ProductSizeQuantity product={product} />
                 <div className="text-sm">
                     <p className="font-semibold mb-3">Description</p>

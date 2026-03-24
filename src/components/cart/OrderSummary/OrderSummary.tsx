@@ -9,8 +9,8 @@ export interface OrderSummaryProps {
 export function OrderSummary({ shipping, subtotal }: OrderSummaryProps) {
     const subtotalWithShipping = subtotal + shipping;
     return (
-        <div className="w-full space-y-4 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
-            <h2 className="text-lg font-bold">Order Summary</h2>
+        <div className="w-full h-max space-y-4 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
+            <h2 className="text-base md:text-lg font-bold">Order Summary</h2>
             <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Shipping</span>
                 <span>${shipping.toFixed(2)}</span>
@@ -19,7 +19,7 @@ export function OrderSummary({ shipping, subtotal }: OrderSummaryProps) {
                 <span>Sales Tax</span>
                 <span>Calculated at checkout</span>
             </p>
-            <p className="flex justify-between items-center text-lg font-bold">
+            <p className="flex justify-between items-center text-base md:text-lg font-bold">
                 <span>Subtotal</span>
                 <span>${subtotalWithShipping.toFixed(2)}</span>
             </p>

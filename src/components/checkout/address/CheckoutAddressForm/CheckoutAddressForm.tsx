@@ -6,16 +6,6 @@ import { CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput, schemaCheckout
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-const FIELDS = [
-    { name: "firstName", label: "First Name", placeholder: "Enter first name" },
-    { name: "lastName", label: "Last Name", placeholder: "Enter last name" },
-    { name: "addressLine1", label: "Address Line 1", placeholder: "Enter address line 1" },
-    { name: "addressLine2", label: "Address Line 2 (Optional)", placeholder: "Enter address line 2" },
-    { name: "postalCode", label: "Postal Code", placeholder: "Enter postal code" },
-    { name: "city", label: "City", placeholder: "Enter city" },
-    { name: "country", label: "Country", placeholder: "Enter country" },
-    { name: "phoneNumber", label: "Phone Number", placeholder: "Enter phone number" },
-] as const;
 export function CheckoutAddressForm() {
 
     const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
@@ -32,8 +22,8 @@ export function CheckoutAddressForm() {
             className="w-full space-y-4"
             onSubmit={handleSubmit(onSubmit)}
         >
-            <h1 className="text-lg font-semibold ">Delivery Address</h1>
-            <div className="w-full flex gap-2.5">
+            <h2 className="text-lg font-semibold ">Delivery Address</h2>
+            <div className="w-full flex flex-wrap gap-2.5">
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
                     name="firstName"
@@ -47,7 +37,7 @@ export function CheckoutAddressForm() {
                     placeholder="Enter last name"
                 />
             </div>
-            <div className="w-full flex gap-2.5">
+            <div className="w-full flex flex-wrap gap-2.5">
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
                     name="addressLine1"
@@ -61,7 +51,7 @@ export function CheckoutAddressForm() {
                     placeholder="Enter address line 2"
                 />
             </div>
-            <div className="w-full flex gap-2.5">
+            <div className="w-full flex flex-wrap gap-2.5">
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
                     name="postalCode"
@@ -75,7 +65,7 @@ export function CheckoutAddressForm() {
                     placeholder="Enter city"
                 />
             </div>
-            <div className="w-full flex gap-2.5">
+            <div className="w-full flex flex-wrap gap-2.5">
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
                     name="country"

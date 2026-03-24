@@ -32,8 +32,8 @@ export function ProductItem({ product }: ProductItemProps) {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
-                <h2 className="font-bold">{product.title}</h2>
-                <p className="text-sm font-semibold">${product.price.toFixed(2)}</p>
+                <h2 className="text-sm md:text-base font-bold">{product.title}</h2>
+                <p className="text-xs md:text-sm font-semibold">${product.price.toFixed(2)}</p>
             </article>
         </Link>
     );
