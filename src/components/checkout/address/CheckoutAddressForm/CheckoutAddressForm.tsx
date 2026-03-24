@@ -1,22 +1,16 @@
 'use client';
 
-
 import { Button, ControllerInput } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
+import { COUNTRY_OPTIONS } from "@/data";
 import { CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput, schemaCheckoutAddress } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-const COUNTRY_OPTIONS = [
-    { value: "us", label: "United States" },
-    { value: "ca", label: "Canada" },
-    { value: "uk", label: "United Kingdom" },
-];
-
 
 export function CheckoutAddressForm() {
 
-    const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
+    const { control, handleSubmit, watch } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaCheckoutAddress),
     });
@@ -24,6 +18,8 @@ export function CheckoutAddressForm() {
     const onSubmit = (data: CheckoutAddressSchemaOutput) => {
         console.log(data);
     }
+
+    const { country } = watch();
 
     return (
         <form
@@ -86,6 +82,8 @@ export function CheckoutAddressForm() {
                     name="phoneNumber"
                     label="Phone Number"
                     placeholder="Enter phone number"
+                    disabled={!country}
+                    helperText={!country ? "Please select a country first" : ""}
                 />
             </div>
             <Button className="w-full" buttonStyle="primary" type="submit">

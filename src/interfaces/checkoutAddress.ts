@@ -3,6 +3,7 @@ import z from "zod";
 export const schemaCheckoutAddress = z.object({
     firstName: z
         .string("First name is required")
+        .trim()
         .min(3, "First name must be at least 3 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
@@ -10,6 +11,7 @@ export const schemaCheckoutAddress = z.object({
         ),
     lastName: z
         .string("Last name is required")
+        .trim()
         .min(3, "Last name must be at least 3 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
@@ -17,6 +19,7 @@ export const schemaCheckoutAddress = z.object({
         ),
     addressLine1: z
         .string("Address Line 1 is required")
+        .trim()
         .min(5, "Address Line 1 must be at least 5 characters long")
         .regex(
             /^[a-zA-Z0-9\s,'-]+$/,
@@ -25,6 +28,7 @@ export const schemaCheckoutAddress = z.object({
     addressLine2: z.string().optional(),
     postalCode: z
         .string("Postal code is required")
+        .trim()
         .min(4, "Postal code must be at least 4 characters long")
         .regex(
             /^[a-zA-Z0-9\s-]+$/,
@@ -32,6 +36,7 @@ export const schemaCheckoutAddress = z.object({
         ),
     city: z
         .string("City is required")
+        .trim()
         .min(2, "City must be at least 2 characters long")
         .regex(
             /^[a-zA-Z\s'-]+$/,
@@ -46,6 +51,7 @@ export const schemaCheckoutAddress = z.object({
         ),
     phoneNumber: z
         .string("Phone number is required")
+        .trim()
         .min(7, "Phone number must be at least 7 characters long")
         .regex(
             /^[0-9\s-]+$/,

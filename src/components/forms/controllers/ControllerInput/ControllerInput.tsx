@@ -5,6 +5,7 @@ import type { FieldValues } from "react-hook-form";
 import { BaseControllerProps } from "@/interfaces";
 import { useControllerField } from "@/hooks";
 import { Input } from "@/components";
+import { CgDanger } from "react-icons/cg";
 
 export interface ControllerInputProps<T extends FieldValues, TT> extends BaseControllerProps<T, TT> {
     type?: React.HTMLInputTypeAttribute;
@@ -55,7 +56,10 @@ export function ControllerInput<T extends FieldValues, TT>({
             )}
 
             {!hasError && helperText && (
-                <p id={`${name}-helper`}>{helperText}</p>
+                <p id={`${name}-helper`} className="text-xs text-blue-500 flex items-center gap-1 mt-0.5">
+                    <CgDanger size={20} className="text-blue-500"/>
+                    {helperText}
+                </p>
             )}
         </div>
     );
