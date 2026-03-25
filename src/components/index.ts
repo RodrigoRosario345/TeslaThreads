@@ -1,6 +1,7 @@
 export * from './ui/Title/Title';
 export * from './ui/Header/Header';
 export * from './ui/Sidebar/Sidebar';
+export * from './ui/Footer/Footer';
 export * from './ui/Button/Button';
 export { default } from './ui/Carrusel/Carrusel';
 export * from './ui/fields/Input/Input';

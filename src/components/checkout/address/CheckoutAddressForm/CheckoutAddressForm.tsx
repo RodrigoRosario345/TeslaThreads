@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 export function CheckoutAddressForm() {
 
-    const { control, handleSubmit, watch } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
+    const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaCheckoutAddress),
     });
@@ -19,7 +19,7 @@ export function CheckoutAddressForm() {
         console.log(data);
     }
 
-    const { country } = watch();
+    // const { country } = watch();
 
     return (
         <form
@@ -82,8 +82,8 @@ export function CheckoutAddressForm() {
                     name="phoneNumber"
                     label="Phone Number"
                     placeholder="Enter phone number"
-                    disabled={!country}
-                    helperText={!country ? "Please select a country first" : ""}
+                    // disabled={!country}
+                    // helperText={!country ? "Please select a country first" : ""}
                 />
             </div>
             <Button className="w-full" buttonStyle="primary" type="submit">
