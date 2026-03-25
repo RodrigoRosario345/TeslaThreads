@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Header />
-            <main className="p-6 sm:p-12">
+            <main className="p-6 sm:p-12 min-h-[calc(100vh-6.3rem)]">
                 {children}
             </main>
             <Footer />
