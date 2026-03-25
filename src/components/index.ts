@@ -16,3 +16,6 @@ export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
 
 export * from './forms/controllers/ControllerInput/ControllerInput';
 // export * from './forms/controllers/ControllerSelect/ControllerSelect';
+
+export * from './auth/SignInForm/SignInForm';
+export * from './auth/SignUpForm/SignUpForm';
