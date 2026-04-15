@@ -1,2 +1,3 @@
 export * from "./carousel";
-export * from "./countries";
+export * from "./countries-data";
+export * from "./catalog-data";

@@ -1,6 +1,6 @@
 "use client";
 
-import { SeedProduct, ValidSizes } from "@/interfaces";
+import { CatalogProduct, ValidSizes } from "@/interfaces";
 import { useState } from "react";
 import { ProductQuantitySelector } from "./ProductQuantitySelector";
 import { ProductSizeSelector } from "./ProductSizeSelector";
@@ -8,7 +8,7 @@ import { Button } from "@/components";
 import { useCartStore } from "@/store";
 
 export interface ProductSizeQuantityProps {
-    product: SeedProduct;
+    product: CatalogProduct;
 }
 
 export function ProductSizeQuantity({

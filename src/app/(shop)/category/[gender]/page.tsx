@@ -1,5 +1,6 @@
 import { ProductList, Title } from "@/components";
-import { initialData } from "@/data/seed";
+import { catalogData } from "@/data";
+
 
 interface CategoryPageProps {
     params: {
@@ -10,7 +11,7 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params }: CategoryPageProps) {
 
     const { gender } = await params;
-    const filteredProducts = initialData.products.filter(product => product.gender === gender);
+    const filteredProducts = catalogData.products.filter(product => product.gender === gender);
 
     return (
         <>

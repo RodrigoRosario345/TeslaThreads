@@ -1,7 +1,7 @@
-import { SeedData } from "@/interfaces";
+import { CatalogData } from "@/interfaces";
 import { ProductItem } from "../ProductItem/ProductItem";
 
-export interface ProductListProps extends SeedData { }
+export interface ProductListProps extends Omit<CatalogData, 'categories'> { }
 
 export function ProductList({ products }: ProductListProps) {
     return (

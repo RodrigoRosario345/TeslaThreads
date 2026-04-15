@@ -1,9 +1,9 @@
 import { ProductList } from "@/components";
-import { initialData } from "@/data/seed";
+import { catalogData } from "@/data";
 
 export default function ShopPage() {
 
-  const products = initialData.products;
+  const { products } = catalogData;
 
   return (
     <ProductList products={products} />

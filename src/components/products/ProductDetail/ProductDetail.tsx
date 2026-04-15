@@ -1,13 +1,14 @@
 'use client';
 
 import Carousel from "@/components";
-import { SeedProduct } from "@/interfaces";
+
 import Image from "next/image";
 import { ProductSizeQuantity } from "./ProductSizeQuantity";
 import { useState } from "react";
+import { CatalogProduct } from "@/interfaces";
 
 export interface ProductDetailProps {
-    product: SeedProduct;
+    product: CatalogProduct;
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {

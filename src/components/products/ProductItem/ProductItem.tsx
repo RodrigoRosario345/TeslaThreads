@@ -1,12 +1,13 @@
 "use client";
 
-import { SeedProduct } from "@/interfaces";
+
+import { CatalogProduct } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 export interface ProductItemProps {
-    product: SeedProduct;
+    product: CatalogProduct;
 }
 
 export function ProductItem({ product }: ProductItemProps) {

@@ -1,5 +1,6 @@
 import { ProductDetail } from "@/components";
-import { initialData } from "@/data/seed";
+import { catalogData } from "@/data";
+
 import { NextPage } from "next";
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 
 const ProductPage: NextPage<Props> = async ({ params }) => {
     const { slug } = await params;
-    const findedProduct = initialData.products.find(
+    const findedProduct = catalogData.products.find(
         (product) => product.slug === slug,
     );
 
