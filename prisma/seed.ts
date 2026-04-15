@@ -16,10 +16,42 @@ async function main() {
     await prisma.category.deleteMany();
 
     // Insert categories
-    const categories = await prisma.category.createMany({
-        data: catalogData.categories
+    const createdCategories = await prisma.category.createManyAndReturn({
+        data: catalogData.categories,
     });
-    console.log(`Inserted ${categories.count} categories.`);
+
+    // Group categories by name for easy lookup
+    const categoriesGroupedByName = createdCategories.reduce(
+        (acc, category) => {
+            acc[category.name] = category.id;
+            return acc;
+        },
+        {} as Record<string, number>,
+    );
+
+    // Insert products and their images
+    await Promise.all(
+        catalogData.products.map(async (product) => {
+            const { id, type, images, ...productData } = product;
+            const categoryId = categoriesGroupedByName[type];
+
+            const createdProduct = await prisma.product.create({
+                data: {
+                    ...productData,
+                    categoryId,
+                },
+            });
+
+            const productImagesData = images.map((image) => ({
+                url: image,
+                productId: createdProduct.id,
+            }));
+
+            await prisma.productImage.createMany({
+                data: productImagesData,
+            });
+        }),
+    );
 }
 
 main()
