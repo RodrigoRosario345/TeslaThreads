@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation";
 interface PaginationProps {
     totalPages: number;
     currentPage: number;
+    urlBase?: string;
 }
 
-export function Pagination({ totalPages, currentPage }: PaginationProps) {
+export function Pagination({ totalPages, currentPage, urlBase }: PaginationProps) {
     const router = useRouter();
 
     const navigateToPage = (page: number) => {
-        router.push(`/?page=${page}`);
+        router.push(`${urlBase || '/'}?page=${page}`);
     };
 
     return (
