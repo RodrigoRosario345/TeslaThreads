@@ -19,3 +19,5 @@ export * from './forms/controllers/ControllerInput/ControllerInput';
 
 export * from './auth/SignInForm/SignInForm';
 export * from './auth/SignUpForm/SignUpForm';
+
+export * from './search/Pagination/Pagination';

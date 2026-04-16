@@ -3,9 +3,9 @@ import { catalogData } from "@/data";
 
 
 interface CategoryPageProps {
-    params: {
+    params: Promise<{
         gender: string;
-    };
+    }>;
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

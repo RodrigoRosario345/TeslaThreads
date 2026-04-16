@@ -4,9 +4,9 @@ import { catalogData } from "@/data";
 import { NextPage } from "next";
 
 interface Props {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>
 }
 
 const ProductPage: NextPage<Props> = async ({ params }) => {
