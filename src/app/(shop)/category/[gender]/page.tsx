@@ -2,7 +2,6 @@ import { getProducts } from "@/actions/product";
 import { Pagination, ProductList, Title } from "@/components";
 import { Gender } from "@/interfaces";
 
-
 interface CategoryPageProps {
     params: Promise<{
         gender: Gender;
@@ -10,14 +9,22 @@ interface CategoryPageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
-
+export default async function CategoryPage({
+    params,
+    searchParams,
+}: CategoryPageProps) {
     const { gender } = await params;
-    const paramsSearch = await searchParams;
-    const page = parseInt(paramsSearch.page as string) || 1;
 
     if (gender !== "men" && gender !== "women" && gender !== "kid") {
         return <div>Invalid category</div>;
+    }
+
+    const paramsSearch = await searchParams;
+    console.log("Search params:", paramsSearch);
+
+    const page = parseInt(paramsSearch.page as string) || 1;
+    if (page < 1) {
+        return <div>Invalid page number</div>;
     }
 
     const { products, totalPages } = await getProducts(page, gender);
@@ -26,8 +33,12 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <>
             <Title title={gender} />
             <ProductList products={products} />
-            {totalPages > 1 && (
-                <Pagination totalPages={totalPages} currentPage={page} urlBase={`/category/${gender}`} />
+            {totalPages > 1 && page <= totalPages && (
+                <Pagination
+                    totalPages={totalPages}
+                    currentPage={page}
+                    urlBase={`/category/${gender}`}
+                />
             )}
         </>
     );
