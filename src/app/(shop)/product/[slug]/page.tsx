@@ -1,21 +1,24 @@
+import { getProductBySlug } from "@/actions/product";
 import { ProductDetail } from "@/components";
-import { catalogData } from "@/data";
 
 import { NextPage } from "next";
+import { notFound } from "next/navigation";
 
 interface Props {
     params: Promise<{
         slug: string;
-    }>
+    }>;
 }
 
 const ProductPage: NextPage<Props> = async ({ params }) => {
     const { slug } = await params;
-    const findedProduct = catalogData.products.find(
-        (product) => product.slug === slug,
-    );
+    
+    const product = await getProductBySlug(slug);
+    if (!product) {
+        notFound();
+    }
 
-    return (findedProduct && <ProductDetail product={findedProduct} />);
+    return product && <ProductDetail product={product} />;
 };
 
 export default ProductPage;

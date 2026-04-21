@@ -1,43 +1,83 @@
 "use server";
 
-import { Gender, ValidTypes } from "@/interfaces";
+import { CatalogProduct, Gender, ValidTypes } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
-export async function getProducts(page: number = 1, gender?: Gender, pageSize: number = 12) {
-
-    // Fetch products with pagination and include related images and category data
-    const productsData = await prisma.product.findMany({
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-        where: {
-            gender: gender
-        },
-        include: {
-            images: {
-                select: { url: true },
+export async function getProducts(
+    page: number = 1,
+    gender?: Gender,
+    pageSize: number = 12,
+) {
+    try {
+        // Fetch products with pagination and include related images and category data
+        const productsData = await prisma.product.findMany({
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+            where: {
+                gender: gender,
             },
-            category: {
-                select: { name: true },
+            include: {
+                images: {
+                    select: { url: true },
+                },
+                category: {
+                    select: { name: true },
+                },
             },
-        },
-    });
+        });
 
-    // Transform the data to match the CatalogProduct interface
-    const products = productsData.map((product) => ({
-        ...product,
-        images: product.images.map((image) => image.url),
-        type: product.category.name as ValidTypes,
-    }));
+        // Transform the data to match the CatalogProduct interface
+        const products = productsData.map((product) => ({
+            ...product,
+            images: product.images.map((image) => image.url),
+            type: product.category.name as ValidTypes,
+        }));
 
-    // Get the total count of products for pagination
-    const totalProducts = await prisma.product.count({ where: { gender } });
-    const totalPages = Math.ceil(totalProducts / pageSize);
+        // Get the total count of products for pagination
+        const totalProducts = await prisma.product.count({ where: { gender } });
+        const totalPages = Math.ceil(totalProducts / pageSize);
 
-    console.log("Total products:", totalProducts);
+        return {
+            products,
+            totalProducts,
+            totalPages,
+        };
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        throw new Error("Failed to fetch products");
+    }
+}
 
-    return {
-        products,
-        totalProducts,
-        totalPages,
-    };
+export async function getProductBySlug(slug: string): Promise<CatalogProduct | null> {
+    try {
+        const productData = await prisma.product.findUnique({
+            where: {
+                slug,
+            },
+            include: {
+                images: {
+                    select: { url: true },
+                },
+                category: {
+                    select: { name: true },
+                },
+            },
+        });
+
+        if (!productData) {
+            return null;
+        }
+
+        // Transform the data to match the CatalogProduct interface
+        const product = {
+            ...productData,
+            images: productData.images.map((image) => image.url),
+            type: productData.category.name as ValidTypes,
+        };
+
+        return product;
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        throw new Error("Failed to fetch product");
+    }
 }
