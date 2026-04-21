@@ -1,6 +1,7 @@
 import { getProducts } from "@/actions/product";
 import { Pagination, ProductList, Title } from "@/components";
 import { Gender } from "@/interfaces";
+import { notFound, redirect } from "next/navigation";
 
 interface GenderPageProps {
     params: Promise<{
@@ -13,18 +14,20 @@ export default async function GenderPage({
     params,
     searchParams,
 }: GenderPageProps) {
+
+    // Extract the gender parameter from the URL
     const { gender } = await params;
 
     if (gender !== "men" && gender !== "women" && gender !== "kid") {
-        return <div>Invalid category</div>;
+        notFound();
     }
 
+    // Extract the page query parameter for pagination
     const paramsSearch = await searchParams;
-    console.log("Search params:", paramsSearch);
 
     const page = parseInt(paramsSearch.page as string) || 1;
     if (page < 1) {
-        return <div>Invalid page number</div>;
+        return redirect(`/gender/${gender}?page=1`);
     }
 
     const { products, totalPages } = await getProducts(page, gender);
