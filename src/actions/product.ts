@@ -30,13 +30,14 @@ export async function getProducts(page: number = 1, gender?: Gender, pageSize: n
     }));
 
     // Get the total count of products for pagination
-    const totalProducts = gender ? await prisma.product.count({ where: { gender } }) : await prisma.product.count();
-    
+    const totalProducts = await prisma.product.count({ where: { gender } });
+    const totalPages = Math.ceil(totalProducts / pageSize);
+
     console.log("Total products:", totalProducts);
 
     return {
         products,
         totalProducts,
-        totalPages: Math.ceil(totalProducts / pageSize),
+        totalPages,
     };
 }

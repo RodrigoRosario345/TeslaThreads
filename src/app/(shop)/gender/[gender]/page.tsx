@@ -2,17 +2,17 @@ import { getProducts } from "@/actions/product";
 import { Pagination, ProductList, Title } from "@/components";
 import { Gender } from "@/interfaces";
 
-interface CategoryPageProps {
+interface GenderPageProps {
     params: Promise<{
         gender: Gender;
     }>;
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function CategoryPage({
+export default async function GenderPage({
     params,
     searchParams,
-}: CategoryPageProps) {
+}: GenderPageProps) {
     const { gender } = await params;
 
     if (gender !== "men" && gender !== "women" && gender !== "kid") {
@@ -37,7 +37,7 @@ export default async function CategoryPage({
                 <Pagination
                     totalPages={totalPages}
                     currentPage={page}
-                    urlBase={`/category/${gender}`}
+                    urlBase={`/gender/${gender}`}
                 />
             )}
         </>

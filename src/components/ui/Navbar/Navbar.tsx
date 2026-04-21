@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const OPTIONS_NAVBAR = [
-    { name: "Men", href: "/category/men" },
-    { name: "Women", href: "/category/women" },
-    { name: "Kids", href: "/category/kid" }
+    { name: "Men", href: "/gender/men" },
+    { name: "Women", href: "/gender/women" },
+    { name: "Kids", href: "/gender/kid" }
 ];
 
 export interface NavbarProps {
