@@ -11,6 +11,7 @@ export interface CartItemProps {
 export function CartItem({ product }: CartItemProps) {
 
     const removeItem = useCartStore((state) => state.removeItem);
+    const quantities = Array.from({ length: product.stock }, (_, i) => i + 1);
 
     return (
         <li className="w-full flex gap-5 text-sm">
@@ -34,7 +35,7 @@ export function CartItem({ product }: CartItemProps) {
                             idItem={product.id}
                             sizeItem={product.size}
                             quantitySelected={product.quantity}
-                            quantities={[1, 2, 3, 4, 5]}
+                            quantities={quantities}
                         />
                     }
                     <Button

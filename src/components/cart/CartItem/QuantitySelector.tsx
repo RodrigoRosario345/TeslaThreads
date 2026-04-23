@@ -33,11 +33,11 @@ export function QuantitySelector({ idItem, sizeItem, quantitySelected, quantitie
             </button>
 
             {isOpen && (
-                <ul className="absolute left-0 top-full w-max bg-white border border-gray-300 rounded shadow-md mt-1 py-2 z-10">
+                <ul className="absolute left-0 top-full max-h-40 w-max overflow-y-auto bg-white border border-gray-300 rounded shadow-md mt-1 py-2 z-10">
                     {quantities.map((quantity) => (
                         <li
                             key={quantity}
-                            className={`px-4 py-2 cursor-pointer ${quantity === quantitySelected ? "bg-gray-200" : "hover:bg-gray-100"}`}
+                            className={`px-4 py-2 cursor-pointer ${quantity === quantitySelected ? "bg-gray-200" : "hover:bg-gray-200"}`}
                             onClick={() => handleSelect(quantity)}
                         >
                             {quantity}

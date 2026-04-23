@@ -41,6 +41,7 @@ export function ProductSizeQuantity({
             price,
             quantity: parseInt(quantity),
             size: selectedSize,
+            stock: inStock,
         });
     };
 
