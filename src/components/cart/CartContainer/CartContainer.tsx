@@ -9,7 +9,7 @@ import { useShallow } from 'zustand/react/shallow';
 export function CartContainer() {
 
     const addedProducts = useCartStore((state) => state.items);
-    const { subtotal, shipping } = useCartStore(useShallow((state) => state.getOrderSummary()));
+    const { subtotal, shipping, tax, total } = useCartStore(useShallow((state) => state.getOrderSummary()));
 
     return (
         <div>
@@ -20,7 +20,7 @@ export function CartContainer() {
                     <div className="block lg:hidden w-full border-b-[0.5px] border-gray-300" />
                     <CartList addedProducts={addedProducts} />
                     <div className="block lg:hidden w-full border-b-[0.5px] border-black" />
-                    <OrderSummary shipping={shipping} subtotal={subtotal} />
+                    <OrderSummary shipping={shipping} subtotal={subtotal} tax={tax} total={total} />
                 </div>
             )}
         </div>
