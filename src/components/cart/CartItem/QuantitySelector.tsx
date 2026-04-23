@@ -12,7 +12,12 @@ export interface QuantitySelectorProps {
     quantities: number[];
 }
 
-export function QuantitySelector({ idItem, sizeItem, quantitySelected, quantities }: QuantitySelectorProps) {
+export function QuantitySelector({
+    idItem,
+    sizeItem,
+    quantitySelected,
+    quantities,
+}: QuantitySelectorProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const replaceQuantity = useCartStore((state) => state.replaceQuantity);
 
@@ -22,7 +27,7 @@ export function QuantitySelector({ idItem, sizeItem, quantitySelected, quantitie
     };
 
     return (
-        <div className="flex flex-col w-max relative" >
+        <div className="flex flex-col w-max relative">
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
@@ -33,7 +38,7 @@ export function QuantitySelector({ idItem, sizeItem, quantitySelected, quantitie
             </button>
 
             {isOpen && (
-                <ul className="absolute left-0 top-full max-h-40 w-max overflow-y-auto bg-white border border-gray-300 rounded shadow-md mt-1 py-2 z-10">
+                <ul className="absolute left-0 top-full max-h-40 w-max overflow-y-auto [&::-webkit-scrollbar]:w-1.25 [&::-webkit-scrollbar-track]:bg-gray-200 [&::-webkit-scrollbar-thumb]:bg-gray-400 [&::-webkit-scrollbar-thumb]:rounded-full bg-white border border-gray-300 rounded shadow-md mt-1 py-2 z-10">
                     {quantities.map((quantity) => (
                         <li
                             key={quantity}

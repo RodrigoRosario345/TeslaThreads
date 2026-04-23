@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 
 export const useCartStore = create<CartStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             items: [],
             addItem: (item) =>
                 set(
@@ -42,7 +42,15 @@ export const useCartStore = create<CartStore>()(
 
                 ),
             clearCart: () => set({ items: [] }, false),
+            getOrderSummary: () => {
+                const { items } = get();
+                const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
+                const shipping = items.length > 0 ? 5.99 : 0;
+                const tax = subtotal * 0.15;
+                const total = subtotal + shipping + tax;
+                return { subtotal, shipping, tax, total };
+            }
         }),
-        { name: "CartStore" },
+        { name: "cart" },  
     ),
 );

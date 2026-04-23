@@ -4,14 +4,12 @@ import { useCartStore } from "@/store";
 import { CartEmpty } from "../CartEmpty/CartEmpty";
 import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { CartList } from "../CartList/CartList";
+import { useShallow } from 'zustand/react/shallow';
 
 export function CartContainer() {
 
     const addedProducts = useCartStore((state) => state.items);
-    const subtotal = addedProducts.reduce(
-        (total, product) => total + product.price * product.quantity,
-        0,
-    );
+    const { subtotal, shipping } = useCartStore(useShallow((state) => state.getOrderSummary()));
 
     return (
         <div>
@@ -22,9 +20,9 @@ export function CartContainer() {
                     <div className="block lg:hidden w-full border-b-[0.5px] border-gray-300" />
                     <CartList addedProducts={addedProducts} />
                     <div className="block lg:hidden w-full border-b-[0.5px] border-black" />
-                    <OrderSummary shipping={5.99} subtotal={subtotal} />
+                    <OrderSummary shipping={shipping} subtotal={subtotal} />
                 </div>
             )}
         </div>
     );
-}
+}  

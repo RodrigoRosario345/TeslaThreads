@@ -20,4 +20,5 @@ export interface CartStore{
     replaceQuantity: (id: string, size: ValidSizes, quantity: number) => void;
     removeItem: (id: string, size: ValidSizes) => void;
     clearCart: () => void;
+    getOrderSummary: () => { subtotal: number; shipping: number, tax: number, total: number };
 }
