@@ -1,9 +1,9 @@
 import { CartStore } from "@/interfaces";
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 export const useCartStore = create<CartStore>()(
-    devtools(
+    persist(
         (set) => ({
             items: [],
             addItem: (item) =>
@@ -22,7 +22,7 @@ export const useCartStore = create<CartStore>()(
                         return { items: [...state.items, item] };
                     },
                     false,
-                    "addItem",
+                  
                 ),
             replaceQuantity: (id, size, quantity) =>
                 set(
@@ -33,15 +33,15 @@ export const useCartStore = create<CartStore>()(
                         return { items: updatedItems };
                     },
                     false,
-                    "replaceQuantity",
+
                 ),
             removeItem: (id, size) =>
                 set(
                     (state) => ({ items: state.items.filter((item) => !(item.id === id && item.size === size)) }),
                     false,
-                    "removeItem",
+
                 ),
-            clearCart: () => set({ items: [] }, false, "clearCart"),
+            clearCart: () => set({ items: [] }, false),
         }),
         { name: "CartStore" },
     ),
