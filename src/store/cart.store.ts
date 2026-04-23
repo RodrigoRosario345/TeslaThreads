@@ -10,7 +10,7 @@ export const useCartStore = create<CartStore>()(
                 set(
                     (state) => {
                         const existingItemIndex = state.items.findIndex(
-                            (i) => i.id === item.id,
+                            (i) => i.id === item.id && i.size === item.size,
                         );
 
                         if (existingItemIndex !== -1) {
@@ -24,20 +24,20 @@ export const useCartStore = create<CartStore>()(
                     false,
                     "addItem",
                 ),
-            replaceQuantity: (id, quantity) =>
+            replaceQuantity: (id, size, quantity) =>
                 set(
                     (state) => {
                         const updatedItems = state.items.map((item) =>
-                            item.id === id ? { ...item, quantity } : item,
+                            item.id === id && item.size === size ? { ...item, quantity } : item,
                         );
                         return { items: updatedItems };
                     },
                     false,
                     "replaceQuantity",
                 ),
-            removeItem: (id) =>
+            removeItem: (id, size) =>
                 set(
-                    (state) => ({ items: state.items.filter((item) => item.id !== id) }),
+                    (state) => ({ items: state.items.filter((item) => !(item.id === id && item.size === size)) }),
                     false,
                     "removeItem",
                 ),

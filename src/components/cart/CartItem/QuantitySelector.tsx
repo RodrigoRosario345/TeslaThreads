@@ -1,21 +1,23 @@
 "use client";
 
+import { ValidSizes } from "@/interfaces";
 import { useCartStore } from "@/store";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export interface QuantitySelectorProps {
     idItem: string;
+    sizeItem: ValidSizes;
     quantitySelected: number;
     quantities: number[];
 }
 
-export function QuantitySelector({ idItem, quantitySelected, quantities }: QuantitySelectorProps) {
+export function QuantitySelector({ idItem, sizeItem, quantitySelected, quantities }: QuantitySelectorProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const replaceQuantity = useCartStore((state) => state.replaceQuantity);
 
     const handleSelect = (quantity: number) => {
-        replaceQuantity(idItem, quantity);
+        replaceQuantity(idItem, sizeItem, quantity);
         setIsOpen(false);
     };
 
@@ -31,7 +33,7 @@ export function QuantitySelector({ idItem, quantitySelected, quantities }: Quant
             </button>
 
             {isOpen && (
-                <ul className="absolute left-0 top-full w-max bg-white border border-gray-300 rounded shadow-md mt-1 py-2">
+                <ul className="absolute left-0 top-full w-max bg-white border border-gray-300 rounded shadow-md mt-1 py-2 z-10">
                     {quantities.map((quantity) => (
                         <li
                             key={quantity}

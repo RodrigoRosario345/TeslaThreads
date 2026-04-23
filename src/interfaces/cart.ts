@@ -16,7 +16,7 @@ export interface CartStore{
 
     //actions
     addItem: (item: CartItem) => void;
-    replaceQuantity: (id: string, quantity: number) => void;
-    removeItem: (id: string) => void;
+    replaceQuantity: (id: string, size: ValidSizes, quantity: number) => void;
+    removeItem: (id: string, size: ValidSizes) => void;
     clearCart: () => void;
 }

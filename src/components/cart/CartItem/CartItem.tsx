@@ -32,6 +32,7 @@ export function CartItem({ product }: CartItemProps) {
                     {
                         <QuantitySelector
                             idItem={product.id}
+                            sizeItem={product.size}
                             quantitySelected={product.quantity}
                             quantities={[1, 2, 3, 4, 5]}
                         />
@@ -39,7 +40,7 @@ export function CartItem({ product }: CartItemProps) {
                     <Button
                         type="button"
                         className="ml-10 pb-px border-b hover:border-b-2 cursor-pointer"
-                        onClick={() => removeItem(product.id)}
+                        onClick={() => removeItem(product.id, product.size)}
                     >
 
                         Remove

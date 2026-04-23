@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Carousel from "@/components";
 
@@ -12,7 +12,6 @@ export interface ProductDetailProps {
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
-
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     return (
@@ -47,9 +46,18 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 )}
             </div>
             <div className="space-y-4 w-full lg:w-[35%]">
-                <h2 className="text-lg md:text-xl lg:text-2xl mb-2 font-semibold">{product.title}</h2>
-                <p className="text-base md:text-lg lg:text-xl font-semibold">${product.price.toFixed(2)}</p>
-                <ProductSizeQuantity product={product} />
+                <h2 className="text-lg md:text-xl lg:text-2xl mb-2 font-semibold">
+                    {product.title}
+                </h2>
+                <p className="text-base md:text-lg lg:text-xl font-semibold">
+                    ${product.price.toFixed(2)}
+                </p>
+                <p className="text-sm text-gray-500">In stock: {product.inStock}</p>
+                {product.inStock > 0 ? (
+                    <ProductSizeQuantity product={product} />
+                ) : (
+                    <p className="text-red-500 font-semibold">Out of stock</p>
+                )}
                 <div className="text-sm">
                     <p className="font-semibold mb-3">Description</p>
                     <p>{product.description}</p>

@@ -3,10 +3,16 @@ import { ValidSizes } from "@/interfaces";
 export interface ProductSizeSelectorProps {
     sizes: ValidSizes[];
     selectedSize: ValidSizes | null;
+    isInValidSize: boolean;
     onSizeChange: (size: ValidSizes) => void;
 }
 
-export function ProductSizeSelector({ sizes, selectedSize, onSizeChange }: ProductSizeSelectorProps) {
+export function ProductSizeSelector({
+    sizes,
+    selectedSize,
+    isInValidSize,
+    onSizeChange,
+}: ProductSizeSelectorProps) {
     return (
         <div className="space-y-2">
             <p className="font-semibold text-sm">Size </p>
@@ -36,6 +42,9 @@ export function ProductSizeSelector({ sizes, selectedSize, onSizeChange }: Produ
                 </div>
             ) : (
                 <p>No sizes available</p>
+            )}
+            {isInValidSize && (
+                <p className="text-red-500 text-sm">Please select a size.</p>
             )}
         </div>
     );

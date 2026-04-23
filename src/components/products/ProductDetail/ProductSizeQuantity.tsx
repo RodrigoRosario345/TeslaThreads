@@ -49,19 +49,14 @@ export function ProductSizeQuantity({
             <ProductSizeSelector
                 sizes={sizes}
                 selectedSize={selectedSize}
+                isInValidSize={isInValidSize}
                 onSizeChange={handleSizeChange}
             />
-
-            {isInValidSize && (
-                <p className="text-red-500 text-sm">Please select a size.</p>
-            )}
-
             <ProductQuantitySelector
                 quantity={quantity}
                 inStock={inStock}
                 onQuantityChange={handleQuantityChange}
             />
-
             <Button buttonStyle="primary" onClick={handleAddToCart}>
                 Add to Cart
             </Button>
