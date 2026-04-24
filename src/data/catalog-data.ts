@@ -1,4 +1,4 @@
-import { CatalogData, CatalogProduct, } from "@/interfaces";
+import { CatalogData, CatalogProduct } from "@/interfaces";
 
 const catalogProducts: Omit<CatalogProduct, "id">[] = [
     {

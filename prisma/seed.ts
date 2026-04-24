@@ -2,7 +2,8 @@ import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
-import { catalogData } from "@/data";
+import { hashSync } from "bcryptjs";
+import { catalogData, USERS } from "@/data";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -11,6 +12,7 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
     // Delete existing data
+    await prisma.user.deleteMany();
     await prisma.productImage.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
@@ -52,6 +54,14 @@ async function main() {
             });
         }),
     );
+
+    // Insert users with hashed passwords
+    await prisma.user.createMany({
+        data: USERS.map((user) => ({
+            ...user,
+            password: hashSync(user.password, 10),
+        })),
+    });
 }
 
 main()
