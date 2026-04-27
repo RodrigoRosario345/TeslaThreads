@@ -2,11 +2,7 @@
 
 import { authenticate } from "@/actions/auth";
 import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
-import {
-    userSignInSchema,
-    userSignInSchemaInput,
-    userSignInSchemaOutput,
-} from "@/interfaces";
+import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -50,8 +46,8 @@ export function SignInForm() {
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
-                buttonStyle="primary"
-                className={`w-full mt-3 mb-3 rounded-full ${isSubmitting ? "opacity-50 hover:opacity-50 cursor-not-allowed!" : ""}`}
+                buttonStyle={isSubmitting ? "primaryDisabled" : "primary"}
+                className="w-full rounded-full"
                 disabled={isSubmitting}
             >
                 <LoadingText
