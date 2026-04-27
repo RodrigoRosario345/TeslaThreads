@@ -12,6 +12,7 @@ const authConfig: NextAuthConfig = {
   providers: [
     Credentials({
       async authorize(credentials) {
+
         const parsedCredentials = z
           .object({
             email: z.string().email(),

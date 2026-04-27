@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, ControllerInput, LoadingText } from "@/components";
+import { authenticate } from "@/actions/auth";
+import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
 import {
     userSignInSchema,
     userSignInSchemaInput,
@@ -8,21 +9,24 @@ import {
 } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { set } from "zod";
 
 export function SignInForm() {
     const {
+        setError,
         control,
         handleSubmit,
-        formState: { isSubmitting },
+        formState: { isSubmitting, errors },
     } = useForm<userSignInSchemaInput, any, userSignInSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(userSignInSchema),
     });
 
     const onSubmit = async (data: userSignInSchemaOutput) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-        console.log("Form submitted:", data);
+        // await new Promise((resolve) => setTimeout(resolve, 3000));
+        const result = await authenticate(data);
+        if (result) {
+            setError("root", { message: result });
+        }
     };
 
     return (
@@ -43,10 +47,11 @@ export function SignInForm() {
                 classNameInput="rounded-full!"
                 type="password"
             />
+            <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
                 buttonStyle="primary"
-                className={`w-full mt-3 mb-3 rounded-full ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`w-full mt-3 mb-3 rounded-full ${isSubmitting ? "opacity-50 hover:opacity-50 cursor-not-allowed!" : ""}`}
                 disabled={isSubmitting}
             >
                 <LoadingText
