@@ -1,7 +1,7 @@
-import { SignInForm } from "@/components";
+import { SignInContainer } from "@/components";
 
 export default function Page() {
     return (
-        <SignInForm />
+        <SignInContainer />
     );
 }

@@ -3,6 +3,7 @@ export * from './ui/Header/Header';
 export * from './ui/Sidebar/Sidebar';
 export * from './ui/Footer/Footer';
 export * from './ui/Button/Button';
+export * from './ui/LoadingText/LoadingText';
 export { default } from './ui/Carrusel/Carrusel';
 export * from './ui/fields/Input/Input';
 
@@ -17,7 +18,7 @@ export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
 export * from './forms/controllers/ControllerInput/ControllerInput';
 // export * from './forms/controllers/ControllerSelect/ControllerSelect';
 
-export * from './auth/SignInForm/SignInForm';
+export * from './auth/SignIn/SignInContainer/SignInContainer';
 export * from './auth/SignUpForm/SignUpForm';
 
 export * from './search/Pagination/Pagination';

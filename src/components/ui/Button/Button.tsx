@@ -13,11 +13,12 @@ interface ButtonProps {
     children?: React.ReactNode;
     buttonStyle?: ButtonStyle;
     onClick?: () => void;
+    disabled?: boolean;
 }
-export function Button({ type, className, children, buttonStyle, onClick }: ButtonProps) {
+export function Button({ type, className, children, buttonStyle, onClick, disabled }: ButtonProps) {
 
     return (
-        <button type={type} className={`${buttonStyle ? BUTTON_STYLES[buttonStyle] : ''} ${className}`} onClick={onClick}>
+        <button type={type} className={`${buttonStyle ? BUTTON_STYLES[buttonStyle] : ''} ${className}`} onClick={onClick} disabled={disabled}>
             {children}
         </button>
     );
