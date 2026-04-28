@@ -18,10 +18,10 @@ export function SignInForm() {
     });
 
     const onSubmit = async (data: userSignInSchemaOutput) => {
-        await new Promise(((resolve) => setTimeout(resolve, 3000)));
+        // await new Promise(((resolve) => setTimeout(resolve, 3000)));
         const result = await signInAction(data);
 
-        if(!result) return undefined;
+        if (!result) return window.location.href = "/"; 
 
         setError("root", { message: result });
     };

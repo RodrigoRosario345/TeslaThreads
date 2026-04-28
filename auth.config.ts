@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { compareSync } from "bcryptjs";
-import NextAuth, { type NextAuthConfig } from "next-auth";
+import NextAuth, { Session, type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
 
@@ -8,6 +8,7 @@ const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/sign-in",
     newUser: "/auth/sign-up",
+    signOut: "/",
   },
   providers: [
     Credentials({
@@ -44,6 +45,14 @@ const authConfig: NextAuthConfig = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token.data) {
+        session.user = token.data as any;
+      }
+      return session;
+    }
+  }
 };
 
 export const { signIn, signOut, auth, handlers: { GET, POST } } = NextAuth(authConfig);

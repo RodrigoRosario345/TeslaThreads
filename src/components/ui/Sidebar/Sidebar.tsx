@@ -28,7 +28,6 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     const handleSignOut = async () => {
         await signOutAction();
         onClose();
-        router.push("/");   
     }
 
     return (
@@ -62,16 +61,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                             </Button>
                         </li>
                     ) : (
-                        <>
-                            <li>
-                                <Link
-                                    href="/auth/sign-in"
-                                    className="inline-block w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
-                                >
-                                    Sign In
-                                </Link>
-                            </li>
-                        </>
+                        <li>
+                            <Link
+                                href="/auth/sign-in"
+                                className="inline-block w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                            >
+                                Sign In
+                            </Link>
+                        </li>
                     )}
                 </ul>
             </nav>
