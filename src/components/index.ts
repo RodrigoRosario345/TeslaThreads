@@ -21,6 +21,6 @@ export * from './forms/controllers/ControllerInput/ControllerInput';
 // export * from './forms/controllers/ControllerSelect/ControllerSelect';
 
 export * from './auth/SignIn/SignInContainer/SignInContainer';
-export * from './auth/SignUpForm/SignUpForm';
+export * from './auth/SignUp/SignUpContainer/SignUpContainer';
 
 export * from './search/Pagination/Pagination';
