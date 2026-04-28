@@ -21,10 +21,13 @@ export function SignInForm() {
         // await new Promise(((resolve) => setTimeout(resolve, 3000)));
         const result = await signInAction(data);
 
-        if (!result) return window.location.href = "/"; 
+        if (!result.success) {
+            setError("root", { message: result.message });
+            return;
+        }
 
-        setError("root", { message: result });
-    };
+        window.location.replace("/"); 
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -59,4 +62,5 @@ export function SignInForm() {
             </Button>
         </form>
     );
+
 }

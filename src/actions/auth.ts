@@ -9,18 +9,32 @@ import {
 import prisma from "@/lib/prisma";
 import { hashSync } from "bcryptjs";
 
-export async function signInAction(
-  formData: userSignInSchemaOutput,
-): Promise<string | undefined> {
+
+interface SignInResult {
+  success: boolean;
+  message: string;
+}
+
+export async function signInAction(formData: userSignInSchemaOutput): Promise<SignInResult> {
   try {
     await signIn("credentials", formData);
+    return {
+      success: true,
+      message: "Signed in successfully.",
+    }
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid email or password.";
+          return {
+            success: false,
+            message: "Invalid email or password.",
+          };
         default:
-          return "Something went wrong.";
+          return {
+            success: false,
+            message: "Something went wrong.",
+          };
       }
     }
     throw error;
