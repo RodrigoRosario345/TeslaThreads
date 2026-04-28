@@ -7,6 +7,7 @@ export * from './ui/LoadingText/LoadingText';
 export * from './ui/ErrorMessage/ErrorMessage';
 export { default } from './ui/Carrusel/Carrusel';
 export * from './ui/fields/Input/Input';
+export * from './Provider/Provider';
 
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';

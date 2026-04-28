@@ -29,7 +29,7 @@ export function Header() {
                     TESLA THREADS
                 </Link>
                 <Navbar onToggleVisibility={toggleVisibility} />
-                <div
+                {/* <div
                     className={`w-full fixed top-12 left-0 bg-white shadow-sm overflow-hidden transition-all ease-linear ${isVisible ? "h-auto p-5 opacity-100" : "h-0 p-0 opacity-0"}`}
                     onMouseEnter={() => toggleVisibility(true)}
                     onMouseLeave={() => toggleVisibility(false)}
@@ -39,7 +39,7 @@ export function Header() {
                         <li>Item 2</li>
                         <li>Item 3</li>
                     </ul>
-                </div>
+                </div> */}
                 <div className="flex items-center">
                     <IoIosSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
                     <Link href="/cart" className="relative rounded-md transition-all hover:bg-gray-100 cursor-pointer">

@@ -1,6 +1,6 @@
 "use client";
 
-import { authenticate } from "@/actions/auth";
+import { signInAction } from "@/actions/auth";
 import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
 import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,11 +18,12 @@ export function SignInForm() {
     });
 
     const onSubmit = async (data: userSignInSchemaOutput) => {
-        // await new Promise((resolve) => setTimeout(resolve, 3000));
-        const result = await authenticate(data);
-        if (result) {
-            setError("root", { message: result });
-        }
+        await new Promise(((resolve) => setTimeout(resolve, 3000)));
+        const result = await signInAction(data);
+
+        if(!result) return undefined;
+
+        setError("root", { message: result });
     };
 
     return (
