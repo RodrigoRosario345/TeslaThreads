@@ -15,6 +15,7 @@ export const userSignInSchema = z.object({
     email: z
         .string("The email field is required")
         .trim()
+        .toLowerCase()
         .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email address"),
     password: z
         .string("The password field is required")

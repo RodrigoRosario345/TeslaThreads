@@ -5,7 +5,7 @@ import { SignUpForm } from "../SignUpForm/SignUpForm";
 
 export function SignUpContainer() {
     return (
-        <section className="bg-white text-gray-500 max-w-96 mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
+        <section className="bg-white text-gray-500 w-full max-w-96 mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
             <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
                 Sign Up
             </h2>

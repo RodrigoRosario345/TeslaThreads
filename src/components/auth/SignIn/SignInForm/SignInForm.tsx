@@ -48,7 +48,7 @@ export function SignInForm() {
             <Button
                 type="submit"
                 buttonStyle={isSubmitting ? "primaryDisabled" : "primary"}
-                className="w-full rounded-full"
+                className="w-full mt-3 mb-3 rounded-full"
                 disabled={isSubmitting}
             >
                 <LoadingText
