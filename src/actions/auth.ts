@@ -39,7 +39,7 @@ export async function signInAction(formData: userSignInSchemaOutput): Promise<Si
 }
 
 export async function signOutAction() {
-  await signOut();
+  await signOut({ redirect: false });
 }
 
 export async function signUpAction(formData: userSignUpSchemaOutput) {

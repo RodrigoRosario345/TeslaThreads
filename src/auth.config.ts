@@ -4,7 +4,7 @@ import NextAuth, { type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
 
-const authConfig: NextAuthConfig = {
+export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/sign-in",
     newUser: "/auth/sign-up",
@@ -46,6 +46,15 @@ const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      console.log("Authorized callback called with auth:", auth, "and request:", nextUrl);
+      const isLoggedIn = !!auth?.user;
+      const authorizedPaths = ["/checkout/address", "/checkout/payment", "/checkout/confirm"];
+      if (!isLoggedIn && authorizedPaths.includes(nextUrl.pathname)) {
+        return false;
+      }
+      return true;
+    },
     async session({ session, token }) {
       if (token.data) {
         session.user = token.data as any;
