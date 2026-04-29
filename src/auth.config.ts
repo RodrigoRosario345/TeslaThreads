@@ -60,6 +60,7 @@ export const authConfig: NextAuthConfig = {
 
       return true;
     },
+    // function that runs when a user signs in or out, or when the session is checked
     async session({ session, token }) {
       if (token.data) {
         session.user = token.data as any;

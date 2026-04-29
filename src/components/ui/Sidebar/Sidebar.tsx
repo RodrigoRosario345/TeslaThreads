@@ -1,12 +1,10 @@
 'use client';
 
-import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import { CgClose } from "react-icons/cg";
 import { Button } from "../Button/Button";
 import { signOutAction } from "@/actions/auth";
-import { useCallback, useEffect, useState } from "react";
-import { Session } from "next-auth";
+import { useSessionUser } from "@/hooks";
 
 const OPTIONS_SIDEBAR = [
     { label: "Home", href: "/" },
@@ -21,23 +19,14 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-    const [session, setSession] = useState<Session | null>(null);
+    const {isAuthenticated, updateSession} = useSessionUser();
 
     const handleSignOut = async () => {
         await signOutAction();
         onClose();
-        setSession(null);
+        updateSession();
+        window.location.reload();
     }
-
-    const fetchSession = useCallback(async () => {
-        const session = await getSession();
-        setSession(session);
-        
-    }, []);
-
-    useEffect(() => {
-        fetchSession();
-    }, []);
 
     return (
         <>
@@ -60,7 +49,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                             </Link>
                         </li>
                     ))}
-                    {session?.user ? (
+                    {isAuthenticated ? (
                         <li>
                             <Button
                                 className="text-left w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
