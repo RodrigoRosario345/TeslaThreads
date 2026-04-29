@@ -14,7 +14,7 @@ interface SignInResult {
 
 export async function signInAction(formData: userSignInSchemaOutput): Promise<SignInResult> {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", { ...formData, redirect: false });
     return {
       success: true,
       message: "Signed in successfully.",

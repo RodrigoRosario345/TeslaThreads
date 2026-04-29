@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components";
+import { auth } from "@/auth.config";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,15 +15,17 @@ export const metadata: Metadata = {
     "Tesla Threads is a an e-commerce store that offers a wide range of products, including clothing, accessories, and home decor. Our mission is to provide high-quality products that are inspired by the innovative spirit of Tesla.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
-        <Provider>
+        <Provider session={session}>
           {children}
         </Provider>
       </body>

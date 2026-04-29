@@ -1,12 +1,12 @@
 'use client';
 
-
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import { CgClose } from "react-icons/cg";
 import { Button } from "../Button/Button";
 import { signOutAction } from "@/actions/auth";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { Session } from "next-auth";
 
 const OPTIONS_SIDEBAR = [
     { label: "Home", href: "/" },
@@ -21,14 +21,23 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-    const { data: session } = useSession();
-    const router = useRouter();
-
+    const [session, setSession] = useState<Session | null>(null);
 
     const handleSignOut = async () => {
         await signOutAction();
         onClose();
+        setSession(null);
     }
+
+    const fetchSession = useCallback(async () => {
+        const session = await getSession();
+        setSession(session);
+        
+    }, []);
+
+    useEffect(() => {
+        fetchSession();
+    }, []);
 
     return (
         <>

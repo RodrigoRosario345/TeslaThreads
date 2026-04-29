@@ -46,13 +46,18 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    // function that runs on every request to check if the user is authorized to access a route
+    // Checks if the user is logged in and if the route is protected (starts with /checkout)
     authorized({ auth, request: { nextUrl } }) {
-      console.log("Authorized callback called with auth:", auth, "and request:", nextUrl);
       const isLoggedIn = !!auth?.user;
-      const authorizedPaths = ["/checkout/address", "/checkout/payment", "/checkout/confirm"];
-      if (!isLoggedIn && authorizedPaths.includes(nextUrl.pathname)) {
-        return false;
+
+      const isProtectedRoute = nextUrl.pathname.startsWith("/checkout");
+
+      if (isProtectedRoute) {
+        // automatically redirects to the sign-in page if the user is not logged in additionally to the callbackUrl query parameter with the current route
+        return isLoggedIn; 
       }
+
       return true;
     },
     async session({ session, token }) {
@@ -64,4 +69,4 @@ export const authConfig: NextAuthConfig = {
   }
 };
 
-export const { signIn, signOut, auth, handlers: { GET, POST } } = NextAuth(authConfig);
+export const { signIn, signOut, auth, handlers } = NextAuth(authConfig);
