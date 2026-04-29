@@ -26,6 +26,22 @@ export function SignInContainer() {
                 <FcGoogle size={20} />
                 Sign In with Google
             </Button>
+            <div className="flex items-center gap-2 my-9">
+                <div className="h-px w-full bg-gray-200" />
+                <p className="text-center text-sm">
+                    Or
+                </p>
+                <div className="h-px w-full bg-gray-200" />
+            </div>
+            <Link href="/">
+                <Button
+                    type="button"
+                    buttonStyle="borderDark"
+                    className="rounded-full w-full"
+                >
+                    Continue as Guest
+                </Button>
+            </Link>
         </section>
     );
 }
