@@ -180,7 +180,7 @@ export default function Carousel<T>({
                 : Math.min(position, items.length - 1);
 
     return (
-        <>
+        <div className="w-full flex gap-3">
             <div
                 ref={containerRef}
                 className={`w-full group aspect-square relative overflow-hidden border-[#222] ${round && "rounded-3xl"}`}
@@ -243,6 +243,6 @@ export default function Carousel<T>({
                     onSelect={setPosition}
                 />
             )}
-        </>
+        </div>
     );
 }

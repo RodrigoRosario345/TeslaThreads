@@ -19,13 +19,12 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-    const {isAuthenticated, updateSession} = useSessionUser();
+    const {isAuthenticated} = useSessionUser();
 
     const handleSignOut = async () => {
         await signOutAction();
-        onClose();
-        updateSession();
         window.location.reload();
+        onClose();
     }
 
     return (

@@ -14,7 +14,7 @@ export function CarouselImgsIndicators({
     onSelect,
 }: CarouselImgsIndicatorsProps) {
     return (
-        <div className="w-full hidden lg:flex  items-center gap-3 mt-5">
+        <div className=" hidden lg:flex flex-col  items-center gap-3 order-first">
             {imgs.map((img, index) => (
                 <div
                     key={index}
