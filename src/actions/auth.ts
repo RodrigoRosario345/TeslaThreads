@@ -1,14 +1,11 @@
 "use server";
 
 import { AuthError } from "next-auth";
-import { signIn, signOut } from "../../auth.config";
-import {
-  userSignInSchemaOutput,
-  userSignUpSchemaOutput,
-} from "@/interfaces/user";
+
+import { userSignInSchemaOutput, userSignUpSchemaOutput } from "@/interfaces/user";
 import prisma from "@/lib/prisma";
 import { hashSync } from "bcryptjs";
-
+import { signIn, signOut } from "@/auth.config";
 
 interface SignInResult {
   success: boolean;
