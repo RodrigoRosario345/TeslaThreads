@@ -42,6 +42,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                         <li key={option.href}>
                             <Link
                                 href={option.href}
+                                onClick={onClose}
                                 className="inline-block w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
                             >
                                 {option.label}
