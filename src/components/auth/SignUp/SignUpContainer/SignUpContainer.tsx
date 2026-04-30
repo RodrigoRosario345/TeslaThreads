@@ -21,7 +21,7 @@ export function SignUpContainer() {
             </p>
             <Button
                 type="button"
-                className="w-full flex items-center gap-2 justify-center my-3 bg-white border border-gray-500/30 py-2.5 rounded-full text-gray-800"
+                className="w-full flex items-center gap-2 justify-center my-3 bg-white border border-gray-500/30 py-2.5 rounded-md! text-gray-800 hover:bg-gray-100 cursor-pointer"
             >
                 <FcGoogle size={20} />
                 Sign Up with Google

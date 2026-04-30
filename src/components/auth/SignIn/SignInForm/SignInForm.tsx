@@ -38,7 +38,6 @@ export function SignInForm() {
                 name="email"
                 label="Email"
                 placeholder="Enter your email"
-                classNameInput="rounded-full!"
                 type="email"
             />
             <ControllerInput<userSignInSchemaInput, userSignInSchemaOutput>
@@ -46,14 +45,13 @@ export function SignInForm() {
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
-                classNameInput="rounded-full!"
                 type="password"
             />
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
                 buttonStyle={isSubmitting ? "primaryDisabled" : "primary"}
-                className="w-full mt-3 mb-3 rounded-full"
+                className="w-full"
                 disabled={isSubmitting}
             >
                 <LoadingText

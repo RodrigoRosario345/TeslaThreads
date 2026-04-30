@@ -57,7 +57,6 @@ export function SignUpForm() {
                 label="Name"
                 type="text"
                 placeholder="Enter your name"
-                classNameInput="rounded-full!"
             />
             <ControllerInput<userSignUpSchemaInput, userSignUpSchemaOutput>
                 control={control}
@@ -65,7 +64,6 @@ export function SignUpForm() {
                 label="Email"
                 type="email"
                 placeholder="Enter your email"
-                classNameInput="rounded-full!"
             />
             <ControllerInput<userSignUpSchemaInput, userSignUpSchemaOutput>
                 control={control}
@@ -73,13 +71,12 @@ export function SignUpForm() {
                 label="Password"
                 type="password"
                 placeholder="Enter your password"
-                classNameInput="rounded-full!"
             />
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
                 buttonStyle={isSubmitting ? "primaryDisabled" : "primary"}
-                className="w-full mt-3 mb-3 rounded-full"
+                className="w-full mt-3 mb-3 rounded-md!"
                 disabled={isSubmitting}
             >
                 <LoadingText

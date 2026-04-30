@@ -4,7 +4,11 @@ import "./globals.css";
 import { Provider } from "@/components";
 import { auth } from "@/auth.config";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: {
