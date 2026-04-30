@@ -13,6 +13,7 @@ import {
     userSignUpSchemaOutput,
 } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export function SignUpForm() {
@@ -25,6 +26,8 @@ export function SignUpForm() {
         mode: "onChange",
         resolver: zodResolver(userSignUpSchema),
     });
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
 
     const onSubmit = async (data: userSignUpSchemaOutput) => {
         // 1. register the user using the signUpAction server action and verify if the registration was successful
@@ -43,7 +46,7 @@ export function SignUpForm() {
             return;
         }
 
-        window.location.replace("/");
+        window.location.replace(callbackUrl);
     };
 
     return (

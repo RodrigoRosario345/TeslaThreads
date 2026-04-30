@@ -4,7 +4,7 @@ import { signInAction } from "@/actions/auth";
 import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
 import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export function SignInForm() {
@@ -17,7 +17,6 @@ export function SignInForm() {
         mode: "onChange",
         resolver: zodResolver(userSignInSchema),
     });
-    const router = useRouter();
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/';
 
