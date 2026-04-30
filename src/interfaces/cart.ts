@@ -10,9 +10,17 @@ export interface CartItem {
     stock: number;
 }
 
+export interface OperationResult {
+  type?: "add" | "edit" | "delete";
+  status: "success" | "error";
+  message: string;
+}
+
+
 export interface CartStore{
     // state
     items: CartItem[];
+    operationResult: OperationResult | null;
 
 
     //actions
@@ -21,4 +29,5 @@ export interface CartStore{
     removeItem: (id: string, size: ValidSizes) => void;
     clearCart: () => void;
     getOrderSummary: () => { subtotal: number; shipping: number, tax: number, total: number };
+    clearOperationResult: () => void;
 }

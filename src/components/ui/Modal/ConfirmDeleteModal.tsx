@@ -11,10 +11,9 @@ export interface ConfirmDeleteModalProps {
     text?: string;
     onDelete: () => void | Promise<void>;
     onClose: () => void;
-    onOpenModalSuccess?: () => void;
 }
 
-export function ConfirmDeleteModal({ text, onDelete, onClose, onOpenModalSuccess }: ConfirmDeleteModalProps) {
+export function ConfirmDeleteModal({ text, onDelete, onClose }: ConfirmDeleteModalProps) {
     const [isDeleting, setIsDeleting] = useState(false);
     const { backdropRef, modalRef, closeModal } = useModal({ onClose });
 
@@ -27,7 +26,6 @@ export function ConfirmDeleteModal({ text, onDelete, onClose, onOpenModalSuccess
         } finally {
             setIsDeleting(false);
             closeModal();
-            onOpenModalSuccess?.();
         }
     };
 

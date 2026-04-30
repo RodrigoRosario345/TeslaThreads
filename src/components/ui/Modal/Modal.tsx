@@ -27,13 +27,13 @@ interface ModalProps {
     type?: "add" | "edit" | "delete";
     status: "success" | "error";
     message: string;
-    onClose?: () => void;
+    clearOperationResult: () => void;
 }
 
-export function Modal({ status, message, onClose }: ModalProps) {
+export function Modal({ status, message, clearOperationResult }: ModalProps) {
 
     const { backdropRef, modalRef, closeModal } = useModal({
-        onClose: onClose || (() => { }),
+        onClose: clearOperationResult,
         autoCloseDelay: 5000,
     });
 

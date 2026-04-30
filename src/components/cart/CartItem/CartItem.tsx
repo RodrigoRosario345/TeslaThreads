@@ -7,10 +7,9 @@ import { useState, useCallback } from "react";
 
 export interface CartItemProps {
     product: CartItem;
-    handleShowModal: () => void;
 }
 
-export function CartItem({ product, handleShowModal }: CartItemProps) {
+export function CartItem({ product }: CartItemProps) {
   
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
     const removeItem = useCartStore((state) => state.removeItem);
@@ -71,7 +70,6 @@ export function CartItem({ product, handleShowModal }: CartItemProps) {
                     text={`Do you really want to delete this ${product.title} (Size: ${product.size}) from your cart?`}
                     onDelete={handleRemove}
                     onClose={handleCloseConfirmDelete}
-                    onOpenModalSuccess={handleShowModal}
                 />
             )}
         </>
