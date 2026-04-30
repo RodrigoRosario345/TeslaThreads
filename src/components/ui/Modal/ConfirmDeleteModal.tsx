@@ -1,0 +1,106 @@
+'use client';
+
+import { useModal } from "@/hooks";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
+import { Button } from "../Button/Button";
+import { LoadingText } from "../LoadingText/LoadingText";
+
+export interface ConfirmDeleteModalProps {
+    text?: string;
+    onDelete: () => void | Promise<void>;
+    onClose: () => void;
+    onOpenModalSuccess?: () => void;
+}
+
+export function ConfirmDeleteModal({ text, onDelete, onClose, onOpenModalSuccess }: ConfirmDeleteModalProps) {
+    const [isDeleting, setIsDeleting] = useState(false);
+    const { backdropRef, modalRef, closeModal } = useModal({ onClose });
+
+    const handleDelete = async () => {
+        setIsDeleting(true);
+        try {
+            await onDelete();
+        } catch (error) {
+            console.error("Delete failed:", error);
+        } finally {
+            setIsDeleting(false);
+            closeModal();
+            onOpenModalSuccess?.();
+        }
+    };
+
+    return (
+        <>
+            {/* Backdrop */}
+            <div
+                ref={backdropRef}
+                className="w-full h-screen fixed inset-0 z-50 bg-black/50 backdrop-blur-xs"
+                onClick={isDeleting ? undefined : closeModal}
+                aria-hidden="true"
+            />
+
+            {/* Modal */}
+            <div
+                ref={modalRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="delete-modal-title"
+                aria-describedby="delete-modal-description"
+                className="w-full max-w-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+            >
+                <div className="relative w-full flex flex-col space-y-5 p-8 rounded-2xl bg-white text-center">
+                    <Button
+                        onClick={closeModal}
+                        className=" text-gray-300 hover:text-gray-400 cursor-pointer my-0 ml-auto -mr-3"
+                        aria-label="close"
+                    >
+                        <IoClose size={40} />
+                    </Button>
+
+                    {/* Icon */}
+                    <div className="text-7xl mx-auto text-red-500">
+                        <AiOutlineCloseCircle aria-hidden="true" />
+                    </div>
+
+                    {/* Title */}
+                    <h2
+                        id="delete-modal-title"
+                        className="text-2xl font-semibold text-red-500"
+                    >
+                        Are you sure?
+                    </h2>
+
+                    {/* Description */}
+                    <p id="delete-modal-description" className="text-gray-600 my-0">
+                        {text}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                        This action cannot be undone.
+                    </p>
+
+                    {/* Actions */}
+                    <div className="flex gap-3 mt-2">
+                        <Button
+                            onClick={closeModal}
+                            disabled={isDeleting}
+                            buttonStyle="primary"
+                            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-normal"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                            buttonStyle="primary"
+                            className="w-full bg-red-500 hover:bg-red-600 font-normal"
+                        >
+                            <LoadingText isLoading={isDeleting} text="Delete" loadingText="Deleting..." />
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}

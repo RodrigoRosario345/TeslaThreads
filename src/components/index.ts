@@ -9,6 +9,8 @@ export { default } from './ui/Carrusel/Carrusel';
 export * from './ui/fields/Input/Input';
 export * from './Provider/Provider';
 export * from './ui/LoadingContent/LoadingContent';
+export * from './ui/Modal/Modal';
+export * from './ui/Modal/ConfirmDeleteModal';
 
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';
