@@ -1,8 +1,9 @@
 "use client";
 
+import { useClickOutside } from "@/hooks";
 import { ValidSizes } from "@/interfaces";
 import { useCartStore } from "@/store";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export interface QuantitySelectorProps {
@@ -20,6 +21,12 @@ export function QuantitySelector({
 }: QuantitySelectorProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const replaceQuantity = useCartStore((state) => state.replaceQuantity);
+    const selectRef = useRef<HTMLDivElement | null>(null);
+    
+    useClickOutside({
+        ref: selectRef,
+        callback: () => setIsOpen(false),
+    });
 
     const handleSelect = (quantity: number) => {
         replaceQuantity(idItem, sizeItem, quantity);
@@ -27,7 +34,7 @@ export function QuantitySelector({
     };
 
     return (
-        <div className="flex flex-col w-max relative">
+        <div className="flex flex-col w-max relative" ref={selectRef}>
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}

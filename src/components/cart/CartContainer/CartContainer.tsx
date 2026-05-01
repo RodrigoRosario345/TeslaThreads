@@ -15,7 +15,7 @@ export function CartContainer() {
     const { subtotal, shipping, tax, total } = useCartStore(useShallow((state) => state.getOrderSummary()));
 
     return (
-        <div>
+        <section>
             {addedProducts.length === 0 ? (
                 <CartEmpty />
             ) : (
@@ -32,6 +32,6 @@ export function CartContainer() {
                     clearOperationResult={clearOperationResult}
                 />
             )}
-        </div>
+        </section>
     );
 }  
