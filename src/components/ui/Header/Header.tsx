@@ -12,7 +12,7 @@ export function Header() {
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-    const itemsLength = useCartStore((state) => state.items.length);
+    const itemsLength = useCartStore((state) => state.getOrderSummary().totalItems);
 
 
     const toggleVisibility = (newState: boolean) => {
@@ -45,7 +45,7 @@ export function Header() {
                     <Link href="/cart" className="relative rounded-md transition-all hover:bg-gray-100 cursor-pointer">
                         <IoCartOutline className="size-9 p-2" />
                         {itemsLength > 0 && (
-                            <span className="absolute top-0.5 right-0 bg-blue-600 text-white text-xs rounded-full size-4 flex items-center justify-center">
+                            <span className={"absolute top-0 -right-1 bg-blue-600 text-white text-xs rounded-full size-5 flex items-center justify-center"}>
                                 {itemsLength}
                             </span>
                         )}
