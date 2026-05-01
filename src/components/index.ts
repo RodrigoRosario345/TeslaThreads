@@ -17,6 +17,7 @@ export * from './products/ProductDetail/ProductDetail';
 
 export * from './cart/CartContainer/CartContainer';
 export * from './cart/CartEmpty/CartEmpty';
+export * from './cart/ProductAddedModal/ProductAddedModal';
 
 export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
 

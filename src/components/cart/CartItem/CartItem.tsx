@@ -7,14 +7,16 @@ import { useState, useCallback } from "react";
 
 export interface CartItemProps {
     product: CartItem;
+    isQuantitySelector?: boolean;
 }
 
-export function CartItem({ product }: CartItemProps) {
-  
+export function CartItem({
+    product,
+    isQuantitySelector = true,
+}: CartItemProps) {
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
     const removeItem = useCartStore((state) => state.removeItem);
     const quantities = Array.from({ length: product.stock }, (_, i) => i + 1);
-
 
     const handleShowConfirmDelete = useCallback(() => {
         setShowConfirmDelete(true);
@@ -38,30 +40,34 @@ export function CartItem({ product }: CartItemProps) {
                     height={100}
                     objectFit="cover"
                 />
-                <div className="flex flex-col gap-1 w-full">
-                    <h3 className="flex justify-between font-semibold gap-10 lg:gap-30">
-                        <span>{product.title}</span>
+                <div className="flex items-start flex-col gap-1 w-full">
+                    <h3 className="flex justify-between font-medium gap-10 lg:gap-25">
+                        <span className="text-start">{product.title}</span>
                         <span>${product.price.toFixed(2)}</span>
                     </h3>
                     <p>Size: {product.size}</p>
-                    <div className="flex gap-1">
-                        Quantity:
-                        {
-                            <QuantitySelector
-                                idItem={product.id}
-                                sizeItem={product.size}
-                                quantitySelected={product.quantity}
-                                quantities={quantities}
-                            />
-                        }
-                        <Button
-                            type="button"
-                            className="ml-10 pb-px border-b hover:border-b-2 cursor-pointer"
-                            onClick={handleShowConfirmDelete}
-                        >
-                            Remove
-                        </Button>
-                    </div>
+                    {isQuantitySelector ? (
+                        <div className="flex gap-1">
+                            Quantity:
+                            {
+                                <QuantitySelector
+                                    idItem={product.id}
+                                    sizeItem={product.size}
+                                    quantitySelected={product.quantity}
+                                    quantities={quantities}
+                                />
+                            }
+                            <Button
+                                type="button"
+                                className="ml-10 pb-px border-b hover:border-b-2 cursor-pointer"
+                                onClick={handleShowConfirmDelete}
+                            >
+                                Remove
+                            </Button>
+                        </div>
+                    ) : (
+                        <p>Quantity: {product.quantity}</p>
+                    )}
                 </div>
             </li>
 
