@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ProductSizeQuantity } from "./ProductSizeQuantity";
 import { useState } from "react";
 import { CatalogProduct } from "@/interfaces";
+import { useCartStore } from "@/store";
 
 export interface ProductDetailProps {
     product: CatalogProduct;
@@ -13,6 +14,13 @@ export interface ProductDetailProps {
 
 export function ProductDetail({ product }: ProductDetailProps) {
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const itemAddedRecently = useCartStore((state) => state.itemAddedRecently);
+    const isItemAddedRecently = !!itemAddedRecently;
+    const clearItemAddedRecently = useCartStore((state) => state.clearItemAddedRecently);
+
+    const handleCloseModal = () => {
+        clearItemAddedRecently();
+    }
 
     return (
         <>
@@ -55,7 +63,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     </p>
                     <p className="text-sm text-gray-500">In stock: {product.inStock}</p>
                     {product.inStock > 0 ? (
-                        <ProductSizeQuantity product={product} />
+                        <ProductSizeQuantity product={product}/>
                     ) : (
                         <p className="text-red-500 font-semibold">Out of stock</p>
                     )}
@@ -65,7 +73,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     </div>
                 </div>
             </article>
-            <ProductAddedModal onClose={() => { }} />
+            {isItemAddedRecently &&  <ProductAddedModal onClose={handleCloseModal} itemAddedRecently={itemAddedRecently} />}
         </>
 
     );

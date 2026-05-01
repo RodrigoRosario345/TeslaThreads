@@ -7,6 +7,7 @@ export const useCartStore = create<CartStore>()(
         (set, get) => ({
             items: [],
             operationResult: null,
+            itemAddedRecently: null,
             addItem: (item) =>
                 set((state) => {
                     const existingItemIndex = state.items.findIndex(
@@ -16,10 +17,10 @@ export const useCartStore = create<CartStore>()(
                     if (existingItemIndex !== -1) {
                         const updatedItems = [...state.items];
                         updatedItems[existingItemIndex].quantity += item.quantity;
-                        return { items: updatedItems };
+                        return { items: updatedItems, itemAddedRecently: updatedItems[existingItemIndex] };
                     }
 
-                    return { items: [...state.items, item] };
+                    return { items: [...state.items, item], itemAddedRecently: item };
                 }, false),
             replaceQuantity: (id, size, quantity) =>
                 set((state) => {
@@ -52,9 +53,11 @@ export const useCartStore = create<CartStore>()(
                 const shipping = items.length > 0 ? 5.99 : 0;
                 const tax = subtotal * 0.15;
                 const total = subtotal + shipping + tax;
-                return { subtotal, shipping, tax, total };
+                const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+                return { subtotal, shipping, tax, total, totalItems };
             },
             clearOperationResult: () => set({ operationResult: null }),
+            clearItemAddedRecently: () => set({ itemAddedRecently: null }),
         }),
         { name: "cart" },
     ),

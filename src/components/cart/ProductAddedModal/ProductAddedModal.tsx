@@ -6,28 +6,29 @@ import { useCartStore } from "@/store";
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
 import { useShallow } from "zustand/react/shallow";
+import { CartItem as CartItemType } from "@/interfaces";
 import { CartItem } from "../CartItem/CartItem";
 
 export interface ProductAddedModalProps {
     onClose: () => void;
+    itemAddedRecently: CartItemType
 }
 
-export function ProductAddedModal({ onClose }: ProductAddedModalProps) {
-    const addedProducts = useCartStore((state) => state.items);
-    const { subtotal } = useCartStore(
+export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedModalProps) {
+    const { subtotal, totalItems } = useCartStore(
         useShallow((state) => state.getOrderSummary()),
     );
 
     const { backdropRef, modalRef, closeModal } = useModal({
         onClose,
-        // autoCloseDelay: 5000,
+        autoCloseDelay: 5000,
     });
 
     return (
         <>
             {/* Backdrop */}
             <div
-                className="w-full h-screen fixed inset-0 z-50 bg-black/50 backdrop-blur-xs"
+                className="w-full h-screen fixed inset-0 z-50 bg-transparent"
                 onClick={closeModal}
                 ref={backdropRef}
                 aria-hidden="true"
@@ -37,10 +38,10 @@ export function ProductAddedModal({ onClose }: ProductAddedModalProps) {
             <div
                 role="dialog"
                 aria-modal="true"
-                className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
+                className="fixed top-10 right-0 z-50"
                 ref={modalRef}
             >
-                <div className="w-full max-w-115 space-y-10 p-8 rounded-2xl bg-white text-center">
+                <div className="w-full max-w-115 space-y-10 p-8 rounded-2xl bg-white text-center shadow-lg">
                     {/* Icon Close */}
                     <IoClose
                         size={40}
@@ -59,13 +60,11 @@ export function ProductAddedModal({ onClose }: ProductAddedModalProps) {
 
                     {/* Added Products */}
                     <ul className="w-full space-y-3">
-                        {addedProducts.map((product) => (
-                            <CartItem
-                                key={`${product.id}-${product.size}`}
-                                product={product}
-                                isQuantitySelector={false}
-                            />
-                        ))}
+                        <CartItem
+                            key={`${itemAddedRecently.id}-${itemAddedRecently.size}`}
+                            product={itemAddedRecently}
+                            isQuantitySelector={false}
+                        />
                     </ul>
 
                     {/* Order Summary */}
@@ -83,7 +82,7 @@ export function ProductAddedModal({ onClose }: ProductAddedModalProps) {
                         href="/cart"
                         className="w-full inline-block bg-black hover:bg-gray-800 text-white font-medium p-2 rounded text-sm outline-2 outline-black border-2 border-white mb-4"
                     >
-                        View Cart ({addedProducts.length})
+                        View Cart ({totalItems})
                     </Link>
                     <Link href="/checkout/address" className="w-full">
                         <Button buttonStyle="primary" className="w-full p-2! hover:p-2!">

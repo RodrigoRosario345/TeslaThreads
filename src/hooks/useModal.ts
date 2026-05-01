@@ -23,9 +23,11 @@ function createModalAnimation(elements: HTMLDivElement[]): GSAPTimeline {
         timeline.from(
             element,
             {
+                top: "-28%",
+                right: "-8%",
                 scale: 0,
                 opacity: 0,
-                duration: 0.3,
+                duration: 0.5,
                 ease: "back.out(1.7)",
             },
             index * 0.05
