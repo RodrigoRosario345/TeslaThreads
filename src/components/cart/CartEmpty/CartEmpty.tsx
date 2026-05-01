@@ -11,7 +11,7 @@ export function CartEmpty() {
 
     return (
         <div className="space-y-6 sm:px-12 mt-30 md:mt-12">
-            <p className="text-xl text-center md:text-left text-gray-600">
+            <p className="text-lg text-center md:text-left text-gray-600">
                 Your cart is empty.
             </p>
             <div className="flex flex-wrap gap-4">
