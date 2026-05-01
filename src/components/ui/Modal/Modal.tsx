@@ -58,16 +58,16 @@ export function Modal({ status, message, clearOperationResult }: ModalProps) {
                 ref={modalRef}
             >
                 <div className="w-full flex flex-col gap-5 p-8 rounded-2xl bg-white text-center">
-                    <div className={`text-7xl mx-auto ${config.iconColor}`}>
+                    <div className={`text-6xl sm:text-7xl mx-auto ${config.iconColor}`}>
                         <Icon />
                     </div>
                     <h2
                         id="modal-title"
-                        className={`text-2xl font-semibold ${config.iconColor}`}
+                        className={`text-xl sm:text-2xl font-semibold ${config.iconColor}`}
                     >
                         {config.title}
                     </h2>
-                    <p id="modal-description" className="text-gray-600">
+                    <p id="modal-description" className="text-gray-600 text-sm sm:text-base">
                         {message}
                     </p>
                     <Button

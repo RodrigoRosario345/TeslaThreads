@@ -58,23 +58,23 @@ export function ConfirmDeleteModal({ text, onDelete, onClose }: ConfirmDeleteMod
                     </Button>
 
                     {/* Icon */}
-                    <div className="text-7xl mx-auto text-red-500">
+                    <div className="text-6xl sm:text-7xl mx-auto text-red-500">
                         <AiOutlineCloseCircle aria-hidden="true" />
                     </div>
 
                     {/* Title */}
                     <h2
                         id="delete-modal-title"
-                        className="text-2xl font-semibold text-red-500"
+                        className="text-xl sm:text-2xl font-semibold text-red-500"
                     >
                         Are you sure?
                     </h2>
 
                     {/* Description */}
-                    <p id="delete-modal-description" className="text-gray-600 my-0">
+                    <p id="delete-modal-description" className="text-gray-600 my-0 text-sm sm:text-base">
                         {text}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">
                         This action cannot be undone.
                     </p>
 
