@@ -8,6 +8,7 @@ export interface CartItem {
     quantity: number;
     size: ValidSizes;
     stock: number;
+    slug: string;
 }
 
 export interface OperationResult {

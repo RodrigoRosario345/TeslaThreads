@@ -12,7 +12,7 @@ export interface ProductSizeQuantityProps {
 }
 
 export function ProductSizeQuantity({
-    product: { id, images, title, price, sizes, inStock },
+    product: { id, images, title, price, sizes, inStock, slug },
 }: ProductSizeQuantityProps) {
     const [selectedSize, setSelectedSize] = useState<ValidSizes | null>(null);
     const [quantity, setQuantity] = useState<string>("1");
@@ -42,6 +42,7 @@ export function ProductSizeQuantity({
             quantity: parseInt(quantity),
             size: selectedSize,
             stock: inStock,
+            slug,
         });
     };
 

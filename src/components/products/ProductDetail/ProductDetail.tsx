@@ -7,6 +7,7 @@ import { ProductSizeQuantity } from "./ProductSizeQuantity";
 import { useState } from "react";
 import { CatalogProduct } from "@/interfaces";
 import { useCartStore } from "@/store";
+import { formatPrice } from "@/helpers";
 
 export interface ProductDetailProps {
     product: CatalogProduct;
@@ -59,7 +60,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                         {product.title}
                     </h2>
                     <p className="text-base md:text-lg lg:text-xl font-semibold">
-                        ${product.price.toFixed(2)}
+                        {formatPrice(product.price)}
                     </p>
                     <p className="text-sm text-gray-500">In stock: {product.inStock}</p>
                     {product.inStock > 0 ? (

@@ -4,6 +4,8 @@ import { QuantitySelector } from "./QuantitySelector";
 import { Button, ConfirmDeleteModal, Modal } from "@/components";
 import { useCartStore } from "@/store";
 import { useState, useCallback } from "react";
+import { formatPrice } from "@/helpers";
+import Link from "next/link";
 
 export interface CartItemProps {
     product: CartItem;
@@ -42,8 +44,10 @@ export function CartItem({
                 />
                 <div className="flex items-start flex-col gap-1 w-full">
                     <h3 className="flex justify-between font-medium gap-10 lg:gap-25">
-                        <span className="text-start">{product.title}</span>
-                        <span>${product.price.toFixed(2)}</span>
+                        <Link href={`/product/${product.slug}`} className="text-start hover:underline hover:underline-offset-2">
+                            {product.title}
+                        </Link>
+                        <span>{formatPrice(product.price)}</span>
                     </h3>
                     <p>Size: {product.size}</p>
                     {isQuantitySelector ? (
