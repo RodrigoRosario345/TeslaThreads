@@ -23,9 +23,10 @@ function createModalAnimation(elements: HTMLDivElement[]): GSAPTimeline {
         timeline.from(
             element,
             {
-                top: "-28%",
-                right: "-8%",
+                xPercent: -14,
+                yPercent: -6,
                 scale: 0,
+                transformOrigin: "right top",
                 opacity: 0,
                 duration: 0.5,
                 ease: "back.out(1.7)",

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import Link from "next/link";
 import { IoCartOutline } from "react-icons/io5";
@@ -9,18 +9,24 @@ import { IoIosSearch } from "react-icons/io";
 import { useCartStore } from "@/store";
 
 export function Header() {
-
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-    const itemsLength = useCartStore((state) => state.getOrderSummary().totalItems);
+    const [mounted, setMounted] = useState<boolean>(false);
 
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const itemsLength = useCartStore(
+        (state) => state.getOrderSummary().totalItems,
+    );
 
     const toggleVisibility = (newState: boolean) => {
         setIsVisible(newState);
-    }
+    };
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-    }
+    };
 
     return (
         <>
@@ -42,15 +48,21 @@ export function Header() {
                 </div> */}
                 <div className="flex items-center">
                     <IoIosSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
-                    <Link href="/cart" className="relative rounded-md transition-all hover:bg-gray-100 cursor-pointer">
+                    <Link
+                        href="/cart"
+                        className="relative rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                    >
                         <IoCartOutline className="size-9 p-2" />
-                        {itemsLength > 0 && (
-                            <span className={"absolute top-0 -right-1 bg-blue-600 text-white text-xs rounded-full size-5 flex items-center justify-center"}>
+                        {mounted && itemsLength > 0 && (
+                            <span className="absolute top-0 -right-1 bg-blue-600 text-white text-xs rounded-full size-5 flex items-center justify-center">
                                 {itemsLength}
                             </span>
                         )}
                     </Link>
-                    <button className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" onClick={toggleSidebar}>
+                    <button
+                        className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                        onClick={toggleSidebar}
+                    >
                         Menu
                     </button>
                 </div>

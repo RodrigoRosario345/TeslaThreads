@@ -46,7 +46,7 @@ export function ProductSizeQuantity({
         });
     };
 
-    return (
+    return ( 
         <div className="space-y-5">
             <ProductSizeSelector
                 sizes={sizes}
