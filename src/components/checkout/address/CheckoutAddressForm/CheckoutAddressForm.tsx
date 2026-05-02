@@ -19,8 +19,6 @@ export function CheckoutAddressForm() {
         console.log(data);
     }
 
-    console.log("Watched values:", watch());
-
     return (
         <form
             className="w-full space-y-4"

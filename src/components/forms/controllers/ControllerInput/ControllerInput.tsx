@@ -13,6 +13,7 @@ export interface ControllerInputProps<T extends FieldValues, TT> extends BaseCon
     classNameContainer?: string;
     classNameLabel?: string;
     classNameInput?: string;
+    value?: string | number | readonly string[] | undefined;
 }
 
 export function ControllerInput<T extends FieldValues, TT>({
@@ -27,6 +28,7 @@ export function ControllerInput<T extends FieldValues, TT>({
     classNameContainer = "",
     classNameLabel = "",
     classNameInput = "",
+    value,
 }: ControllerInputProps<T, TT>) {
     const { field, error, hasError } = useControllerField(name, control);
 
@@ -44,7 +46,7 @@ export function ControllerInput<T extends FieldValues, TT>({
                 placeholder={placeholder}
                 className={`${hasError ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""} ${classNameInput}`}
                 disabled={disabled}
-                value={field.value || ""}
+                value={(value ?? field.value) || ""}
                 aria-invalid={hasError}
                 aria-describedby={hasError ? `${name}-error` : helperText ? `${name}-helper` : undefined}
             />
