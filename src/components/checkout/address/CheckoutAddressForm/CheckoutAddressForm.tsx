@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 export function CheckoutAddressForm() {
 
-    const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
+    const { control, handleSubmit, watch } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaCheckoutAddress),
     });
@@ -19,7 +19,7 @@ export function CheckoutAddressForm() {
         console.log(data);
     }
 
-    // const { country } = watch();
+    console.log("Watched values:", watch());
 
     return (
         <form
@@ -82,10 +82,19 @@ export function CheckoutAddressForm() {
                     name="phoneNumber"
                     label="Phone Number"
                     placeholder="Enter phone number"
-                    // disabled={!country}
-                    // helperText={!country ? "Please select a country first" : ""}
+                // disabled={!country}
+                // helperText={!country ? "Please select a country first" : ""}
                 />
             </div>
+            <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
+                control={control}
+                name="rememberAddress"
+                label="Remember this address"
+                type="checkbox"
+                classNameContainer="flex-row-reverse justify-end items-center gap-2 mt-6!"
+                classNameLabel="text-sm! font-medium text-gray-600! cursor-pointer"
+                classNameInput="peer order-1 appearance-none size-6! border border-gray-300! rounded-md  focus:ring-0! checked:border-blue-600! checked:bg-blue-600 cursor-pointer"
+            />
             <Button className="w-full" buttonStyle="primary" type="submit">
                 Next
             </Button>

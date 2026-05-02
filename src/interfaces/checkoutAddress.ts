@@ -57,6 +57,7 @@ export const schemaCheckoutAddress = z.object({
             /^[0-9\s-]+$/,
             "Phone number can only contain numbers, spaces, and hyphens",
         ),
+    rememberAddress: z.boolean().optional(),
 });
 
 export type CheckoutAddressSchema = z.infer<typeof schemaCheckoutAddress>;

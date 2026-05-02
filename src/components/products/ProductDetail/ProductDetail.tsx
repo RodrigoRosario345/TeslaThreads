@@ -39,7 +39,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                                     )}
                                     <Image
                                         key={index}
-                                        sizes="max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         fill
                                         src={`/products/${item}`}
                                         alt={product.title}
