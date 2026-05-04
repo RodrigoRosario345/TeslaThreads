@@ -3,7 +3,7 @@
 import { Button, ControllerInput } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
 import { selectCountryOptions } from "@/data";
-import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput} from "@/interfaces";
+import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput } from "@/interfaces";
 import { useDeliveryAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,17 +11,22 @@ import { useForm } from "react-hook-form";
 
 export function CheckoutAddressForm() {
 
+    const deliveryAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
     const { control, handleSubmit } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaDeliveryAddress),
+        defaultValues: deliveryAddress || undefined,
     });
     const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
+    const clearDeliveryAddress = useDeliveryAddressStore((state) => state.clearDeliveryAddress);
 
     const onSubmit = (data: DeliveryAddressSchemaOutput) => {
         const { rememberAddress, ...addressData } = data;
-        if (rememberAddress) {
-            addDeliveryAddress(addressData);
+        if (!rememberAddress) {
+            clearDeliveryAddress();
+            return;
         }
+        addDeliveryAddress(addressData);
     }
 
     return (
