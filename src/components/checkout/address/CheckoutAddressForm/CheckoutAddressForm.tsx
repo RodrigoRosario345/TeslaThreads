@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, ControllerInput } from "@/components";
+import { Button, ControllerInput, LoadingText } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
 import { selectCountryOptions } from "@/data";
 import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput } from "@/interfaces";
@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 export function CheckoutAddressForm() {
 
     const deliveryAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
-    const { control, handleSubmit } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaDeliveryAddress),
         defaultValues: deliveryAddress || undefined,
@@ -20,7 +20,8 @@ export function CheckoutAddressForm() {
     const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
     const clearDeliveryAddress = useDeliveryAddressStore((state) => state.clearDeliveryAddress);
 
-    const onSubmit = (data: DeliveryAddressSchemaOutput) => {
+    const onSubmit = async (data: DeliveryAddressSchemaOutput) => {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         const { rememberAddress, ...addressData } = data;
         if (!rememberAddress) {
             clearDeliveryAddress();
@@ -103,8 +104,17 @@ export function CheckoutAddressForm() {
                 classNameLabel="text-sm! font-medium text-gray-600! cursor-pointer"
                 classNameInput="peer order-1 appearance-none size-6! border border-gray-300! rounded-md  focus:ring-0! checked:border-blue-600! checked:bg-blue-600 cursor-pointer"
             />
-            <Button className="w-full" variant="primary" type="submit" >
-                Next
+            <Button
+                className="w-full"
+                variant={isSubmitting ? "primaryDisabled" : "primary"}
+                type="submit"
+                disabled={isSubmitting}
+            >
+                <LoadingText
+                    isLoading={isSubmitting}
+                    text="Save Address"
+                    loadingText="Saving..."
+                />
             </Button>
         </form>
     )
