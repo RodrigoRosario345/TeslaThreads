@@ -85,7 +85,7 @@ export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedMo
                         View Cart ({totalItems})
                     </Link>
                     <Link href="/checkout/address" className="w-full">
-                        <Button buttonStyle="primary" className="w-full p-2! hover:p-2!">
+                        <Button variant="primary" className="w-full p-2! hover:p-2!">
                             Checkout
                         </Button>
                     </Link>

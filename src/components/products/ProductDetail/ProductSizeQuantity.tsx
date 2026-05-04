@@ -59,7 +59,7 @@ export function ProductSizeQuantity({
                 inStock={inStock}
                 onQuantityChange={handleQuantityChange}
             />
-            <Button buttonStyle="primary" onClick={handleAddToCart}>
+            <Button variant="primary" onClick={handleAddToCart}>
                 Add to Cart
             </Button>
         </div>

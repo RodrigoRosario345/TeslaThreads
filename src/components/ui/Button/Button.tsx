@@ -6,20 +6,15 @@ const BUTTON_STYLES = {
     borderDark: "border-3 border-gray-900 transition-colors hover:bg-gray-900 hover:text-white text-gray-900 text-sm font-medium py-2 px-20 rounded cursor-pointer",
 } as const;
 
-type ButtonStyle = keyof typeof BUTTON_STYLES;
+type Variant = keyof typeof BUTTON_STYLES;
 
-interface ButtonProps {
-    type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
-    className?: string;
-    children?: React.ReactNode;
-    buttonStyle?: ButtonStyle;
-    onClick?: () => void;
-    disabled?: boolean;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: Variant;
 }
-export function Button({ type, className, children, buttonStyle, onClick, disabled }: ButtonProps) {
+export function Button({ type, className, children, variant , onClick, disabled }: ButtonProps) {
 
     return (
-        <button type={type} className={`${buttonStyle ? BUTTON_STYLES[buttonStyle] : ''} ${className}`} onClick={onClick} disabled={disabled}>
+        <button type={type} className={`${variant ? BUTTON_STYLES[variant] : ''} ${className}`} onClick={onClick} disabled={disabled}>
             {children}
         </button>
     );

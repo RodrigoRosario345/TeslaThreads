@@ -2,7 +2,7 @@
 
 import { Button, ControllerInput } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
-import { COUNTRY_OPTIONS } from "@/data";
+import { selectCountryOptions } from "@/data";
 import { CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput, schemaCheckoutAddress } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 export function CheckoutAddressForm() {
 
-    const { control, handleSubmit, watch } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
+    const { control, handleSubmit } = useForm<CheckoutAddressSchemaInput, any, CheckoutAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaCheckoutAddress),
     });
@@ -73,7 +73,7 @@ export function CheckoutAddressForm() {
                     name="country"
                     label="Country"
                     placeholder="Select country"
-                    options={COUNTRY_OPTIONS}
+                    items={selectCountryOptions}
                 />
                 <ControllerInput<CheckoutAddressSchemaInput, CheckoutAddressSchemaOutput>
                     control={control}
@@ -93,7 +93,7 @@ export function CheckoutAddressForm() {
                 classNameLabel="text-sm! font-medium text-gray-600! cursor-pointer"
                 classNameInput="peer order-1 appearance-none size-6! border border-gray-300! rounded-md  focus:ring-0! checked:border-blue-600! checked:bg-blue-600 cursor-pointer"
             />
-            <Button className="w-full" buttonStyle="primary" type="submit">
+            <Button className="w-full" variant="primary" type="submit">
                 Next
             </Button>
         </form>

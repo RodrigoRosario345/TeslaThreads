@@ -31,7 +31,7 @@ export function Pagination({
             {pages.map((page) => (
                 <Link href={`${urlBase || "/"}?page=${page}`} passHref key={page}>
                     <Button
-                        buttonStyle="secondary"
+                        variant="secondary"
                         className={page === currentPage ? "bg-gray-700" : ""}
                     >
                         {page}

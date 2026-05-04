@@ -83,7 +83,7 @@ export function ConfirmDeleteModal({ text, onDelete, onClose }: ConfirmDeleteMod
                         <Button
                             onClick={closeModal}
                             disabled={isDeleting}
-                            buttonStyle="primary"
+                            variant="primary"
                             className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-normal"
                         >
                             Cancel
@@ -91,7 +91,7 @@ export function ConfirmDeleteModal({ text, onDelete, onClose }: ConfirmDeleteMod
                         <Button
                             onClick={handleDelete}
                             disabled={isDeleting}
-                            buttonStyle="primary"
+                            variant="primary"
                             className="w-full bg-red-500 hover:bg-red-600 font-normal"
                         >
                             <LoadingText isLoading={isDeleting} text="Delete" loadingText="Deleting..." />

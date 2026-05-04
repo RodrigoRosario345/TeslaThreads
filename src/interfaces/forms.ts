@@ -1,6 +1,7 @@
 import { Control, FieldValues, Path } from "react-hook-form";
 
 export interface SelectOption<T = string | number> {
+    id: string | number;
     value: T;
     label: string;
 }

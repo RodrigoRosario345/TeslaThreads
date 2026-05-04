@@ -75,7 +75,7 @@ export function SignUpForm() {
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
-                buttonStyle={isSubmitting ? "primaryDisabled" : "primary"}
+                variant={isSubmitting ? "primaryDisabled" : "primary"}
                 className="w-full mt-3 mb-3 rounded-md!"
                 disabled={isSubmitting}
             >

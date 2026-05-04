@@ -6,7 +6,7 @@ export interface ControllerSelectProps<
     T extends FieldValues,
     TT,
 > extends BaseControllerProps<T, TT> {
-    options: SelectOption[];
+    items: SelectOption[];
     placeholder?: string;
     className?: string;
 }
@@ -15,7 +15,7 @@ export function ControllerSelect<T extends FieldValues, TT>({
     name,
     label,
     control,
-    options,
+    items,
     placeholder = "Select an option",
     disabled = false,
     helperText,
@@ -44,9 +44,9 @@ export function ControllerSelect<T extends FieldValues, TT>({
                 <option value="" disabled>
                     {placeholder}
                 </option>
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.label}
+                {items.map((item) => (
+                    <option key={item.id} value={item.value}>
+                        {item.label}
                     </option>
                 ))}
             </select>

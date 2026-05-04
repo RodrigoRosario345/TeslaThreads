@@ -16,13 +16,13 @@ export function CartEmpty() {
             </p>
             <div className="flex flex-wrap gap-4">
                 <Link href="/" className="w-60 grow md:max-w-80">
-                    <Button buttonStyle="primary" className="w-full px-0!">
+                    <Button variant="primary" className="w-full px-0!">
                         Continue Shopping
                     </Button>
                 </Link>
                 {!isAuthenticated && (
                     <Link href={`/auth/sign-in?callbackUrl=${encodeURIComponent(pathname)}`} className="w-60 grow md:max-w-80">
-                        <Button buttonStyle="borderDark" className="w-full px-0!">
+                        <Button variant="borderDark" className="w-full px-0!">
                             Sign In
                         </Button>
                     </Link>

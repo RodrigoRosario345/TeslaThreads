@@ -36,7 +36,7 @@ export function SignInContainer() {
             <Link href="/">
                 <Button
                     type="button"
-                    buttonStyle="borderDark"
+                    variant="borderDark"
                     className="w-full rounded-md!"
                 >
                     Continue as Guest
