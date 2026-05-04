@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const schemaCheckoutAddress = z.object({
+export const schemaDeliveryAddress = z.object({
     firstName: z
         .string("First name is required")
         .trim()
@@ -60,6 +60,22 @@ export const schemaCheckoutAddress = z.object({
     rememberAddress: z.boolean().optional().default(false),
 });
 
-export type CheckoutAddressSchema = z.infer<typeof schemaCheckoutAddress>;
-export type CheckoutAddressSchemaInput = z.input<typeof schemaCheckoutAddress>;
-export type CheckoutAddressSchemaOutput = z.output<typeof schemaCheckoutAddress>;
+export type DeliveryAddressSchema = z.infer<typeof schemaDeliveryAddress>;
+export type DeliveryAddressSchemaInput = z.input<typeof schemaDeliveryAddress>;
+export type DeliveryAddressSchemaOutput = z.output<
+    typeof schemaDeliveryAddress
+>;
+
+export type DeliveryAddress = Omit<
+    DeliveryAddressSchemaOutput,
+    "rememberAddress"
+>;
+
+export interface DeliveryAddressStore {
+    // state
+    deliveryAddress: DeliveryAddress | null;
+
+    // actions
+    addDeliveryAddress: (address: DeliveryAddress) => void;
+    clearDeliveryAddress: () => void;
+}
