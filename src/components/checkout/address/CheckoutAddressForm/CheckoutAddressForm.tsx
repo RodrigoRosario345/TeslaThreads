@@ -6,27 +6,33 @@ import { selectCountryOptions } from "@/data";
 import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput } from "@/interfaces";
 import { useDeliveryAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useShallow } from 'zustand/react/shallow';
 
 
 export function CheckoutAddressForm() {
+    const deliveryAddress = useDeliveryAddressStore(useShallow((state) => state.deliveryAddress));
+    const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
+    // const clearDeliveryAddress = useDeliveryAddressStore((state) => state.clearDeliveryAddress);
 
-    const deliveryAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
-    const { control, handleSubmit, formState: { isSubmitting } } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
+    const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaDeliveryAddress),
-        defaultValues: deliveryAddress || undefined,
+        // defaultValues: deliveryAddress || undefined,
     });
-    const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
-    const clearDeliveryAddress = useDeliveryAddressStore((state) => state.clearDeliveryAddress);
+
+    useEffect(() => {
+        if (!deliveryAddress.firstName) return
+        reset(deliveryAddress);
+    }, [deliveryAddress]);
 
     const onSubmit = async (data: DeliveryAddressSchemaOutput) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
         const { rememberAddress, ...addressData } = data;
-        if (!rememberAddress) {
-            clearDeliveryAddress();
-            return;
-        }
+        // if (!rememberAddress) {
+        //     clearDeliveryAddress();
+        //     return;
+        // }
         addDeliveryAddress(addressData);
     }
 

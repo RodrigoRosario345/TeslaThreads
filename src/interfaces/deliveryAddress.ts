@@ -62,18 +62,13 @@ export const schemaDeliveryAddress = z.object({
 
 export type DeliveryAddressSchema = z.infer<typeof schemaDeliveryAddress>;
 export type DeliveryAddressSchemaInput = z.input<typeof schemaDeliveryAddress>;
-export type DeliveryAddressSchemaOutput = z.output<
-    typeof schemaDeliveryAddress
->;
+export type DeliveryAddressSchemaOutput = z.output<typeof schemaDeliveryAddress>;
 
-export type DeliveryAddress = Omit<
-    DeliveryAddressSchemaOutput,
-    "rememberAddress"
->;
+export type DeliveryAddress = Omit<DeliveryAddressSchemaOutput,"rememberAddress">;
 
 export interface DeliveryAddressStore {
     // state
-    deliveryAddress: DeliveryAddress | null;
+    deliveryAddress: DeliveryAddress;
 
     // actions
     addDeliveryAddress: (address: DeliveryAddress) => void;

@@ -1,15 +1,25 @@
-import { DeliveryAddressStore } from "@/interfaces";
+import { DeliveryAddress, DeliveryAddressStore } from "@/interfaces";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+
+const emptyDeliveryAddress: DeliveryAddress = {
+    firstName: "",
+    lastName: "",
+    addressLine1: "",
+    postalCode: "",
+    city: "",
+    country: "",
+    phoneNumber: "",
+};
 
 export const useDeliveryAddressStore = create<DeliveryAddressStore>()(
     devtools(
         persist(
             (set) => ({
-                deliveryAddress: null,
+                deliveryAddress: emptyDeliveryAddress,
 
                 addDeliveryAddress: (address) => set({ deliveryAddress: address }),
-                clearDeliveryAddress: () => set({ deliveryAddress: null }),
+                clearDeliveryAddress: () => set({ deliveryAddress: emptyDeliveryAddress }),
             }),
             {
                 name: "delivery-address",
