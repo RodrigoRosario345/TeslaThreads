@@ -34,7 +34,7 @@ export function CartItem({
 
     return (
         <>
-            <li className="w-full flex gap-5 text-sm">
+            <article className="w-full flex gap-5 text-sm">
                 <Image
                     src={`${product.image}`}
                     alt={product.title}
@@ -73,7 +73,7 @@ export function CartItem({
                         <p>Quantity: {product.quantity}</p>
                     )}
                 </div>
-            </li>
+            </article>
 
             {showConfirmDelete && (
                 <ConfirmDeleteModal

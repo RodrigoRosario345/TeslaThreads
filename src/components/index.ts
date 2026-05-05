@@ -20,6 +20,7 @@ export * from './cart/CartEmpty/CartEmpty';
 export * from './cart/ProductAddedModal/ProductAddedModal';
 
 export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
+export * from './checkout/OrderReviewContainer/OrderReviewContainer';
 
 export * from './forms/controllers/ControllerInput/ControllerInput';
 // export * from './forms/controllers/ControllerSelect/ControllerSelect';

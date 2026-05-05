@@ -21,7 +21,9 @@ export function CartList({ addedProducts }: CartListProps) {
             </Link>
             <ul className="w-full space-y-3">
                 {addedProducts.map((product) => (
-                    <CartItem key={`${product.id}-${product.size}`} product={product} />
+                    <li key={`${product.id}-${product.size}`}>
+                        <CartItem product={product} />
+                    </li>
                 ))}
             </ul>
         </div>

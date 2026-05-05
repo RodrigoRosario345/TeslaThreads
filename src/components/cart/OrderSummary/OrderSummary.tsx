@@ -7,12 +7,26 @@ export interface OrderSummaryProps {
     shipping: number;
     tax: number;
     total: number;
+    totalItems?: number;
+    isOrderReview?: boolean;
 }
 
-export function OrderSummary({ shipping, subtotal, tax, total }: OrderSummaryProps) {
+export function OrderSummary({
+    shipping,
+    subtotal,
+    tax,
+    total,
+    totalItems,
+    isOrderReview,
+}: OrderSummaryProps) {
     return (
         <div className="w-full h-max space-y-4 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
-            <h2 className="text-base md:text-lg font-bold">Order Summary</h2>
+            <h2 className="text-base md:text-lg font-bold">
+                Order Summary {isOrderReview && totalItems && `(${totalItems} items)`}
+            </h2>
+            {isOrderReview && (
+                <div className="w-full border-b-[0.5px] border-gray-300" />
+            )}
             <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Subtotal</span>
                 <span>{formatPrice(subtotal)}</span>
