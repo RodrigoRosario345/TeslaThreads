@@ -8,7 +8,7 @@ const OPTIONS_NAVBAR = [
 ];
 
 export interface NavbarProps {
-    onToggleVisibility: (newState: boolean) => void;
+    onToggleVisibility?: (newState: boolean) => void;
 }
 
 export function Navbar({ onToggleVisibility }: NavbarProps) {
@@ -16,14 +16,14 @@ export function Navbar({ onToggleVisibility }: NavbarProps) {
     return (
         <nav
             className="h-full hidden md:flex items-center gap-2 px-25"
-            onMouseLeave={() => onToggleVisibility(false)}
+            onMouseLeave={() => onToggleVisibility?.(false)}
         >
             {OPTIONS_NAVBAR.map((option) => (
                 <Link
                     key={option.name}
                     href={option.href}
                     className={`text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 ${pathname === option.href ? "bg-gray-100" : ""}`}
-                    onMouseEnter={() => onToggleVisibility(true)}
+                    onMouseEnter={() => onToggleVisibility?.(true)}
                 >
                     {option.name}
                 </Link>

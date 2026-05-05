@@ -1,7 +1,7 @@
 import type { CartItem } from "@/interfaces";
 import Image from "next/image";
 import { QuantitySelector } from "./QuantitySelector";
-import { Button, ConfirmDeleteModal, Modal } from "@/components";
+import { Button, ConfirmDeleteModal } from "@/components";
 import { useCartStore } from "@/store";
 import { useState, useCallback } from "react";
 import { formatPrice } from "@/helpers";

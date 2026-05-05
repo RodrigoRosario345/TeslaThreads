@@ -7,23 +7,23 @@ import { IoCartOutline } from "react-icons/io5";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { IoIosSearch } from "react-icons/io";
 import { useCartStore } from "@/store";
+import { motion, useAnimation } from "motion/react";
 
 export function Header() {
-    const [isVisible, setIsVisible] = useState<boolean>(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
     const [mounted, setMounted] = useState<boolean>(false);
+    const itemsLength = useCartStore((state) => state.getOrderSummary().totalItems);
+    const controls = useAnimation();
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    const itemsLength = useCartStore(
-        (state) => state.getOrderSummary().totalItems,
-    );
+    useEffect(() => {
+        if (!mounted || itemsLength === 0) return;
+        controls.start({ scale: [0, 1], opacity: [0, 1], transition: { duration: 0.4 } });
+    }, [itemsLength, mounted, controls]);
 
-    const toggleVisibility = (newState: boolean) => {
-        setIsVisible(newState);
-    };
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
@@ -34,18 +34,7 @@ export function Header() {
                 <Link href="/" className="text-lg md:text-xl font-bold">
                     TESLA THREADS
                 </Link>
-                <Navbar onToggleVisibility={toggleVisibility} />
-                {/* <div
-                    className={`w-full fixed top-12 left-0 bg-white shadow-sm overflow-hidden transition-all ease-linear ${isVisible ? "h-auto p-5 opacity-100" : "h-0 p-0 opacity-0"}`}
-                    onMouseEnter={() => toggleVisibility(true)}
-                    onMouseLeave={() => toggleVisibility(false)}
-                >
-                    <ul>
-                        <li>Item 1</li>
-                        <li>Item 2</li>
-                        <li>Item 3</li>
-                    </ul>
-                </div> */}
+                <Navbar />
                 <div className="flex items-center">
                     <IoIosSearch className="p-2 size-9 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
                     <Link
@@ -54,9 +43,11 @@ export function Header() {
                     >
                         <IoCartOutline className="size-9 p-2" />
                         {mounted && itemsLength > 0 && (
-                            <span className="absolute top-0 -right-1 bg-blue-600 text-white text-xs rounded-full size-5 flex items-center justify-center">
+                            <motion.span className="absolute top-0 -right-1 bg-blue-600 text-white text-xs rounded-full size-5 flex items-center justify-center"
+                                animate={controls}
+                            >
                                 {itemsLength}
-                            </span>
+                            </motion.span>
                         )}
                     </Link>
                     <button

@@ -1,8 +1,6 @@
 import type { CartItem as CartItemType } from "@/interfaces";
 import { CartItem } from "../CartItem/CartItem";
 import Link from "next/link";
-import { useCallback, useState } from "react";
-import { Modal } from "@/components/ui/Modal/Modal";
 
 interface CartListProps {
     addedProducts: CartItemType[];
@@ -12,6 +10,9 @@ export function CartList({ addedProducts }: CartListProps) {
 
     return (
         <div className="space-y-5">
+            <p className="text-gray-600">
+                Add more items to your cart to qualify for free shipping.
+            </p>
             <Link
                 href="/"
                 className="w-auto text-sm underline underline-offset-3 hover:decoration-2 cursor-pointer inline-block"
