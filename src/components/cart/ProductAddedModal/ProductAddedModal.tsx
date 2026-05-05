@@ -79,12 +79,13 @@ export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedMo
 
                     {/* Actions */}
                     <Link
+                        onClick={onClose}
                         href="/cart"
                         className="w-full inline-block bg-black hover:bg-gray-800 text-white font-medium p-2 rounded text-sm outline-2 outline-black border-2 border-white mb-4"
                     >
                         View Cart ({totalItems})
                     </Link>
-                    <Link href="/checkout/address" className="w-full">
+                    <Link href="/checkout/address" className="w-full" onClick={onClose}>
                         <Button variant="primary" className="w-full p-2! hover:p-2!">
                             Checkout
                         </Button>
