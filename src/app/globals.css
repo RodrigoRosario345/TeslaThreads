@@ -8,6 +8,13 @@
 }
 
 @theme {
+  --color-blue-custom: #3e6ae1;
+  --color-blue-custom-hover: #3558b7;
+
+
+
+
+
   --animate-carrusel: animate-carrusel 3s linear 3s infinite;
 
   @keyframes animate-carrusel {
