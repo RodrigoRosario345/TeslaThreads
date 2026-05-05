@@ -34,7 +34,7 @@ export function CartItem({
 
     return (
         <>
-            <article className="w-full flex gap-5 text-sm">
+            <article className="w-full flex gap-5 text-sm ">
                 <Image
                     src={`${product.image}`}
                     alt={product.title}
@@ -42,7 +42,7 @@ export function CartItem({
                     height={100}
                     objectFit="cover"
                 />
-                <div className="flex items-start flex-col gap-1 w-full">
+                <div className="flex flex-col items-stretch gap-1 w-full ">
                     <h3 className="flex justify-between font-medium gap-10 lg:gap-25">
                         <Link href={`/product/${product.slug}`} className="text-start hover:underline hover:underline-offset-2">
                             {product.title}

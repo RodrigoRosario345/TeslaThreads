@@ -2,7 +2,7 @@
 
 import { CartEmpty } from "@/components/cart/CartEmpty/CartEmpty";
 import { OrderSummary } from "@/components/cart/OrderSummary/OrderSummary";
-import { useCartStore } from "@/store";
+import { useCartStore, useDeliveryAddressStore } from "@/store";
 import { useShallow } from "zustand/react/shallow";
 import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
 
@@ -11,6 +11,7 @@ export function OrderReviewContainer() {
     const { subtotal, shipping, tax, total, totalItems } = useCartStore(
         useShallow((state) => state.getOrderSummary()),
     );
+    const shippingAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
 
     return (
         <section>
@@ -26,8 +27,11 @@ export function OrderReviewContainer() {
                         subtotal={subtotal}
                         tax={tax}
                         total={total}
-                        totalItems={totalItems}
+                        title={`Order Summary${totalItems ? ` (${totalItems} items)` : ''}`}
+                        buttonText="Place Order"
+                        shippingAddress={shippingAddress}
                         isOrderReview
+
                     />
                 </div>
             )}

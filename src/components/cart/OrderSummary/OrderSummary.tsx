@@ -1,31 +1,40 @@
 import { Button } from "@/components";
 import { formatPrice } from "@/helpers";
+import { DeliveryAddress } from "@/interfaces";
+import { ShippingAddressSummary } from "./ShippingAddressSummary";
 import Link from "next/link";
 
 export interface OrderSummaryProps {
+    title?: string;
     subtotal: number;
     shipping: number;
     tax: number;
     total: number;
-    totalItems?: number;
     isOrderReview?: boolean;
+    buttonText?: string;
+    shippingAddress?: DeliveryAddress;
 }
 
 export function OrderSummary({
+    title,
     shipping,
     subtotal,
     tax,
     total,
-    totalItems,
     isOrderReview,
+    buttonText = "Proceed to Checkout",
+    shippingAddress,
 }: OrderSummaryProps) {
     return (
-        <div className="w-full h-max space-y-4 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
+        <div className="w-full h-max space-y-3 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
             <h2 className="text-base md:text-lg font-bold">
-                Order Summary {isOrderReview && totalItems && `(${totalItems} items)`}
+                {title || "Order Summary"}
             </h2>
-            {isOrderReview && (
-                <div className="w-full border-b-[0.5px] border-gray-300" />
+            {isOrderReview  && (
+                <>
+                    <ShippingAddressSummary shippingAddress={shippingAddress} />
+                    <div className="w-full border-b-[0.5px] border-gray-300" />
+                </>
             )}
             <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Subtotal</span>
@@ -46,7 +55,7 @@ export function OrderSummary({
             <div className="w-full fixed bottom-0 left-0 px-4 py-6 text-center shadow-[0_-2px_10px_rgba(0,0,0,0.1)] bg-white lg:static lg:shadow-none lg:p-0">
                 <Link href="/checkout/address">
                     <Button type="button" variant="primary" className="w-full max-w-120">
-                        Checkout
+                        {buttonText}
                     </Button>
                 </Link>
             </div>
