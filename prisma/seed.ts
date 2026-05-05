@@ -3,7 +3,7 @@ import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 import { hashSync } from "bcryptjs";
-import { catalogData, USERS } from "@/data";
+import { catalogData, COUNTRIES, USERS } from "@/data";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
@@ -16,7 +16,7 @@ async function main() {
     await prisma.productImage.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
-
+    await prisma.country.deleteMany();
     // Insert categories
     const createdCategories = await prisma.category.createManyAndReturn({
         data: catalogData.categories,
@@ -61,6 +61,11 @@ async function main() {
             ...user,
             password: hashSync(user.password, 10),
         })),
+    });
+
+    // Insert contries
+    await prisma.country.createMany({
+        data: COUNTRIES,
     });
 }
 

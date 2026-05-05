@@ -1,6 +1,6 @@
 import { SelectOption } from "@/interfaces";
 
-export const countries: { name: string; id: string }[] = [
+export const COUNTRIES: { name: string; id: string }[] = [
     { name: "Afghanistan", id: "AF" },
     { name: "Aland Islands", id: "AX" },
     { name: "Albania", id: "AL" },
@@ -246,7 +246,7 @@ export const countries: { name: string; id: string }[] = [
     { name: "Zimbabwe", id: "ZW" },
 ];
 
-export const selectCountryOptions: SelectOption[] = countries.map((country) => ({
+export const selectCountryOptions: SelectOption[] = COUNTRIES.map((country) => ({
     id: country.id,
     value: country.name,
     label: country.name,

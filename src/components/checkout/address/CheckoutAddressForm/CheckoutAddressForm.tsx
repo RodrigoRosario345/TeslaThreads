@@ -1,17 +1,22 @@
 'use client';
 
+import { deleteDeliveryAddress, saveDeliveryAddress } from "@/actions/address";
 import { Button, ControllerInput, LoadingText } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
-import { selectCountryOptions } from "@/data";
-import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput } from "@/interfaces";
+import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput, SelectOption } from "@/interfaces";
 import { useDeliveryAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useShallow } from 'zustand/react/shallow';
 
+interface CheckoutAddressFormProps {
+    selectCountryOptions: SelectOption[];
+    defaultValues?: DeliveryAddressSchemaInput;
+    userId: string;
+}
 
-export function CheckoutAddressForm() {
+export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userId }: CheckoutAddressFormProps) {
     const deliveryAddress = useDeliveryAddressStore(useShallow((state) => state.deliveryAddress));
     const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
     // const clearDeliveryAddress = useDeliveryAddressStore((state) => state.clearDeliveryAddress);
@@ -20,20 +25,24 @@ export function CheckoutAddressForm() {
         mode: "onChange",
         resolver: zodResolver(schemaDeliveryAddress),
         // defaultValues: deliveryAddress || undefined,
+        defaultValues
     });
 
     useEffect(() => {
-        if (!deliveryAddress.firstName) return
+        if (defaultValues || !deliveryAddress.firstName) return
         reset(deliveryAddress);
     }, [deliveryAddress]);
 
     const onSubmit = async (data: DeliveryAddressSchemaOutput) => {
+        console.log("Form submitted with data:", data);
         const { rememberAddress, ...addressData } = data;
-        // if (!rememberAddress) {
-        //     clearDeliveryAddress();
-        //     return;
-        // }
         addDeliveryAddress(addressData);
+        if (!rememberAddress) {
+            await deleteDeliveryAddress(userId);
+            return;
+        }
+        await saveDeliveryAddress(addressData, userId);
+
     }
 
     return (

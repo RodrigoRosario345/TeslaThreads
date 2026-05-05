@@ -60,6 +60,12 @@ export const authConfig: NextAuthConfig = {
 
       return true;
     },
+    async jwt({ token, user }) {
+      if (user) {
+        token.data = user;
+      }
+      return token;
+    },
     // function that runs when a user signs in or out, or when the session is checked
     async session({ session, token }) {
       if (token.data) {

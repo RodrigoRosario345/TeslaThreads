@@ -73,7 +73,7 @@ model User {
   role          Role    @default(user)
   image         String?
 
-  userAddresses UserAddress[]
+  userAddresses UserAddress?
 }
 
 model Country {
@@ -86,13 +86,15 @@ model Country {
 model UserAddress {
   id String @id @default(uuid())
 
-  firstName  String
-  lastName   String
-  address    String
-  city       String
-  postalCode String
+  firstName    String
+  lastName     String
+  addressLine1 String
+  addressLine2 String?
+  postalCode   String
+  city         String
+  phoneNumber  String
 
-  userId    String
+  userId    String @unique
   countryId String
 
   user    User    @relation(fields: [userId], references: [id])
