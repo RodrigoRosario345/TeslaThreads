@@ -6,6 +6,7 @@ import { ControllerSelect } from "@/components/forms/controllers/ControllerSelec
 import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput, SelectOption } from "@/interfaces";
 import { useDeliveryAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useShallow } from 'zustand/react/shallow';
@@ -17,9 +18,9 @@ interface CheckoutAddressFormProps {
 }
 
 export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userId }: CheckoutAddressFormProps) {
+    const router = useRouter();
     const deliveryAddress = useDeliveryAddressStore(useShallow((state) => state.deliveryAddress));
     const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
-    // const clearDeliveryAddress = useDeliveryAddressStore((state) => state.clearDeliveryAddress);
 
     const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
         mode: "onChange",
@@ -33,15 +34,14 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
     }, [deliveryAddress]);
 
     const onSubmit = async (data: DeliveryAddressSchemaOutput) => {
-        // console.log("Form submitted with data:", data);
         const { rememberAddress, ...addressData } = data;
         addDeliveryAddress(addressData);
         if (!rememberAddress) {
             await deleteDeliveryAddress(userId);
-            return;
+        } else {
+            await saveDeliveryAddress(addressData, userId);
         }
-        await saveDeliveryAddress(addressData, userId);
-
+        router.push("/checkout");
     }
 
     return (
