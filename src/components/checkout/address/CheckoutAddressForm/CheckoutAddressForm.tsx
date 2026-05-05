@@ -24,7 +24,6 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
     const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaDeliveryAddress),
-        // defaultValues: deliveryAddress || undefined,
         defaultValues
     });
 
@@ -34,7 +33,7 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
     }, [deliveryAddress]);
 
     const onSubmit = async (data: DeliveryAddressSchemaOutput) => {
-        console.log("Form submitted with data:", data);
+        // console.log("Form submitted with data:", data);
         const { rememberAddress, ...addressData } = data;
         addDeliveryAddress(addressData);
         if (!rememberAddress) {

@@ -12,11 +12,13 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
     // Delete existing data
+    await prisma.userAddress.deleteMany();
+    await prisma.country.deleteMany();
     await prisma.user.deleteMany();
     await prisma.productImage.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
-    await prisma.country.deleteMany();
+
     // Insert categories
     const createdCategories = await prisma.category.createManyAndReturn({
         data: catalogData.categories,

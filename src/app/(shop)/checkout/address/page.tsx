@@ -29,7 +29,7 @@ export default async function AddressPage() {
         phoneNumber: address.phoneNumber,
         country: address.countryId
     } : undefined;
-    console.log("Default values for address form:", defaultValuesAddress);
+    // console.log("Default values for address form:", defaultValuesAddress);
     return (
         <section className="mx-auto w-full max-w-xl">
             <Title title="Address" />
