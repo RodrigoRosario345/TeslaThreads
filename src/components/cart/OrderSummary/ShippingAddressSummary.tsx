@@ -1,15 +1,13 @@
-import type { DeliveryAddress } from "@/interfaces";
+import { useDeliveryAddressStore } from "@/store";
 import Link from "next/link";
 
 export interface ShippingAddressSummaryProps {
-    shippingAddress?: DeliveryAddress;
+
 }
 
-export function ShippingAddressSummary({ shippingAddress }: ShippingAddressSummaryProps) {
+export function ShippingAddressSummary() {
 
-    if (!shippingAddress) {
-        return null;
-    }
+    const shippingAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
 
     return (
         <div className="text-sm space-y-1">
@@ -26,6 +24,9 @@ export function ShippingAddressSummary({ shippingAddress }: ShippingAddressSumma
                 {shippingAddress.firstName} {shippingAddress.lastName}
             </p>
             <p className="font-semibold">{shippingAddress.addressLine1}</p>
+            {shippingAddress.addressLine2 && (
+                <p className="font-semibold">{shippingAddress.addressLine2}</p>
+            )}
             <p className="font-semibold">
                 {shippingAddress.city}, {shippingAddress.postalCode}
             </p>

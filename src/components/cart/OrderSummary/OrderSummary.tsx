@@ -23,7 +23,6 @@ export function OrderSummary({
     total,
     isOrderReview,
     buttonText = "Proceed to Checkout",
-    shippingAddress,
 }: OrderSummaryProps) {
     return (
         <div className="w-full h-max space-y-3 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
@@ -32,7 +31,7 @@ export function OrderSummary({
             </h2>
             {isOrderReview  && (
                 <>
-                    <ShippingAddressSummary shippingAddress={shippingAddress} />
+                    <ShippingAddressSummary />
                     <div className="w-full border-b-[0.5px] border-gray-300" />
                 </>
             )}
