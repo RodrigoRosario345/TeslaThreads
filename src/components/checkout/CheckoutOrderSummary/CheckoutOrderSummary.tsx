@@ -21,11 +21,11 @@ export function CheckoutOrderSummary({
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     const handleCheckout = () => {
-        setIsSubmitting(true);
+        // setIsSubmitting(true);
 
-        setTimeout(() => {
-            setIsSubmitting(false);
-        }, 4000);
+        // setTimeout(() => {
+        //     setIsSubmitting(false);
+        // }, 4000);
     };
 
     return (
