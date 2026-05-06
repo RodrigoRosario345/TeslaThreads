@@ -1,11 +1,11 @@
 import { useDeliveryAddressStore } from "@/store";
 import Link from "next/link";
 
-export interface ShippingAddressSummaryProps {
+export interface AddressSummaryProps {
 
 }
 
-export function ShippingAddressSummary() {
+export function AddressSummary() {
 
     const shippingAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
 
