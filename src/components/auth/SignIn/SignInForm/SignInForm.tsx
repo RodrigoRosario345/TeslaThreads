@@ -1,0 +1,66 @@
+"use client";
+
+import { signInAction } from "@/actions/auth";
+import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
+import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+export function SignInForm() {
+    const {
+        setError,
+        control,
+        handleSubmit,
+        formState: { isSubmitting, errors },
+    } = useForm<userSignInSchemaInput, any, userSignInSchemaOutput>({
+        mode: "onChange",
+        resolver: zodResolver(userSignInSchema),
+    });
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+    const onSubmit = async (data: userSignInSchemaOutput) => {
+        // await new Promise(((resolve) => setTimeout(resolve, 3000)));
+        const result = await signInAction(data);
+        if (!result.success) {
+            setError("root", { message: result.message });
+            return;
+        }
+
+        window.location.href = callbackUrl;
+    }
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <ControllerInput<userSignInSchemaInput, userSignInSchemaOutput>
+                control={control}
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
+                type="email"
+            />
+            <ControllerInput<userSignInSchemaInput, userSignInSchemaOutput>
+                control={control}
+                name="password"
+                label="Password"
+                placeholder="Enter your password"
+                type="password"
+            />
+            <ErrorMessage message={errors.root?.message} />
+            <Button
+                type="submit"
+                variant={isSubmitting ? "primaryDisabled" : "primary"}
+                className="w-full"
+                disabled={isSubmitting}
+            >
+                <LoadingText
+                    isLoading={isSubmitting}
+                    text="Signing In"
+                    loadingText="Signing In..."
+                />
+            </Button>
+        </form>
+    );
+
+}
