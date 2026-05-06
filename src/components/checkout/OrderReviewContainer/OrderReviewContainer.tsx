@@ -1,16 +1,27 @@
 "use client";
 
 import { CartEmpty } from "@/components/cart/CartEmpty/CartEmpty";
-import { OrderSummary } from "@/components/cart/OrderSummary/OrderSummary";
 import { useCartStore } from "@/store";
 import { useShallow } from "zustand/react/shallow";
 import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
+import { CheckoutOrderSummary } from "../CheckoutOrderSummary/CheckoutOrderSummary";
+import { useEffect, useState } from "react";
+import { LoadingContent } from "@/components/ui/LoadingContent/LoadingContent";
 
 export function OrderReviewContainer() {
     const addedProducts = useCartStore((state) => state.items);
     const { subtotal, shipping, tax, total, totalItems } = useCartStore(
         useShallow((state) => state.getOrderSummary()),
     );
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+
+    if (!isLoading) {
+        return <LoadingContent />;
+    }
 
     return (
         <section>
@@ -21,15 +32,12 @@ export function OrderReviewContainer() {
                     <div className="block lg:hidden w-full border-b-[0.5px] border-gray-300" />
                     <OrderReviewItems addedProducts={addedProducts} />
                     <div className="block lg:hidden w-full border-b-[0.5px] border-black" />
-                    <OrderSummary
+                    <CheckoutOrderSummary
                         shipping={shipping}
                         subtotal={subtotal}
                         tax={tax}
                         total={total}
-                        title={`Order Summary${totalItems ? ` (${totalItems} items)` : ''}`}
-                        buttonText="Place Order"
-                        isOrderReview
-
+                        totalItems={totalItems}
                     />
                 </div>
             )}

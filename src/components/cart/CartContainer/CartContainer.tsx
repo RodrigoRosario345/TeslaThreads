@@ -6,6 +6,8 @@ import { OrderSummary } from "../OrderSummary/OrderSummary";
 import { CartList } from "../CartList/CartList";
 import { useShallow } from 'zustand/react/shallow';
 import { Modal } from "@/components/ui/Modal/Modal";
+import { useEffect, useState } from "react";
+import { LoadingContent } from "@/components/ui/LoadingContent/LoadingContent";
 
 export function CartContainer() {
     const operationResult = useCartStore((state) => state.operationResult);
@@ -13,6 +15,17 @@ export function CartContainer() {
     const clearOperationResult = useCartStore((state) => state.clearOperationResult);
     const addedProducts = useCartStore((state) => state.items);
     const { subtotal, shipping, tax, total } = useCartStore(useShallow((state) => state.getOrderSummary()));
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsLoading(true);
+    }, []);
+
+
+    if (!isLoading) {
+        return <LoadingContent />;
+    }
+
 
     return (
         <section>
