@@ -52,8 +52,9 @@ model Product {
   gender      Gender
   categoryId  Int
 
-  category Category       @relation(fields: [categoryId], references: [id])
-  images   ProductImage[]
+  category   Category       @relation(fields: [categoryId], references: [id])
+  images     ProductImage[]
+  orderItems OrderItem[]
 }
 
 model ProductImage {
@@ -74,13 +75,15 @@ model User {
   image         String?
 
   userAddresses UserAddress?
+  orders        Order[]
 }
 
 model Country {
   id   String @id @default(uuid())
   name String @unique
 
-  addresses UserAddress[]
+  addresses      UserAddress[]
+  orderAddresses OrderAddress[]
 }
 
 model UserAddress {
@@ -99,4 +102,53 @@ model UserAddress {
 
   user    User    @relation(fields: [userId], references: [id])
   country Country @relation(fields: [countryId], references: [id])
+}
+
+model Order {
+  id           String    @id @default(uuid())
+  subTotal     Float     @default(0)
+  tax          Float     @default(0)
+  total        Float     @default(0)
+  isPaid       Boolean   @default(false)
+  paidAt       DateTime?
+  itemsInOrder Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  userId String
+
+  user         User          @relation(fields: [userId], references: [id])
+  orderItems   OrderItem[]
+  orderAddress OrderAddress?
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int    @default(1)
+  price    Float  @default(0)
+  size     Size
+
+  orderId   String
+  productId String
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model OrderAddress {
+  id String @id @default(uuid())
+
+  firstName    String
+  lastName     String
+  addressLine1 String
+  addressLine2 String?
+  postalCode   String
+  city         String
+  phoneNumber  String
+
+  countryId String
+  orderId   String @unique
+
+  country Country @relation(fields: [countryId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id])
 }
