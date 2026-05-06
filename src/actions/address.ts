@@ -1,18 +1,18 @@
 "use server";
 
 import type { UserAddress } from "@/generated/prisma/client";
-import type { DeliveryAddress } from "@/interfaces";
+import type { ShippingAddress } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 type AddressResult =
-    | { success: true; address: DeliveryAddress }
+    | { success: true; address: ShippingAddress }
     | { success: false; address: null; error: string };
 
 type AddressDeleteResult =
     | { success: true; deleted: boolean }
     | { success: false; error: string };
 
-function buildAddressData(address: DeliveryAddress, userId: string) {
+function buildAddressData(address: ShippingAddress, userId: string) {
     return {
         userId,
         firstName: address.firstName,
@@ -26,7 +26,7 @@ function buildAddressData(address: DeliveryAddress, userId: string) {
     };
 }
 
-function formatAddress(address: UserAddress): DeliveryAddress {
+function formatAddress(address: UserAddress): ShippingAddress {
     return {
         firstName: address.firstName,
         lastName: address.lastName,
@@ -39,7 +39,7 @@ function formatAddress(address: UserAddress): DeliveryAddress {
     };
 }
 
-export async function getDeliveryAddress(userId: string): Promise<AddressResult> {
+export async function getShippingAddress(userId: string): Promise<AddressResult> {
     try {
         const address = await prisma.userAddress.findUnique({
             where: {
@@ -51,22 +51,22 @@ export async function getDeliveryAddress(userId: string): Promise<AddressResult>
             return {
                 success: false,
                 address: null,
-                error: "Delivery address not found",
+                error: "Shipping address not found",
             };
         }
         return { success: true, address: formatAddress(address) };
     } catch (error) {
-        console.error("Error fetching delivery address:", error);
+        console.error("Error fetching shipping address:", error);
         return {
             success: false,
             address: null,
-            error: "Failed to fetch delivery address",
+            error: "Failed to fetch shipping address",
         };
     }
 }
 
-export async function createDeliveryAddress(
-    address: DeliveryAddress,
+export async function createShippingAddress(
+    address: ShippingAddress,
     userId: string,
 ): Promise<AddressResult> {
     try {
@@ -76,17 +76,17 @@ export async function createDeliveryAddress(
 
         return { success: true, address: formatAddress(newAddress) };
     } catch (error) {
-        console.error("Error creating delivery address:", error);
+        console.error("Error creating shipping address:", error);
         return {
             success: false,
             address: null,
-            error: "Failed to create delivery address",
+            error: "Failed to create shipping address",
         };
     }
 }
 
-export async function saveDeliveryAddress(
-    address: DeliveryAddress,
+export async function saveShippingAddress(
+    address: ShippingAddress,
     userId: string,
 ): Promise<AddressResult> {
     try {
@@ -99,16 +99,16 @@ export async function saveDeliveryAddress(
 
         return { success: true, address: formatAddress(savedAddress) };
     } catch (error) {
-        console.error("Error saving delivery address:", error);
+        console.error("Error saving shipping address:", error);
         return {
             success: false,
             address: null,
-            error: "Failed to save delivery address",
+            error: "Failed to save shipping address",
         };
     }
 }
 
-export async function deleteDeliveryAddress(
+export async function deleteShippingAddress(
     userId: string,
 ): Promise<AddressDeleteResult> {
     try {
@@ -118,7 +118,7 @@ export async function deleteDeliveryAddress(
 
         return { success: true, deleted: result.count > 0 };
     } catch (error) {
-        console.error("Error deleting delivery address:", error);
-        return { success: false, error: "Failed to delete delivery address" };
+        console.error("Error deleting shipping address:", error);
+        return { success: false, error: "Failed to delete shipping address" };
     }
 }

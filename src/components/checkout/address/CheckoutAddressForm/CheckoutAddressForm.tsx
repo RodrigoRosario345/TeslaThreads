@@ -1,10 +1,10 @@
 'use client';
 
-import { deleteDeliveryAddress, saveDeliveryAddress } from "@/actions/address";
+import { deleteShippingAddress, saveShippingAddress } from "@/actions/address";
 import { Button, ControllerInput, LoadingText } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
-import { schemaDeliveryAddress, DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput, SelectOption } from "@/interfaces";
-import { useDeliveryAddressStore } from "@/store";
+import { schemaShippingAddress, ShippingAddressSchemaInput, ShippingAddressSchemaOutput, SelectOption } from "@/interfaces";
+import { useShippingAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -13,33 +13,33 @@ import { useShallow } from 'zustand/react/shallow';
 
 interface CheckoutAddressFormProps {
     selectCountryOptions: SelectOption[];
-    defaultValues?: DeliveryAddressSchemaInput;
+    defaultValues?: ShippingAddressSchemaInput;
     userId: string;
 }
 
 export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userId }: CheckoutAddressFormProps) {
     const router = useRouter();
-    const deliveryAddress = useDeliveryAddressStore(useShallow((state) => state.deliveryAddress));
-    const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
+    const shippingAddress = useShippingAddressStore(useShallow((state) => state.shippingAddress));
+    const addShippingAddress = useShippingAddressStore((state) => state.addShippingAddress);
 
-    const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<DeliveryAddressSchemaInput, any, DeliveryAddressSchemaOutput>({
+    const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<ShippingAddressSchemaInput, any, ShippingAddressSchemaOutput>({
         mode: "onChange",
-        resolver: zodResolver(schemaDeliveryAddress),
+        resolver: zodResolver(schemaShippingAddress),
         defaultValues
     });
 
     useEffect(() => {
-        if (defaultValues || !deliveryAddress.firstName) return
-        reset(deliveryAddress);
-    }, [deliveryAddress]);
+        if (defaultValues || !shippingAddress.firstName) return
+        reset(shippingAddress);
+    }, [shippingAddress]);
 
-    const onSubmit = async (data: DeliveryAddressSchemaOutput) => {
+    const onSubmit = async (data: ShippingAddressSchemaOutput) => {
         const { rememberAddress, ...addressData } = data;
-        addDeliveryAddress(addressData);
+        addShippingAddress(addressData);
         if (!rememberAddress) {
-            await deleteDeliveryAddress(userId);
+            await deleteShippingAddress(userId);
         } else {
-            await saveDeliveryAddress(addressData, userId);
+            await saveShippingAddress(addressData, userId);
         }
         router.push("/checkout");
     }
@@ -51,13 +51,13 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
         >
             <h2 className="text-lg font-semibold ">Delivery Address</h2>
             <div className="w-full flex flex-wrap gap-2.5">
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="firstName"
                     label="First Name"
                     placeholder="Enter first name"
                 />
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="lastName"
                     label="Last Name"
@@ -65,13 +65,13 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
                 />
             </div>
             <div className="w-full flex flex-wrap gap-2.5">
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="addressLine1"
                     label="Address Line 1"
                     placeholder="Enter address line 1"
                 />
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="addressLine2"
                     label="Address Line 2 (Optional)"
@@ -79,13 +79,13 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
                 />
             </div>
             <div className="w-full flex flex-wrap gap-2.5">
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="postalCode"
                     label="Postal Code"
                     placeholder="Enter postal code"
                 />
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="city"
                     label="City"
@@ -93,14 +93,14 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
                 />
             </div>
             <div className="w-full flex flex-wrap gap-2.5">
-                <ControllerSelect<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerSelect<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="country"
                     label="Country"
                     placeholder="Select country"
                     items={selectCountryOptions}
                 />
-                <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+                <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="phoneNumber"
                     label="Phone Number"
@@ -109,7 +109,7 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
                 // helperText={!country ? "Please select a country first" : ""}
                 />
             </div>
-            <ControllerInput<DeliveryAddressSchemaInput, DeliveryAddressSchemaOutput>
+            <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                 control={control}
                 name="rememberAddress"
                 label="Remember this address"
