@@ -1,4 +1,4 @@
-import { useDeliveryAddressStore } from "@/store";
+import { useShippingAddressStore } from "@/store";
 import Link from "next/link";
 
 export interface AddressSummaryProps {
@@ -7,7 +7,7 @@ export interface AddressSummaryProps {
 
 export function AddressSummary() {
 
-    const shippingAddress = useDeliveryAddressStore((state) => state.deliveryAddress);
+    const shippingAddress = useShippingAddressStore((state) => state.shippingAddress);
 
     return (
         <div className="text-sm space-y-1">

@@ -4,7 +4,7 @@ import { deleteShippingAddress, saveShippingAddress } from "@/actions/address";
 import { Button, ControllerInput, LoadingText } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
 import { schemaShippingAddress, ShippingAddressSchemaInput, ShippingAddressSchemaOutput, SelectOption } from "@/interfaces";
-import { useDeliveryAddressStore } from "@/store";
+import { useShippingAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -19,8 +19,8 @@ interface CheckoutAddressFormProps {
 
 export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userId }: CheckoutAddressFormProps) {
     const router = useRouter();
-    const deliveryAddress = useDeliveryAddressStore(useShallow((state) => state.deliveryAddress));
-    const addDeliveryAddress = useDeliveryAddressStore((state) => state.addDeliveryAddress);
+    const shippingAddress = useShippingAddressStore(useShallow((state) => state.shippingAddress));
+    const addShippingAddress = useShippingAddressStore((state) => state.addShippingAddress);
 
     const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<ShippingAddressSchemaInput, any, ShippingAddressSchemaOutput>({
         mode: "onChange",
@@ -29,13 +29,13 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
     });
 
     useEffect(() => {
-        if (defaultValues || !deliveryAddress.firstName) return
-        reset(deliveryAddress);
-    }, [deliveryAddress]);
+        if (defaultValues || !shippingAddress.firstName) return
+        reset(shippingAddress);
+    }, [shippingAddress]);
 
     const onSubmit = async (data: ShippingAddressSchemaOutput) => {
         const { rememberAddress, ...addressData } = data;
-        addDeliveryAddress(addressData);
+        addShippingAddress(addressData);
         if (!rememberAddress) {
             await deleteShippingAddress(userId);
         } else {
