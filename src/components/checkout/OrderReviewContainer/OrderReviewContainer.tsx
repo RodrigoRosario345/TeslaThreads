@@ -6,7 +6,7 @@ import { useShallow } from "zustand/react/shallow";
 import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
 import { CheckoutOrderSummary } from "../CheckoutOrderSummary/CheckoutOrderSummary";
 import { useEffect, useState } from "react";
-import { LoadingContent } from "@/components/ui/LoadingContent/LoadingContent";
+import { OrderReviewSkeleton } from "../OrderReviewSkeleton/OrderReviewSkeleton";
 
 export function OrderReviewContainer() {
     const addedProducts = useCartStore((state) => state.items);
@@ -20,7 +20,7 @@ export function OrderReviewContainer() {
     }, []);
 
     if (!isLoading) {
-        return <LoadingContent />;
+        return <OrderReviewSkeleton />;
     }
 
     return (
