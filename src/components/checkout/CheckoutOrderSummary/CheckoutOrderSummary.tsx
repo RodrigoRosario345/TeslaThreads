@@ -2,6 +2,8 @@ import { Button, LoadingText } from "@/components";
 import { formatPrice } from "@/helpers";
 import { useState } from "react";
 import { AddressSummary } from "../address/AddressSummary/AddressSummary";
+import { useCartStore, useShippingAddressStore } from "@/store";
+import { createOrder } from "@/actions/order";
 
 export interface CheckoutOrderSummaryProps {
     subtotal: number;
@@ -19,13 +21,31 @@ export function CheckoutOrderSummary({
     totalItems,
 }: CheckoutOrderSummaryProps) {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const shippingAddress = useShippingAddressStore((state) => state.shippingAddress);
+    const productsAddedToCart = useCartStore((state) => state.items);
 
-    const handleCheckout = () => {
-        // setIsSubmitting(true);
+    const handleCheckout = async () => {
 
-        // setTimeout(() => {
-        //     setIsSubmitting(false);
-        // }, 4000);
+        setIsSubmitting(true);
+
+        const formattedProductsToOrder = productsAddedToCart.map((item) => ({
+            productId: item.id,
+            size: item.size,
+            quantity: item.quantity,
+        }));
+
+        const orderDetails = {
+            shippingAddress,
+            productsToOrder: formattedProductsToOrder,
+        };
+
+        const result = await createOrder(orderDetails)
+
+        console.log("Result:", result);
+
+
+        setIsSubmitting(false);
+
     };
 
     return (

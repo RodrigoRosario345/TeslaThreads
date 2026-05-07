@@ -36,7 +36,7 @@ export function CartItemSkeleton() {
             </div>
             <div className="block lg:hidden w-full border-b-[0.5px] border-black" />
             <div className="w-full h-max space-y-3 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
-                <div className="h-5 w-30 rounded bg-gray-300"></div>
+                <div className="h-5 w-38 rounded bg-gray-300"></div>
                 <div className="flex justify-between gap-10 lg:gap-25">
                     <div className="h-4 w-28 rounded bg-gray-300"></div>
                     <div className="h-4 w-28 rounded bg-gray-300"></div>
