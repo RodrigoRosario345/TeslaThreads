@@ -20,7 +20,7 @@ export function OrderReviewContainer() {
     useEffect(() => {
         setIsLoading(true);
         if (addedProducts.length < 1) {
-            router.push("/cart");
+            router.replace("/cart");
         }
     }, []);
 

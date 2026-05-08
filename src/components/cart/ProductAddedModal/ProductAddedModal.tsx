@@ -41,7 +41,7 @@ export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedMo
                 className="fixed top-10 right-0 z-50"
                 ref={modalRef}
             >
-                <div className="w-full max-w-115 space-y-10 p-8 rounded-2xl bg-white text-center shadow-lg">
+                <div className="w-full max-w-115 space-y-10 p-8 rounded-2xl bg-white shadow-lg">
                     {/* Icon Close */}
                     <IoClose
                         size={40}
@@ -58,14 +58,12 @@ export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedMo
                         Item added to cart!
                     </h2>
 
-                    {/* Added Products */}
-                    <ul className="w-full space-y-3">
-                        <CartItem
-                            key={`${itemAddedRecently.id}-${itemAddedRecently.size}`}
-                            product={itemAddedRecently}
-                            isQuantitySelector={false}
-                        />
-                    </ul>
+                    {/* Added Product */}
+                    <CartItem
+                        key={`${itemAddedRecently.id}-${itemAddedRecently.size}`}
+                        product={itemAddedRecently}
+                        isQuantitySelector={false}
+                    />
 
                     {/* Order Summary */}
                     <div className="w-full border-t-[0.1px] border-gray-400" />
@@ -81,7 +79,7 @@ export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedMo
                     <Link
                         onClick={onClose}
                         href="/cart"
-                        className="w-full inline-block bg-black hover:bg-gray-800 text-white font-medium p-2 rounded text-sm outline-2 outline-black border-2 border-white mb-4"
+                        className="w-full inline-block text-center bg-black hover:bg-gray-800 text-white font-medium p-2 rounded text-sm outline-2 outline-black border-2 border-white mb-4"
                     >
                         View Cart ({totalItems})
                     </Link>

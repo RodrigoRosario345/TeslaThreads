@@ -42,7 +42,7 @@ export function CartItem({
                     height={100}
                     objectFit="cover"
                 />
-                <div className="flex flex-col items-stretch gap-1 w-full ">
+                <div className="w-full space-y-1">
                     <h3 className="flex justify-between font-medium gap-10 lg:gap-25">
                         <Link href={`/product/${product.slug}`} className="text-start hover:underline hover:underline-offset-2">
                             {product.title}
