@@ -31,7 +31,7 @@ export function CheckoutOrderSummary({
         const formattedProductsToOrder = productsAddedToCart.map((item) => ({
             productId: item.id,
             size: item.size,
-            quantity: item.quantity,
+            quantity: item.quantity, 
         }));
 
         const orderDetails = {

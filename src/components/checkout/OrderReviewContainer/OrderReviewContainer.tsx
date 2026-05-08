@@ -7,8 +7,10 @@ import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
 import { CheckoutOrderSummary } from "../CheckoutOrderSummary/CheckoutOrderSummary";
 import { useEffect, useState } from "react";
 import { OrderReviewSkeleton } from "../OrderReviewSkeleton/OrderReviewSkeleton";
+import { useRouter } from "next/navigation";
 
 export function OrderReviewContainer() {
+    const router = useRouter();
     const addedProducts = useCartStore((state) => state.items);
     const { subtotal, shipping, tax, total, totalItems } = useCartStore(
         useShallow((state) => state.getOrderSummary()),
@@ -17,6 +19,9 @@ export function OrderReviewContainer() {
 
     useEffect(() => {
         setIsLoading(true);
+        if (addedProducts.length < 1) {
+            router.push("/cart");
+        }
     }, []);
 
     if (!isLoading) {

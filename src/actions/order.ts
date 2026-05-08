@@ -16,7 +16,6 @@ interface OrderDetails {
 }
 
 export const createOrder = async (orderDetails: OrderDetails) => {
-
     const { shippingAddress, productsToOrder } = orderDetails;
     console.log("Shipping Address:", shippingAddress);
     console.log("Products to Order:", productsToOrder);
@@ -42,11 +41,16 @@ export const createOrder = async (orderDetails: OrderDetails) => {
     });
 
     // get count total items ordered
-    const totalItems = productsToOrder.reduce((total, item) => total + item.quantity, 0);
+    const totalItems = productsToOrder.reduce(
+        (total, item) => total + item.quantity,
+        0,
+    );
 
     // get subtotal, shipping, tax and total
     const subTotal = productsToOrder.reduce((sum, product) => {
-        const orderItem = productDetails.find((item) => item.id === product.productId);
+        const orderItem = productDetails.find(
+            (item) => item.id === product.productId,
+        );
         return sum + (orderItem ? product.quantity * orderItem.price : 0);
     }, 0);
 
@@ -54,22 +58,49 @@ export const createOrder = async (orderDetails: OrderDetails) => {
     const tax = subTotal * 0.15; // 15% tax
     const total = subTotal + shipping + tax;
 
-
     // Create the order transaction in the database
     try {
         // Verify and update stock for each product
         const transactionResults = await prisma.$transaction(async (tx) => {
-
             // Check stock availability and update stock
+            const stockUpdates = productsToOrder.map(async (product) => {
+                const productInDb = await tx.product.findUnique({
+                    where: { id: product.productId },
+                });
 
+                if (!productInDb) {
+                    throw new Error(`Product with ID ${product.productId} not found.`);
+                }
+
+                if (productInDb.inStock < product.quantity) {
+                    throw new Error(`Not enough stock for product ${productInDb.title}.`);
+                }
+
+                return tx.product.update({
+                    where: { id: product.productId },
+                    data: { inStock: productInDb.inStock - product.quantity },
+                });
+            });
+
+            const updatedProducts = await Promise.all(stockUpdates);
+
+            // Ensure no product has negative stock after the update
+            updatedProducts.forEach((product) => {
+                if (product.inStock < 0) {
+                    throw new Error(
+                        `Stock for product ${product.title} cannot be negative. Current stock: ${product.inStock}`,
+                    );
+                }
+            });
 
             // Create order record
             const orderItems = productsToOrder.map((product) => ({
                 productId: product.productId,
                 quantity: product.quantity,
-                price: productDetails.find((item) => item.id === product.productId)?.price || 0,
+                price:
+                    productDetails.find((item) => item.id === product.productId)?.price ||
+                    0,
                 size: product.size,
-
             }));
 
             const order = await tx.order.create({
@@ -83,10 +114,9 @@ export const createOrder = async (orderDetails: OrderDetails) => {
                         createMany: {
                             data: orderItems,
                         },
-                    }
-                }
+                    },
+                },
             });
-
 
             // create shipping address record
             const { country, ...dataShippingAddress } = shippingAddress;
@@ -101,19 +131,23 @@ export const createOrder = async (orderDetails: OrderDetails) => {
 
             return {
                 order,
-                shippingAddressRecord
+                shippingAddressRecord,
             };
-
         });
-
-
     } catch (error) {
-
+        console.error("Error creating order:", error);
+        return {
+            success: false,
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An error occurred while creating the order.",
+        };
     }
 
-
-
     console.log(`Product Details: ${JSON.stringify(productDetails)}`);
-    console.log(`Order Summary: ${JSON.stringify({ totalItems, subTotal, shipping, tax, total })}`)
+    console.log(
+        `Order Summary: ${JSON.stringify({ totalItems, subTotal, shipping, tax, total })}`,
+    );
     return { success: true, message: "Order created successfully!" };
 };
