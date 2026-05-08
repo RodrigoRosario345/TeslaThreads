@@ -44,24 +44,24 @@ export function CheckoutOrderSummary({
             productsToOrder: formattedProductsToOrder,
         };
 
-        const result = await createOrder(orderDetails)
+        const { success, message, order } = await createOrder(orderDetails)
 
         setIsSubmitting(false);
 
-        if (!result.success) {
+        if (!success) {
             addOperationResult({
                 status: "error",
-                message: result.message,
+                message: message,
             });
-        } else {
-            addOperationResult({
-                status: "success",
-                message: result.message,
-            });
-            clearCart();
+            router.replace("/cart");
+            return;
         }
-
-        router.replace("/cart");
+        addOperationResult({
+            status: "success",
+            message: message,
+        });
+        router.replace("/order/" + order?.id);
+        clearCart();
     };
 
 

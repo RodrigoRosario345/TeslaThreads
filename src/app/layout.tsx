@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geom, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components";
 import { auth } from "@/auth.config";
 
-const inter = Inter({
+const font = Instrument_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -28,10 +26,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
-        <Provider session={session}>
-          {children}
-        </Provider>
+      <body className={`${font.className} antialiased`}>
+        <Provider session={session}>{children}</Provider>
       </body>
     </html>
   );

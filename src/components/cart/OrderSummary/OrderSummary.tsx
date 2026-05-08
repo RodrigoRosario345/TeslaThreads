@@ -17,7 +17,7 @@ export function OrderSummary({
 }: OrderSummaryProps) {
     return (
         <div className="w-full h-max space-y-3 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
-            <h2 className="text-base md:text-lg font-bold">Order Summary</h2>
+            <h2 className="text-base md:text-xl font-semibold">Order Summary</h2>
             <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Subtotal</span>
                 <span>{formatPrice(subtotal)}</span>
