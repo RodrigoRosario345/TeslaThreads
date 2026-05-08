@@ -31,12 +31,16 @@ export interface CartStore {
     operationResult: OperationResult | null;
     itemAddedRecently: CartItem | null;
 
-    //actions
+    //actions items
     addItem: (item: CartItem) => void;
     replaceQuantity: (id: string, size: ValidSizes, quantity: number) => void;
     removeItem: (id: string, size: ValidSizes) => void;
     clearCart: () => void;
     getOrderSummary: () => OrderSummaryResult;
+
+
+    // actions operation result
+    addOperationResult: (result: OperationResult) => void;
     clearOperationResult: () => void;
     clearItemAddedRecently: () => void;
 }
