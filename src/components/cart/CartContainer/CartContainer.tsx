@@ -7,7 +7,7 @@ import { CartList } from "../CartList/CartList";
 import { useShallow } from 'zustand/react/shallow';
 import { Modal } from "@/components/ui/Modal/Modal";
 import { useEffect, useState } from "react";
-import { LoadingContent } from "@/components/ui/LoadingContent/LoadingContent";
+import { CartItemSkeleton } from "../CartItemSkeleton/CartItemSkeleton";
 
 export function CartContainer() {
     const operationResult = useCartStore((state) => state.operationResult);
@@ -23,7 +23,9 @@ export function CartContainer() {
 
 
     if (!isLoading) {
-        return <LoadingContent />;
+        return (
+            <CartItemSkeleton />
+        );
     }
 
 
@@ -32,7 +34,7 @@ export function CartContainer() {
             {addedProducts.length === 0 ? (
                 <CartEmpty />
             ) : (
-                <div className="flex flex-col lg:flex-row gap-6 sm:gap-10 lg:gap-30">
+                <div className="flex flex-col lg:flex-row gap-6 sm:gap-10 lg:gap-30 lg:justify-between">
                     <div className="block lg:hidden w-full border-b-[0.5px] border-gray-300" />
                     <CartList addedProducts={addedProducts} />
                     <div className="block lg:hidden w-full border-b-[0.5px] border-black" />

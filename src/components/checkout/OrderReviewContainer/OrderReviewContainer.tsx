@@ -6,9 +6,11 @@ import { useShallow } from "zustand/react/shallow";
 import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
 import { CheckoutOrderSummary } from "../CheckoutOrderSummary/CheckoutOrderSummary";
 import { useEffect, useState } from "react";
-import { LoadingContent } from "@/components/ui/LoadingContent/LoadingContent";
+import { OrderReviewSkeleton } from "../OrderReviewSkeleton/OrderReviewSkeleton";
+import { useRouter } from "next/navigation";
 
 export function OrderReviewContainer() {
+    const router = useRouter();
     const addedProducts = useCartStore((state) => state.items);
     const { subtotal, shipping, tax, total, totalItems } = useCartStore(
         useShallow((state) => state.getOrderSummary()),
@@ -17,10 +19,13 @@ export function OrderReviewContainer() {
 
     useEffect(() => {
         setIsLoading(true);
+        if (addedProducts.length < 1) {
+            router.replace("/cart");
+        }
     }, []);
 
     if (!isLoading) {
-        return <LoadingContent />;
+        return <OrderReviewSkeleton />;
     }
 
     return (
