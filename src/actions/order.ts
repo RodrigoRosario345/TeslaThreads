@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth.config";
-import { ShippingAddress, ValidSizes } from "@/interfaces";
+import { Order, ShippingAddress, ValidSizes } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 interface ProductToOrder {
@@ -15,7 +15,11 @@ interface OrderDetails {
     productsToOrder: ProductToOrder[];
 }
 
-export const createOrder = async (orderDetails: OrderDetails) => {
+type OrderResult = { success: boolean; order: Order | null; message: string };
+
+export const createOrder = async (
+    orderDetails: OrderDetails,
+): Promise<OrderResult> => {
     const { shippingAddress, productsToOrder } = orderDetails;
     console.log("Shipping Address:", shippingAddress);
     console.log("Products to Order:", productsToOrder);
@@ -27,6 +31,7 @@ export const createOrder = async (orderDetails: OrderDetails) => {
     if (!userId) {
         return {
             success: false,
+            order: null,
             message: "You must be logged in to place an order.",
         };
     }
@@ -61,7 +66,7 @@ export const createOrder = async (orderDetails: OrderDetails) => {
     // Create the order transaction in the database
     try {
         // Verify and update stock for each product
-        const transactionResults = await prisma.$transaction(async (tx) => {
+        const orderTransactionResult = await prisma.$transaction(async (tx) => {
             // Check stock availability and update stock
             const stockUpdates = productsToOrder.map(async (product) => {
                 const productInDb = await tx.product.findUnique({
@@ -129,25 +134,48 @@ export const createOrder = async (orderDetails: OrderDetails) => {
                 },
             });
 
-            return {
-                order,
-                shippingAddressRecord,
-            };
+            return order;
         });
+
+        return {
+            success: true,
+            order: orderTransactionResult,
+            message: "Order created successfully!",
+        };
     } catch (error) {
         console.error("Error creating order:", error);
         return {
             success: false,
+            order: null,
             message:
                 error instanceof Error
                     ? error.message
                     : "An error occurred while creating the order.",
         };
     }
+};
 
-    console.log(`Product Details: ${JSON.stringify(productDetails)}`);
-    console.log(
-        `Order Summary: ${JSON.stringify({ totalItems, subTotal, shipping, tax, total })}`,
-    );
-    return { success: true, message: "Order created successfully!" };
+export const getOrderById = async (orderId: string): Promise<OrderResult> => {
+    try {
+        const order = await prisma.order.findUnique({
+            where: { id: orderId },
+            include: { orderItems: true, orderAddress: true },
+        });
+
+        if (!order) {
+            return { success: false, order: null, message: "Order not found." };
+        }
+
+        return { success: true, order, message: "Order retrieved successfully!" };
+    } catch (error) {
+        console.error("Error fetching order:", error);
+        return {
+            success: false,
+            order: null,
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An error occurred while fetching the order.",
+        };
+    }
 };

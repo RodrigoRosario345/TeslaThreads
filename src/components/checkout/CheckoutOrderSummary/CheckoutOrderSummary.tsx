@@ -1,9 +1,10 @@
-import { Button, LoadingText } from "@/components";
+import { Button, LoadingText, Modal } from "@/components";
 import { formatPrice } from "@/helpers";
 import { useState } from "react";
 import { AddressSummary } from "../address/AddressSummary/AddressSummary";
 import { useCartStore, useShippingAddressStore } from "@/store";
 import { createOrder } from "@/actions/order";
+import { useRouter } from "next/navigation";
 
 export interface CheckoutOrderSummaryProps {
     subtotal: number;
@@ -20,18 +21,22 @@ export function CheckoutOrderSummary({
     total,
     totalItems,
 }: CheckoutOrderSummaryProps) {
+    const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const shippingAddress = useShippingAddressStore((state) => state.shippingAddress);
     const productsAddedToCart = useCartStore((state) => state.items);
+    const clearCart = useCartStore((state) => state.clearCart);
+    const addOperationResult = useCartStore((state) => state.addOperationResult);
 
-    const handleCheckout = async () => {
+
+    const handlePlaceOrder = async () => {
 
         setIsSubmitting(true);
 
         const formattedProductsToOrder = productsAddedToCart.map((item) => ({
             productId: item.id,
             size: item.size,
-            quantity: item.quantity, 
+            quantity: item.quantity,
         }));
 
         const orderDetails = {
@@ -39,14 +44,26 @@ export function CheckoutOrderSummary({
             productsToOrder: formattedProductsToOrder,
         };
 
-        const result = await createOrder(orderDetails)
-
-        console.log("Result:", result);
-
+        const { success, message, order } = await createOrder(orderDetails)
 
         setIsSubmitting(false);
 
+        if (!success) {
+            addOperationResult({
+                status: "error",
+                message: message,
+            });
+            router.replace("/cart");
+            return;
+        }
+        addOperationResult({
+            status: "success",
+            message: message,
+        });
+        router.replace("/order/" + order?.id);
+        clearCart();
     };
+
 
     return (
         <div className="w-full h-max space-y-3 lg:p-8 lg:rounded-md lg:shadow-xl lg:max-w-sm">
@@ -76,7 +93,7 @@ export function CheckoutOrderSummary({
                     type="button"
                     variant={isSubmitting ? "primaryDisabled" : "primary"}
                     className="w-full max-w-120"
-                    onClick={handleCheckout}
+                    onClick={handlePlaceOrder}
                     disabled={isSubmitting}
                 >
                     <LoadingText

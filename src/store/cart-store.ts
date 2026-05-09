@@ -56,6 +56,7 @@ export const useCartStore = create<CartStore>()(
                 const totalItems = items.reduce((total, item) => total + item.quantity, 0);
                 return { subtotal, shipping, tax, total, totalItems };
             },
+            addOperationResult: (result) => set({ operationResult: result }),
             clearOperationResult: () => set({ operationResult: null }),
             clearItemAddedRecently: () => set({ itemAddedRecently: null }),
         }),

@@ -22,7 +22,7 @@ export function ProductItem({ product }: ProductItemProps) {
 
     return (
         <Link href={`/product/${product.slug}`}>
-            <article className="space-y-1 cursor-pointer">
+            <article className="space-y-3 cursor-pointer">
                 <Image
                     className="rounded-sm"
                     src={`/products/${imagen}`}
@@ -32,8 +32,10 @@ export function ProductItem({ product }: ProductItemProps) {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
-                <h2 className="text-sm md:text-base font-bold">{product.title}</h2>
-                <p className="text-xs md:text-sm font-semibold">${product.price.toFixed(2)}</p>
+                <div>
+                    <h2 className="text-sm md:text-base font-bold">{product.title}</h2>
+                    <p className="text-xs md:text-sm font-semibold">${product.price.toFixed(2)}</p>
+                </div>
             </article>
         </Link>
     );
