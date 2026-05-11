@@ -60,8 +60,8 @@ export function CheckoutOrderSummary({
             status: "success",
             message: message,
         });
-        router.replace("/order/" + order?.id);
         clearCart();
+        router.replace("/order/" + order?.id);
     };
 
 

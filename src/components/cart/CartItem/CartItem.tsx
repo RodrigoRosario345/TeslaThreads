@@ -9,13 +9,10 @@ import Link from "next/link";
 
 export interface CartItemProps {
     product: CartItem;
-    isQuantitySelector?: boolean;
+    isModifiable?: boolean;
 }
 
-export function CartItem({
-    product,
-    isQuantitySelector = true,
-}: CartItemProps) {
+export function CartItem({ product, isModifiable = true }: CartItemProps) {
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
     const removeItem = useCartStore((state) => state.removeItem);
     const quantities = Array.from({ length: product.stock }, (_, i) => i + 1);
@@ -44,13 +41,20 @@ export function CartItem({
                 />
                 <div className="w-full space-y-1">
                     <h3 className="flex justify-between font-medium gap-10 lg:gap-25">
-                        <Link href={`/product/${product.slug}`} className="text-start hover:underline hover:underline-offset-2">
-                            {product.title}
-                        </Link>
+                        {isModifiable ? (
+                            <Link
+                                href={`/product/${product.slug}`}
+                                className="text-start hover:underline hover:underline-offset-2"
+                            >
+                                {product.title}
+                            </Link>
+                        ) : (
+                            <span>{product.title}</span>
+                        )}
                         <span>{formatPrice(product.price)}</span>
                     </h3>
                     <p>Size: {product.size}</p>
-                    {isQuantitySelector ? (
+                    {isModifiable ? (
                         <div className="flex gap-1">
                             Quantity:
                             {
