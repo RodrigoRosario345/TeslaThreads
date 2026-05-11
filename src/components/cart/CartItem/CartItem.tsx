@@ -6,6 +6,7 @@ import { useCartStore } from "@/store";
 import { useState, useCallback } from "react";
 import { formatPrice } from "@/helpers";
 import Link from "next/link";
+import { useShallow } from "zustand/react/shallow";
 
 export interface CartItemProps {
     product: CartItem;
@@ -15,7 +16,21 @@ export interface CartItemProps {
 export function CartItem({ product, isModifiable = true }: CartItemProps) {
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
     const removeItem = useCartStore((state) => state.removeItem);
-    const quantities = Array.from({ length: product.stock }, (_, i) => i + 1);
+    const othersSizeSameProduct = useCartStore(
+        useShallow((state) =>
+            state.items.filter(
+                (item) => item.id === product.id && item.size !== product.size,
+            ),
+        ),
+    );
+    const quantityOfOthersSizeSameProduct = othersSizeSameProduct.reduce(
+        (total, item) => total + item.quantity,
+        0,
+    );
+    const quantities = Array.from(
+        { length: product.stock - quantityOfOthersSizeSameProduct },
+        (_, i) => i + 1,
+    );
 
     const handleShowConfirmDelete = useCallback(() => {
         setShowConfirmDelete(true);
