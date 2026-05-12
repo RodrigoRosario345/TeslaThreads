@@ -64,6 +64,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     <p className="text-base md:text-lg lg:text-xl font-semibold">
                         {formatPrice(product.price)}
                     </p>
+                    
                     <ProductSizeQuantity product={product} />
                     <div className="text-sm">
                         <p className="font-semibold mb-3">Description</p>

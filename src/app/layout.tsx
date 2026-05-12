@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Geom, Instrument_Sans } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/components";
 import { auth } from "@/auth.config";
 
-const font = Instrument_Sans({
+const font = Geist({
   subsets: ["latin"],
 });
 
