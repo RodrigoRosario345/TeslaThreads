@@ -1,6 +1,7 @@
 import type { CartItem as CartItemType } from "@/interfaces";
 import { CartItem } from "../CartItem/CartItem";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button/Button";
 
 interface CartListProps {
     addedProducts: CartItemType[];
@@ -14,10 +15,10 @@ export function CartList({ addedProducts }: CartListProps) {
                 Add more items to your cart to qualify for free shipping.
             </p>
             <Link
-                href="/"
-                className="w-auto text-sm underline underline-offset-3 hover:decoration-2 cursor-pointer inline-block"
-            >
-                Continue Shopping
+                href="/"            >
+                <Button variant="link">
+                    Continue Shopping
+                </Button>
             </Link>
             <ul className="w-full space-y-3">
                 {addedProducts.map((product) => (

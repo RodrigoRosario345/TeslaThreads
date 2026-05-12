@@ -49,13 +49,8 @@ export function ConfirmDeleteModal({ text, onDelete, onClose }: ConfirmDeleteMod
                 className="w-full max-w-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50"
             >
                 <div className="relative w-full flex flex-col space-y-5 p-8 rounded-2xl bg-white text-center">
-                    <Button
-                        onClick={closeModal}
-                        className=" text-gray-300 hover:text-gray-400 cursor-pointer my-0 ml-auto -mr-3"
-                        aria-label="close"
-                    >
-                        <IoClose size={40} />
-                    </Button>
+
+                    <IoClose size={40} className="text-gray-200 hover:text-gray-300 cursor-pointer my-0 ml-auto -mr-3" onClick={closeModal} aria-label="close" />
 
                     {/* Icon */}
                     <div className="text-6xl sm:text-7xl mx-auto text-red-500">
@@ -83,16 +78,16 @@ export function ConfirmDeleteModal({ text, onDelete, onClose }: ConfirmDeleteMod
                         <Button
                             onClick={closeModal}
                             disabled={isDeleting}
-                            variant="primary"
-                            className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-normal"
+                            variant="outline"
+                            className="w-full"
                         >
                             Cancel
                         </Button>
                         <Button
                             onClick={handleDelete}
                             disabled={isDeleting}
-                            variant="primary"
-                            className="w-full bg-red-500 hover:bg-red-600 font-normal"
+                            variant="destructive"
+                            className="w-full"
                         >
                             <LoadingText isLoading={isDeleting} text="Delete" loadingText="Deleting..." />
                         </Button>

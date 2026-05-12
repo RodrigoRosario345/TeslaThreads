@@ -120,7 +120,7 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
             />
             <Button
                 className="w-full"
-                variant={isSubmitting ? "primaryDisabled" : "primary"}
+                variant={isSubmitting ? "disabled" : "primary"}
                 type="submit"
                 disabled={isSubmitting}
             >

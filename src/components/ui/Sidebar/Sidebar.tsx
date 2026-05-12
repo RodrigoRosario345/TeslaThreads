@@ -19,7 +19,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-    const {isAuthenticated} = useSessionUser();
+    const { isAuthenticated } = useSessionUser();
 
     const handleSignOut = async () => {
         await signOutAction();
@@ -43,7 +43,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                             <Link
                                 href={option.href}
                                 onClick={onClose}
-                                className="inline-block w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                                className="inline-block w-full bg-transparent transition-colors hover:bg-gray-100 font-semibold py-2.5 px-4 rounded cursor-pointer"
                             >
                                 {option.label}
                             </Link>
@@ -52,7 +52,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     {isAuthenticated ? (
                         <li>
                             <Button
-                                className="text-left w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                                variant="ghost"
+                                className="text-left w-full font-semibold"
                                 onClick={handleSignOut}
                             >
                                 Sign Out
@@ -62,7 +63,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                         <li>
                             <Link
                                 href="/auth/sign-in"
-                                className="inline-block w-full font-semibold p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                                className="inline-block w-full bg-transparent transition-colors hover:bg-gray-100 font-semibold py-2.5 px-4 rounded cursor-pointer"
                             >
                                 Sign In
                             </Link>

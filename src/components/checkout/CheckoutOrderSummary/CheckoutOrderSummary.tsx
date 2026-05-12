@@ -91,7 +91,7 @@ export function CheckoutOrderSummary({
             <div className="w-full fixed bottom-0 left-0 px-4 py-6 text-center shadow-[0_-2px_10px_rgba(0,0,0,0.1)] bg-white lg:static lg:shadow-none lg:p-0">
                 <Button
                     type="button"
-                    variant={isSubmitting ? "primaryDisabled" : "primary"}
+                    variant={isSubmitting ? "disabled" : "primary"}
                     className="w-full max-w-120"
                     onClick={handlePlaceOrder}
                     disabled={isSubmitting}

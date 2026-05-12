@@ -82,7 +82,8 @@ export function CartItem({ product, isModifiable = true }: CartItemProps) {
                             }
                             <Button
                                 type="button"
-                                className="ml-10 pb-px border-b hover:border-b-2 cursor-pointer"
+                                variant="link"
+                                className="ml-4"
                                 onClick={handleShowConfirmDelete}
                             >
                                 Remove

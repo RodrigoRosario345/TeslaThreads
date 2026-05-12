@@ -50,7 +50,7 @@ export function SignInForm() {
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
-                variant={isSubmitting ? "primaryDisabled" : "primary"}
+                variant={isSubmitting ? "disabled" : "primary"}
                 className="w-full"
                 disabled={isSubmitting}
             >
