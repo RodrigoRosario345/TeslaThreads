@@ -61,7 +61,7 @@ export function CheckoutOrderSummary({
             message: message,
         });
         clearCart();
-        router.replace("/order/" + order?.id);
+        router.replace("/order/" + order?.id, );
     };
 
 

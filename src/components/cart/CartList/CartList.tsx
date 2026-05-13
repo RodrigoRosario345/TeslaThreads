@@ -16,7 +16,7 @@ export function CartList({ addedProducts }: CartListProps) {
             </p>
             <Link
                 href="/"            >
-                <Button variant="link">
+                <Button variant="link" className="mb-4">
                     Continue Shopping
                 </Button>
             </Link>
