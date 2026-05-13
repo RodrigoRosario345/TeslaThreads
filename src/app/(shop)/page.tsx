@@ -11,7 +11,6 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
   const page = parseInt(params.page as string) || 1;
   const { products, totalPages } = await getProducts(page);
 
-
   return (
     <>
       <ProductList products={products} />

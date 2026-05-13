@@ -116,7 +116,7 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
                 type="checkbox"
                 classNameContainer="flex-row-reverse justify-end items-center gap-2 mt-6!"
                 classNameLabel="text-sm! font-medium text-gray-600! cursor-pointer"
-                classNameInput="peer order-1 appearance-none size-6! border border-gray-300! rounded-md  focus:ring-0! checked:border-blue-600! checked:bg-blue-600 cursor-pointer"
+                classNameInput="peer order-1 appearance-none size-6! border border-gray-300! rounded-md  focus:ring-0! checked:border-primary! checked:bg-primary cursor-pointer"
             />
             <Button
                 className="w-full"
