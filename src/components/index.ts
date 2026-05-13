@@ -13,6 +13,7 @@ export * from './ui/Modal/Modal';
 export * from './ui/Modal/ConfirmDeleteModal';
 export * from './ui/CountTo/CountTo';
 export * from './ui/TransitionAnimationPage/TransitionAnimationPage';
+export * from './ui/Table/Table';
 
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';
@@ -31,5 +32,7 @@ export * from './auth/SignIn/SignInContainer/SignInContainer';
 export * from './auth/SignUp/SignUpContainer/SignUpContainer';
 
 export * from './search/Pagination/Pagination';
+
+export * from './orders/OrdersContainer/OrdersContainer';
 
 
