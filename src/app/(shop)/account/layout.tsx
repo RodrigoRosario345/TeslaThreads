@@ -1,8 +1,6 @@
 import { AccountSidebar } from "@/components";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-    console.log("Rendering Account Layout");
-    
+export default function Layout({ children }: { children: React.ReactNode }) {    
     return (
         <div id="account-container" className="flex flex-col md:flex-row gap-8">
             <AccountSidebar />

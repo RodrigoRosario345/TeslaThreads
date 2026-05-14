@@ -10,7 +10,7 @@ import { IoIosSearch } from "react-icons/io";
 import { useCartStore } from "@/store";
 import { motion, useAnimation } from "motion/react";
 import { Button } from "../Button/Button";
-import { useSessionUser } from "@/hooks";
+import { useCallbackUrl, useSessionUser } from "@/hooks";
 
 export function Header() {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -18,6 +18,7 @@ export function Header() {
     const itemsLength = useCartStore((state) => state.getOrderSummary().totalItems);
     const controls = useAnimation();
     const { isAuthenticated } = useSessionUser();
+    const callbackUrl = useCallbackUrl();
 
     useEffect(() => {
         setMounted(true);
@@ -54,7 +55,7 @@ export function Header() {
                             </motion.span>
                         )}
                     </Link>
-                    <Link href={isAuthenticated ? "/account" : "/auth/sign-in"}>
+                    <Link href={isAuthenticated ? "/account" : `/auth/sign-in?callbackUrl=${callbackUrl}`}>
                         <RiAccountCircleLine className="size-9 p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
                     </Link>
                     <Button

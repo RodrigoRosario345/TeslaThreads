@@ -4,7 +4,7 @@ import Link from "next/link";
 import { CgClose } from "react-icons/cg";
 import { Button } from "../Button/Button";
 import { signOutAction } from "@/actions/auth";
-import { useSessionUser } from "@/hooks";
+import { useCallbackUrl, useSessionUser } from "@/hooks";
 
 const OPTIONS_SIDEBAR = [
     { label: "Home", href: "/" },
@@ -20,6 +20,8 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
     const { isAuthenticated } = useSessionUser();
+    const callbackUrl = useCallbackUrl();
+    
 
     const handleSignOut = async () => {
         await signOutAction();
@@ -62,7 +64,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     ) : (
                         <li>
                             <Link
-                                href="/auth/sign-in"
+                                href={`/auth/sign-in?callbackUrl=${callbackUrl}`}
                                 className="inline-block w-full bg-transparent transition-colors hover:bg-gray-100 font-semibold py-2.5 px-4 rounded cursor-pointer"
                             >
                                 Sign In
