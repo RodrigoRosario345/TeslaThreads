@@ -5,7 +5,7 @@ import { NextPage } from 'next'
 const OrdersPage: NextPage = () => {
     return (
         <>
-            <Title title='Your Orders' />
+            <Title title='My Orders' />
             <OrdersContainer />
         </>
     )

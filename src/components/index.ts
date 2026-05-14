@@ -35,4 +35,4 @@ export * from './search/Pagination/Pagination';
 
 export * from './orders/OrdersContainer/OrdersContainer';
 
-
+export * from './account/AccountNav/AccountNav'

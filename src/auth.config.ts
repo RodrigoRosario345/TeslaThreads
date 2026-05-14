@@ -4,6 +4,8 @@ import NextAuth, { type NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import z from "zod";
 
+const protectedRoutes = ["/account", "/checkout"];
+
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/sign-in",
@@ -50,8 +52,7 @@ export const authConfig: NextAuthConfig = {
     // Checks if the user is logged in and if the route is protected (starts with /checkout)
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-
-      const isProtectedRoute = nextUrl.pathname.startsWith("/checkout");
+      const isProtectedRoute = protectedRoutes.some((route) => nextUrl.pathname.startsWith(route));
 
       if (isProtectedRoute) {
         // automatically redirects to the sign-in page if the user is not logged in additionally to the callbackUrl query parameter with the current route
