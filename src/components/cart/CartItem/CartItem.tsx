@@ -3,10 +3,11 @@ import Image from "next/image";
 import { QuantitySelector } from "./QuantitySelector";
 import { Button, ConfirmDeleteModal } from "@/components";
 import { useCartStore } from "@/store";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import { formatPrice } from "@/helpers";
 import Link from "next/link";
 import { useShallow } from "zustand/react/shallow";
+import { useConfirmDeleteModal } from "@/hooks";
 
 export interface CartItemProps {
     product: CartItem;
@@ -14,8 +15,8 @@ export interface CartItemProps {
 }
 
 export function CartItem({ product, isModifiable = true }: CartItemProps) {
-    const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
     const removeItem = useCartStore((state) => state.removeItem);
+    const { handleCloseConfirmDelete, handleShowConfirmDelete, showConfirmDelete } = useConfirmDeleteModal();
     const othersSizeSameProduct = useCartStore(
         useShallow((state) =>
             state.items.filter(
@@ -32,17 +33,12 @@ export function CartItem({ product, isModifiable = true }: CartItemProps) {
         (_, i) => i + 1,
     );
 
-    const handleShowConfirmDelete = useCallback(() => {
-        setShowConfirmDelete(true);
-    }, []);
 
     const handleRemove = useCallback(() => {
         removeItem(product.id, product.size);
     }, []);
 
-    const handleCloseConfirmDelete = useCallback(() => {
-        setShowConfirmDelete(false);
-    }, []);
+
 
     return (
         <>

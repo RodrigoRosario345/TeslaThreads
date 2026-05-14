@@ -3,9 +3,9 @@ import { OrdersTable } from "../OrdersTable/OrdersTable";
 export function OrdersContainer() {
 
     return (
-        <section>
+        <div>
             <p className="text-gray-600">You have no orders yet.</p>
             <OrdersTable  />
-        </section>
+        </div>
     )
 }
