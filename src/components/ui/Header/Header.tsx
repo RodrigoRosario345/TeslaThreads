@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { Navbar } from "../Navbar/Navbar";
 import Link from "next/link";
 import { IoCartOutline } from "react-icons/io5";
+import { RiAccountCircleLine } from "react-icons/ri";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { IoIosSearch } from "react-icons/io";
 import { useCartStore } from "@/store";
 import { motion, useAnimation } from "motion/react";
+import { Button } from "../Button/Button";
 
 export function Header() {
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -50,12 +52,16 @@ export function Header() {
                             </motion.span>
                         )}
                     </Link>
-                    <button
-                        className="text-sm font-medium p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer"
+                    <Link href="/account">
+                        <RiAccountCircleLine className="size-9 p-2 rounded-md transition-all hover:bg-gray-100 cursor-pointer" />
+                    </Link>
+                    <Button
+                        variant="ghost"
+                        className="text-sm p-2"
                         onClick={toggleSidebar}
                     >
                         Menu
-                    </button>
+                    </Button>
                 </div>
             </header>
             <Sidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
