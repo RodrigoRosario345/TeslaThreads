@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteShippingAddress, saveShippingAddress } from "@/actions/address";
+import { deleteAllUserAddresses, saveShippingAddress } from "@/actions/address";
 import { Button, ControllerInput, LoadingText } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
 import { schemaShippingAddress, ShippingAddressSchemaInput, ShippingAddressSchemaOutput, SelectOption } from "@/interfaces";
@@ -37,7 +37,7 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
         const { rememberAddress, ...addressData } = data;
         addShippingAddress(addressData);
         if (!rememberAddress) {
-            await deleteShippingAddress(userId);
+            await deleteAllUserAddresses(userId);
         } else {
             await saveShippingAddress(addressData, userId);
         }

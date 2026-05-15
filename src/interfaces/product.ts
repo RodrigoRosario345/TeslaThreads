@@ -17,6 +17,6 @@ export type ValidTypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
 export type Gender = 'men' | 'women' | 'kid' | 'unisex'
 
 export interface CatalogData {
-    categories: Record<"name", ValidTypes>[],
+    categories: { name: string; slug: string }[],
     products: CatalogProduct[],
 }

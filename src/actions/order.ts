@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/auth.config";
+import { OrderStatus } from "@/generated/prisma/enums";
 import { Order, ShippingAddress, ValidSizes } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
@@ -16,6 +17,19 @@ interface OrderDetails {
 }
 
 type OrderResult = { success: boolean; order: Order | null; message: string };
+
+/** Generates a human-friendly order number like "TSL-1001" */
+async function generateOrderNumber(): Promise<string> {
+    const lastOrder = await prisma.order.findFirst({
+        orderBy: { createdAt: "desc" },
+        select: { orderNumber: true },
+    });
+
+    if (!lastOrder) return "TSL-1001";
+
+    const lastNumber = parseInt(lastOrder.orderNumber.split("-")[1], 10);
+    return `TSL-${lastNumber + 1}`;
+}
 
 export const createOrder = async (
     orderDetails: OrderDetails,
@@ -56,12 +70,15 @@ export const createOrder = async (
         const orderItem = productDetails.find(
             (item) => item.id === product.productId,
         );
-        return sum + (orderItem ? product.quantity * orderItem.price : 0);
+        return sum + (orderItem ? product.quantity * Number(orderItem.price) : 0);
     }, 0);
 
     const shipping = subTotal > 300 ? 0 : 5.99; // Free shipping for orders over $300
     const tax = subTotal * 0.15; // 15% tax
     const total = subTotal + shipping + tax;
+
+    // Generate order number
+    const orderNumber = await generateOrderNumber();
 
     // Create the order transaction in the database
     try {
@@ -111,6 +128,7 @@ export const createOrder = async (
             const order = await tx.order.create({
                 data: {
                     userId,
+                    orderNumber,
                     itemsInOrder: totalItems,
                     subTotal,
                     tax,
@@ -137,10 +155,20 @@ export const createOrder = async (
             return order;
         });
 
+        // Convert Decimal fields to numbers for the response
+        const orderResponse: Order = {
+            ...orderTransactionResult,
+            subTotal: Number(orderTransactionResult.subTotal),
+            tax: Number(orderTransactionResult.tax),
+            total: Number(orderTransactionResult.total),
+            orderNumber: orderTransactionResult.orderNumber,
+            status: orderTransactionResult.status,
+        };
+
         return {
             success: true,
-            order: orderTransactionResult,
-            message: "Order created successfully!",
+            order: orderResponse,
+            message: `Order ${orderNumber} created successfully!`,
         };
     } catch (error) {
         console.error("Error creating order:", error);
@@ -166,7 +194,18 @@ export const getOrderById = async (orderId: string): Promise<OrderResult> => {
             return { success: false, order: null, message: "Order not found." };
         }
 
-        return { success: true, order, message: "Order retrieved successfully!" };
+        const orderResponse: Order = {
+            ...order,
+            subTotal: Number(order.subTotal),
+            tax: Number(order.tax),
+            total: Number(order.total),
+        };
+
+        return {
+            success: true,
+            order: orderResponse,
+            message: "Order retrieved successfully!",
+        };
     } catch (error) {
         console.error("Error fetching order:", error);
         return {
@@ -176,6 +215,44 @@ export const getOrderById = async (orderId: string): Promise<OrderResult> => {
                 error instanceof Error
                     ? error.message
                     : "An error occurred while fetching the order.",
+        };
+    }
+};
+
+export const getOrdersByUser = async (
+    userId: string,
+    status?: OrderStatus,
+): Promise<{ success: boolean; orders: Order[]; message: string }> => {
+    try {
+        const orders = await prisma.order.findMany({
+            where: {
+                userId,
+                status
+            },
+            orderBy: { createdAt: "desc" },
+        });
+
+        const mappedOrders: Order[] = orders.map((order) => ({
+            ...order,
+            subTotal: Number(order.subTotal),
+            tax: Number(order.tax),
+            total: Number(order.total),
+        }));
+
+        return {
+            success: true,
+            orders: mappedOrders,
+            message: "Orders retrieved successfully!",
+        };
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        return {
+            success: false,
+            orders: [],
+            message:
+                error instanceof Error
+                    ? error.message
+                    : "An error occurred while fetching orders.",
         };
     }
 };

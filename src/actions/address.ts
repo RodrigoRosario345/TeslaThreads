@@ -41,7 +41,7 @@ function formatAddress(address: UserAddress): ShippingAddress {
 
 export async function getShippingAddress(userId: string): Promise<AddressResult> {
     try {
-        const address = await prisma.userAddress.findUnique({
+        const address = await prisma.userAddress.findFirst({
             where: {
                 userId,
             },
@@ -61,6 +61,29 @@ export async function getShippingAddress(userId: string): Promise<AddressResult>
             success: false,
             address: null,
             error: "Failed to fetch shipping address",
+        };
+    }
+}
+
+export async function getUserAddresses(
+    userId: string,
+): Promise<{ success: true; addresses: ShippingAddress[] } | { success: false; addresses: null; error: string }> {
+    try {
+        const addresses = await prisma.userAddress.findMany({
+            where: { userId },
+            orderBy: { createdAt: "desc" },
+        });
+
+        return {
+            success: true,
+            addresses: addresses.map(formatAddress),
+        };
+    } catch (error) {
+        console.error("Error fetching user addresses:", error);
+        return {
+            success: false,
+            addresses: null,
+            error: "Failed to fetch addresses",
         };
     }
 }
@@ -88,14 +111,25 @@ export async function createShippingAddress(
 export async function saveShippingAddress(
     address: ShippingAddress,
     userId: string,
+    addressId?: string,
 ): Promise<AddressResult> {
     try {
         const addressData = buildAddressData(address, userId);
-        const savedAddress = await prisma.userAddress.upsert({
-            where: { userId },
-            create: addressData,
-            update: addressData,
-        });
+
+        let savedAddress: UserAddress;
+
+        if (addressId) {
+            // Update existing address
+            savedAddress = await prisma.userAddress.update({
+                where: { id: addressId },
+                data: addressData,
+            });
+        } else {
+            // Create new address
+            savedAddress = await prisma.userAddress.create({
+                data: addressData,
+            });
+        }
 
         return { success: true, address: formatAddress(savedAddress) };
     } catch (error) {
@@ -109,6 +143,21 @@ export async function saveShippingAddress(
 }
 
 export async function deleteShippingAddress(
+    addressId: string,
+): Promise<AddressDeleteResult> {
+    try {
+        await prisma.userAddress.delete({
+            where: { id: addressId },
+        });
+
+        return { success: true, deleted: true };
+    } catch (error) {
+        console.error("Error deleting shipping address:", error);
+        return { success: false, error: "Failed to delete shipping address" };
+    }
+}
+
+export async function deleteAllUserAddresses(
     userId: string,
 ): Promise<AddressDeleteResult> {
     try {
@@ -118,7 +167,7 @@ export async function deleteShippingAddress(
 
         return { success: true, deleted: result.count > 0 };
     } catch (error) {
-        console.error("Error deleting shipping address:", error);
-        return { success: false, error: "Failed to delete shipping address" };
+        console.error("Error deleting all user addresses:", error);
+        return { success: false, error: "Failed to delete addresses" };
     }
 }
