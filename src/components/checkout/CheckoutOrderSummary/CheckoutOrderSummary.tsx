@@ -44,7 +44,7 @@ export function CheckoutOrderSummary({
             productsToOrder: formattedProductsToOrder,
         };
 
-        const { success, message, order } = await createOrder(orderDetails)
+        const { success, message, data: order } = await createOrder(orderDetails)
 
         setIsSubmitting(false);
 

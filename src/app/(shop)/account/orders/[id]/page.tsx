@@ -1,4 +1,5 @@
-import { getOrderById } from "@/actions/order";
+
+import { getOrderById } from "@/actions";
 import { Metadata, NextPage } from "next";
 import { notFound } from "next/navigation";
 
@@ -26,13 +27,13 @@ const OrderPage: NextPage<Props> = async ({ params }) => {
     const { id } = await params;
 
     const orderResult = await getOrderById(id);
-    if (!orderResult.order || !orderResult.success) {
+    if (!orderResult.data || !orderResult.success) {
         notFound();
     }
 
     return (
         <div>
-            {JSON.stringify(orderResult.order, null, 2)}
+            {JSON.stringify(orderResult.data, null, 2)}
         </div>
     )
 };

@@ -11,9 +11,9 @@ export default async function AddressPage() {
         redirect("/");
     }
 
-    const { countries } = await getCountries();
+    const { data: countries } = await getCountries();
     const selectCountryOptions = countries || [];
-    const { address } = await getUserAddress(session.user.id);
+    const { data: address } = await getUserAddress(session.user.id);
     const defaultValuesAddress = address || undefined;
 
     return (
