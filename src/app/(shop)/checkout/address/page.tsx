@@ -1,4 +1,4 @@
-import { getShippingAddress } from "@/actions/address";
+import { getUserAddress } from "@/actions/address";
 import { getCountries } from "@/actions/country";
 import { auth } from "@/auth.config";
 import { CheckoutAddressForm, Title } from "@/components";
@@ -13,7 +13,7 @@ export default async function AddressPage() {
 
     const { countries } = await getCountries();
     const selectCountryOptions = countries || [];
-    const { address } = await getShippingAddress(session.user.id);
+    const { address } = await getUserAddress(session.user.id);
     const defaultValuesAddress = address || undefined;
 
     return (
@@ -21,7 +21,7 @@ export default async function AddressPage() {
             <Title title="Address" />
             <CheckoutAddressForm
                 selectCountryOptions={selectCountryOptions}
-                defaultValues={defaultValuesAddress}
+                addressDefaultValues={defaultValuesAddress}
                 userId={session.user.id}
             />
         </section>

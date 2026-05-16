@@ -8,6 +8,11 @@ type AddressResult =
     | { success: true; address: ShippingAddress }
     | { success: false; address: null; error: string };
 
+type UserAddressesResult =
+    | { success: true; addresses: ShippingAddress[] }
+    | { success: false; addresses: null; error: string };
+
+
 type AddressDeleteResult =
     | { success: true; deleted: boolean }
     | { success: false; error: string };
@@ -28,6 +33,7 @@ function buildAddressData(address: ShippingAddress, userId: string) {
 
 function formatAddress(address: UserAddress): ShippingAddress {
     return {
+        addressId: address.id,
         firstName: address.firstName,
         lastName: address.lastName,
         addressLine1: address.addressLine1,
@@ -39,7 +45,7 @@ function formatAddress(address: UserAddress): ShippingAddress {
     };
 }
 
-export async function getShippingAddress(userId: string): Promise<AddressResult> {
+export async function getUserAddress(userId: string): Promise<AddressResult> {
     try {
         const address = await prisma.userAddress.findFirst({
             where: {
@@ -67,7 +73,7 @@ export async function getShippingAddress(userId: string): Promise<AddressResult>
 
 export async function getUserAddresses(
     userId: string,
-): Promise<{ success: true; addresses: ShippingAddress[] } | { success: false; addresses: null; error: string }> {
+): Promise<UserAddressesResult> {
     try {
         const addresses = await prisma.userAddress.findMany({
             where: { userId },

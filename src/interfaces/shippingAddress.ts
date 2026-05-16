@@ -64,7 +64,9 @@ export type ShippingAddressSchema = z.infer<typeof schemaShippingAddress>;
 export type ShippingAddressSchemaInput = z.input<typeof schemaShippingAddress>;
 export type ShippingAddressSchemaOutput = z.output<typeof schemaShippingAddress>;
 
-export type ShippingAddress = Omit<ShippingAddressSchemaOutput,"rememberAddress">;
+export type ShippingAddress = Omit<ShippingAddressSchemaOutput, "rememberAddress"> & {
+    addressId?: string;
+};
 
 export interface ShippingAddressStore {
     // state
@@ -74,3 +76,4 @@ export interface ShippingAddressStore {
     addShippingAddress: (address: ShippingAddress) => void;
     clearShippingAddress: () => void;
 }
+

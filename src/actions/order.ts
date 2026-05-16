@@ -35,8 +35,6 @@ export const createOrder = async (
     orderDetails: OrderDetails,
 ): Promise<OrderResult> => {
     const { shippingAddress, productsToOrder } = orderDetails;
-    console.log("Shipping Address:", shippingAddress);
-    console.log("Products to Order:", productsToOrder);
 
     // verify if user is authenticated
     const session = await auth();

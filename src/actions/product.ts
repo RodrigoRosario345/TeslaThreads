@@ -24,11 +24,16 @@ export async function getProducts(
                     select: { name: true },
                 },
             },
+            omit: {
+                createdAt: true,
+                updatedAt: true,
+            }
         });
 
         // Transform the data to match the CatalogProduct interface
         const products = productsData.map((product) => ({
             ...product,
+            price: Number(product.price),
             images: product.images.map((image) => image.url),
             type: product.category.name as ValidTypes,
         }));
@@ -62,6 +67,10 @@ export async function getProductBySlug(slug: string): Promise<CatalogProduct | n
                     select: { name: true },
                 },
             },
+            omit: {
+                createdAt: true,
+                updatedAt: true,
+            }
         });
 
         if (!productData) {
@@ -71,6 +80,7 @@ export async function getProductBySlug(slug: string): Promise<CatalogProduct | n
         // Transform the data to match the CatalogProduct interface
         const product = {
             ...productData,
+            price: Number(productData.price),
             images: productData.images.map((image) => image.url),
             type: productData.category.name as ValidTypes,
         };

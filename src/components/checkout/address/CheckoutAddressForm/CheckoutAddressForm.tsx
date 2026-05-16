@@ -3,7 +3,7 @@
 import { deleteAllUserAddresses, saveShippingAddress } from "@/actions/address";
 import { Button, ControllerInput, LoadingText } from "@/components";
 import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
-import { schemaShippingAddress, ShippingAddressSchemaInput, ShippingAddressSchemaOutput, SelectOption } from "@/interfaces";
+import { schemaShippingAddress, ShippingAddressSchemaInput, ShippingAddressSchemaOutput, SelectOption, ShippingAddress } from "@/interfaces";
 import { useShippingAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -13,11 +13,11 @@ import { useShallow } from 'zustand/react/shallow';
 
 interface CheckoutAddressFormProps {
     selectCountryOptions: SelectOption[];
-    defaultValues?: ShippingAddressSchemaInput;
+    addressDefaultValues?: ShippingAddress;
     userId: string;
 }
 
-export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userId }: CheckoutAddressFormProps) {
+export function CheckoutAddressForm({ selectCountryOptions, addressDefaultValues, userId }: CheckoutAddressFormProps) {
     const router = useRouter();
     const shippingAddress = useShippingAddressStore(useShallow((state) => state.shippingAddress));
     const addShippingAddress = useShippingAddressStore((state) => state.addShippingAddress);
@@ -25,11 +25,11 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
     const { control, handleSubmit, reset, formState: { isSubmitting } } = useForm<ShippingAddressSchemaInput, any, ShippingAddressSchemaOutput>({
         mode: "onChange",
         resolver: zodResolver(schemaShippingAddress),
-        defaultValues
+        defaultValues: addressDefaultValues
     });
 
     useEffect(() => {
-        if (defaultValues || !shippingAddress.firstName) return
+        if (addressDefaultValues || !shippingAddress.firstName) return
         reset(shippingAddress);
     }, [shippingAddress]);
 
@@ -39,7 +39,7 @@ export function CheckoutAddressForm({ selectCountryOptions, defaultValues, userI
         if (!rememberAddress) {
             await deleteAllUserAddresses(userId);
         } else {
-            await saveShippingAddress(addressData, userId);
+            await saveShippingAddress(addressData, userId, addressDefaultValues?.addressId);
         }
         router.push("/checkout");
     }
