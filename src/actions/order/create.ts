@@ -16,7 +16,7 @@ interface OrderDetails {
     productsToOrder: ProductToOrder[];
 }
 
-/** Genera un número de orden amigable: "TSL-1001", "TSL-1002", … */
+// Generates a unique order number in the format "TSL-XXXX" where XXXX is an incrementing number.
 async function generateOrderNumber(): Promise<string> {
     const lastOrder = await prisma.order.findFirst({
         orderBy: { createdAt: "desc" },

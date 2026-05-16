@@ -60,7 +60,7 @@ export function CheckoutOrderSummary({
             status: "success",
             message: message,
         });
-        clearCart();
+        clearCart();//this carry to page the order id to show the order detailss
         router.replace("/account/orders/" + order?.id,);
     };
 
