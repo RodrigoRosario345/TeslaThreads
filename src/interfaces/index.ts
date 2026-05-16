@@ -5,3 +5,4 @@ export * from './forms';
 export * from './shippingAddress';
 export * from './user'
 export * from './order';
+export * from './pagination';

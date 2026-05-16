@@ -40,7 +40,8 @@ export default async function GenderPage({
                 <Pagination
                     totalPages={totalPages}
                     currentPage={page}
-                    urlBase={`/gender/${gender}`}
+                    baseUrl={`/gender/${gender}`}
+                    maxVisiblePages={3}
                 />
             )}
         </>

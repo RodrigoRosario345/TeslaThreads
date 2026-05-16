@@ -1,49 +1,72 @@
 "use client";
 
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
-import { Button } from "../../ui/Button/Button";
+import { usePagination } from "@/hooks/usePagination";
 import Link from "next/link";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { PageLink } from "../PageLink/PageLink";
 
 interface PaginationProps {
     totalPages: number;
     currentPage: number;
-    urlBase?: string;
+    baseUrl?: string;
+    maxVisiblePages?: number;
 }
 
 export function Pagination({
     totalPages,
     currentPage,
-    urlBase,
+    baseUrl = "",
+    maxVisiblePages = 7,
 }: PaginationProps) {
-
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const {
+        items,
+        hasPreviousPage,
+        hasNextPage,
+        previousPage,
+        nextPage,
+        getPageUrl,
+        isCurrentPage,
+    } = usePagination({ totalPages, currentPage, maxVisiblePages, baseUrl });
 
     return (
-        <nav className="flex justify-center items-center gap-2 mt-8">
-            {currentPage > 1 && (
-                <Link href={`${urlBase || "/"}?page=${currentPage - 1}`} passHref>
-                    <SlArrowLeft
-                        size={30}
-                        className="text-gray-500 cursor-pointer hover:text-gray-700"
-                    />
+        <nav
+            className="flex justify-center items-center gap-1.5 mt-8"
+            aria-label="Pagination"
+        >
+            {hasPreviousPage && (
+                <Link
+                    href={getPageUrl(previousPage!)}
+                    passHref
+                    className="flex items-center gap-1.5 hover:bg-gray-100 rounded px-4 py-2.5 transition-colors"
+                    aria-label="Go to previous page"
+                >
+                    <IoIosArrowBack size={16} />
+                    <span className="text-sm font-medium">Previous</span>
                 </Link>
             )}
-            {pages.map((page) => (
-                <Link href={`${urlBase || "/"}?page=${page}`} passHref key={page}>
-                    <Button
-                        variant="secondary"
-                        className={page === currentPage ? "bg-gray-700" : ""}
-                    >
-                        {page}
-                    </Button>
-                </Link>
+
+            {items.map((item, index) => (
+                <PageLink
+                    key={
+                        item.type === "ellipsis"
+                            ? `ellipsis-${index}`
+                            : `page-${item.value}`
+                    }
+                    item={item}
+                    pageUrl={getPageUrl(item.value as number)}
+                    isActive={item.type === "page" && isCurrentPage(item.value as number)}
+                />
             ))}
-            {currentPage < totalPages && (
-                <Link href={`${urlBase || "/"}?page=${currentPage + 1}`} passHref>
-                    <SlArrowRight
-                        size={30}
-                        className="text-gray-500 font-black  cursor-pointer hover:text-gray-700"
-                    />
+
+            {hasNextPage && (
+                <Link
+                    href={getPageUrl(nextPage!)}
+                    passHref
+                    className="flex items-center gap-1.5 hover:bg-gray-100 rounded px-4 py-2.5 transition-colors"
+                    aria-label="Go to next page"
+                >
+                    <span className="text-sm font-medium">Next</span>
+                    <IoIosArrowForward size={16} />
                 </Link>
             )}
         </nav>

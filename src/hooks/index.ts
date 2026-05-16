@@ -5,3 +5,4 @@ export * from './useModal';
 export * from './useClickOutside';
 export * from './useConfirmDeleteModal';
 export * from './useCallbackUrl';
+export * from './usePagination';
