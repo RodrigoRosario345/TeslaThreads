@@ -6,6 +6,7 @@ import { BaseControllerProps } from "@/interfaces";
 import { useControllerField } from "@/hooks";
 import { Input } from "@/components";
 import { CgDanger } from "react-icons/cg";
+import { cn } from "@/lib/utils";
 
 export interface ControllerInputProps<T extends FieldValues, TT> extends BaseControllerProps<T, TT> {
     type?: React.HTMLInputTypeAttribute;
@@ -34,7 +35,7 @@ export function ControllerInput<T extends FieldValues, TT>({
 
     return (
         <div className={`flex-1 basis-3xs flex flex-col gap-2 ${classNameContainer}`}>
-            <label htmlFor={name} className={`block text-sm font-medium ${hasError ? "text-red-500" : "text-gray-700"} ${classNameLabel}`}>
+            <label htmlFor={name} className={cn(`block text-sm font-medium ${hasError ? "text-red-500" : "text-gray-700"}`, classNameLabel)}>
                 {label}
                 {required && <span className="text-red-500 ml-1">*</span>}
             </label>
@@ -44,7 +45,7 @@ export function ControllerInput<T extends FieldValues, TT>({
                 id={name}
                 type={type}
                 placeholder={placeholder}
-                className={`${hasError ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""} ${classNameInput}`}
+                className={cn(`${hasError ? "border-red-500 focus:ring-red-500 focus:border-red-500" : ""} ${classNameInput}`)}
                 disabled={disabled}
                 value={(value ?? field.value) || ""}
                 aria-invalid={hasError}
@@ -59,7 +60,7 @@ export function ControllerInput<T extends FieldValues, TT>({
 
             {!hasError && helperText && (
                 <p id={`${name}-helper`} className="text-xs text-blue-500 flex items-center gap-1 mt-0.5">
-                    <CgDanger size={20} className="text-blue-500"/>
+                    <CgDanger size={20} className="text-blue-500" />
                     {helperText}
                 </p>
             )}
