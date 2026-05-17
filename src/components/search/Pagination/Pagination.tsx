@@ -4,6 +4,7 @@ import { usePagination } from "@/hooks/usePagination";
 import Link from "next/link";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { PageLink } from "../PageLink/PageLink";
+import { useScreenSize } from "@/hooks";
 
 interface PaginationProps {
     totalPages: number;
@@ -18,6 +19,8 @@ export function Pagination({
     baseUrl = "",
     maxVisiblePages = 7,
 }: PaginationProps) {
+    const { isMobile } = useScreenSize();
+    const adjustedMaxVisiblePages = isMobile ? 3 : maxVisiblePages;
     const {
         items,
         hasPreviousPage,
@@ -26,7 +29,8 @@ export function Pagination({
         nextPage,
         getPageUrl,
         isCurrentPage,
-    } = usePagination({ totalPages, currentPage, maxVisiblePages, baseUrl });
+    } = usePagination({ totalPages, currentPage, maxVisiblePages: adjustedMaxVisiblePages, baseUrl });
+
 
     return (
         <nav

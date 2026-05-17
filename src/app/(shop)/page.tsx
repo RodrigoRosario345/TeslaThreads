@@ -15,7 +15,7 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
     <>
       <ProductList products={products} />
       {totalPages > 1 && (
-        <Pagination totalPages={totalPages} currentPage={page} maxVisiblePages={3} />
+        <Pagination totalPages={totalPages} currentPage={page} />
       )}
     </>
   );

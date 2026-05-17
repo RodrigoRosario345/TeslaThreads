@@ -6,3 +6,4 @@ export * from './shippingAddress';
 export * from './user'
 export * from './order';
 export * from './pagination';
+export * from './screenSize';

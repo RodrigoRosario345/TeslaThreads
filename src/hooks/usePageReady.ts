@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useRef } from "react";
 
-/*
+/** 
   Module-level flag: becomes `true` as soon as the first page load finishes.
   On subsequent SPA navigations we know NOT to wait for `window.load` again,
   so we can animate immediately.
  */
 let globalPageReady = false;
 
-/*  
+/** 
   Detects whether the page (including JS bundles, CSS, images, etc.)
   has fully finished loading.
  

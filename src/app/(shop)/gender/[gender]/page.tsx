@@ -41,7 +41,6 @@ export default async function GenderPage({
                     totalPages={totalPages}
                     currentPage={page}
                     baseUrl={`/gender/${gender}`}
-                    maxVisiblePages={3}
                 />
             )}
         </>
