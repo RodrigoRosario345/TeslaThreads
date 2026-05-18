@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import { OrdersContainer, Title } from '@/components'
-import { NextPage } from 'next'
 
-
-const OrdersPage: NextPage = () => {
+export const metadata: Metadata = {
+    title: 'My Orders',
+    description: 'View and track all your orders at Tesla Threads.',
+}
+const OrdersPage = () => {
     return (
         <>
             <Title title='My Orders' />

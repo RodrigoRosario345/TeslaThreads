@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { getUserAddress } from "@/actions/address";
 import { getCountries } from "@/actions/country";
 import { auth } from "@/auth.config";
 import { CheckoutAddressForm, Title } from "@/components";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Shipping Address",
+  description: "Enter or update your shipping address for your Tesla Threads order.",
+};
 
 export default async function AddressPage() {
     const session = await auth();

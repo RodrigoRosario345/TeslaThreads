@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getProducts } from "@/actions/product";
 import { Pagination, ProductList, Title } from "@/components";
 import { Gender } from "@/interfaces";
@@ -8,6 +9,21 @@ interface GenderPageProps {
         gender: Gender;
     }>;
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export async function generateMetadata({ params }: GenderPageProps): Promise<Metadata> {
+    const { gender } = await params;
+
+    const label = gender === "men" ? "Men" : gender === "women" ? "Women" : "Kids";
+
+    return {
+        title: `${label}'s Collection`,
+        description: `Shop the latest ${label.toLowerCase()}'s clothing and accessories at Tesla Threads.`,
+        openGraph: {
+            title: `${label}'s Collection | Tesla Threads`,
+            description: `Shop the latest ${label.toLowerCase()}'s clothing and accessories.`,
+        },
+    };
 }
 
 export default async function GenderPage({
