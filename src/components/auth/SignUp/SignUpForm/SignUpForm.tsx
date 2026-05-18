@@ -1,21 +1,12 @@
 "use client";
 
-import { signInAction, signUpAction } from "@/actions/auth";
-import {
-    Button,
-    ControllerInput,
-    ControllerPassword,
-    ErrorMessage,
-    LoadingText,
-} from "@/components";
-import {
-    userSignUpSchema,
-    userSignUpSchemaInput,
-    userSignUpSchemaOutput,
-} from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { signInAction, signUpAction } from "@/actions/auth";
+
+import { userSignUpSchema, userSignUpSchemaInput, userSignUpSchemaOutput } from "@/interfaces";
+import { Button, ControllerInput, ControllerPassword, ErrorMessage, LoadingText } from "@/components";
 
 export function SignUpForm() {
     const {
@@ -30,22 +21,19 @@ export function SignUpForm() {
     const callbackUrl = searchParams.get('callbackUrl') || '/';
 
     const onSubmit = async (data: userSignUpSchemaOutput) => {
-        // 1. register the user using the signUpAction server action and verify if the registration was successful
+        // Register the user using the signUpAction server action and verify if the registration was successful
         const result = await signUpAction(data);
-
         if (!result.success) {
             setError("root", { message: result.message });
             return;
         }
 
-        // 3. If registration was successful, automatically sign in the user and verify if the sign-in was successful
+        // If registration was successful, automatically sign in the user and verify if the sign-in was successful
         const resultSignIn = await signInAction(data);
-
         if (!resultSignIn.success) {
             setError("root", { message: resultSignIn.message });
             return;
         }
-
         window.location.replace(callbackUrl);
     };
 
