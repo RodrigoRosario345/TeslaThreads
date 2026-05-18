@@ -4,6 +4,7 @@ import { signInAction, signUpAction } from "@/actions/auth";
 import {
     Button,
     ControllerInput,
+    ControllerPassword,
     ErrorMessage,
     LoadingText,
 } from "@/components";
@@ -23,7 +24,6 @@ export function SignUpForm() {
         setError,
         formState: { isSubmitting, errors },
     } = useForm<userSignUpSchemaInput, any, userSignUpSchemaOutput>({
-        mode: "onChange",
         resolver: zodResolver(userSignUpSchema),
     });
     const searchParams = useSearchParams();
@@ -65,12 +65,12 @@ export function SignUpForm() {
                 type="email"
                 placeholder="Enter your email"
             />
-            <ControllerInput<userSignUpSchemaInput, userSignUpSchemaOutput>
+            <ControllerPassword<userSignUpSchemaInput, userSignUpSchemaOutput>
                 control={control}
                 name="password"
                 label="Password"
-                type="password"
                 placeholder="Enter your password"
+                showStrengthBar
             />
             <ErrorMessage message={errors.root?.message} />
             <Button

@@ -1,7 +1,7 @@
 "use client";
 
 import { signInAction } from "@/actions/auth";
-import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
+import { Button, ControllerInput, LoadingText, ErrorMessage, ControllerPassword } from "@/components";
 import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
@@ -40,12 +40,12 @@ export function SignInForm() {
                 placeholder="Enter your email"
                 type="email"
             />
-            <ControllerInput<userSignInSchemaInput, userSignInSchemaOutput>
+            <ControllerPassword<userSignInSchemaInput, userSignInSchemaOutput>
                 control={control}
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
-                type="password"
+                showToggle
             />
             <ErrorMessage message={errors.root?.message} />
             <Button

@@ -26,6 +26,7 @@ export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
 export * from './checkout/OrderReviewContainer/OrderReviewContainer';
 
 export * from './forms/controllers/ControllerInput/ControllerInput';
+export * from './forms/controllers/ControllerPassword/ControllerPassword';
 // export * from './forms/controllers/ControllerSelect/ControllerSelect';
 
 export * from './auth/SignIn/SignInContainer/SignInContainer';
