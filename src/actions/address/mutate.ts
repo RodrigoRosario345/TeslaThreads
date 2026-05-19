@@ -6,7 +6,6 @@ import prisma from "@/lib/prisma";
 import type { MutateResult } from "../types";
 
 // Helpers
-
 function buildAddressData(address: ShippingAddress, userId: string) {
     return {
         userId,
@@ -36,7 +35,6 @@ function formatAddress(address: UserAddress): ShippingAddress {
 }
 
 // Mutations
-
 export async function createShippingAddress(
     address: ShippingAddress,
     userId: string,

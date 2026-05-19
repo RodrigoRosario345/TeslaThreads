@@ -1,14 +1,12 @@
+import { ShippingAddress } from "@/interfaces";
 import { useShippingAddressStore } from "@/store";
 import Link from "next/link";
 
 export interface AddressSummaryProps {
-
+    shippingAddress: ShippingAddress;
 }
 
-export function AddressSummary() {
-
-    const shippingAddress = useShippingAddressStore((state) => state.shippingAddress);
-
+export function AddressSummary({ shippingAddress }: AddressSummaryProps) {
     return (
         <div className="text-sm space-y-1">
             <p className="font-medium flex justify-between">

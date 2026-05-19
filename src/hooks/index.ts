@@ -8,3 +8,4 @@ export * from './useCallbackUrl';
 export * from './usePagination';
 export * from './usePageReady';
 export * from './useScreenSize';
+export * from './useSelectController';

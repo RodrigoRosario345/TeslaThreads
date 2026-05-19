@@ -8,6 +8,7 @@ import type { GetOneResult, GetManyResult } from "../types";
 // Helpers 
 
 function formatAddress(address: UserAddress): ShippingAddress {
+    console.log("Formatting address:", address);
     return {
         addressId: address.id,
         firstName: address.firstName,

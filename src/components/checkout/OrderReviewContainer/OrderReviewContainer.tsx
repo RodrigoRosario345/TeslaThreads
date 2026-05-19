@@ -1,7 +1,7 @@
 "use client";
 
 import { CartEmpty } from "@/components/cart/CartEmpty/CartEmpty";
-import { useCartStore } from "@/store";
+import { useCartStore, useShippingAddressStore } from "@/store";
 import { useShallow } from "zustand/react/shallow";
 import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
 import { CheckoutOrderSummary } from "../CheckoutOrderSummary/CheckoutOrderSummary";

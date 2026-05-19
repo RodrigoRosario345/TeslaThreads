@@ -1,6 +1,6 @@
 import { Button, LoadingText, Modal } from "@/components";
 import { formatPrice } from "@/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddressSummary } from "../address/AddressSummary/AddressSummary";
 import { useCartStore, useShippingAddressStore } from "@/store";
 import { createOrder } from "@/actions/order";
@@ -27,6 +27,12 @@ export function CheckoutOrderSummary({
     const productsAddedToCart = useCartStore((state) => state.items);
     const clearCart = useCartStore((state) => state.clearCart);
     const addOperationResult = useCartStore((state) => state.addOperationResult);
+
+    useEffect(() => {
+        if (!shippingAddress.firstName) {
+            router.replace("/checkout/address");
+        }
+    }, []);
 
 
     const handlePlaceOrder = async () => {
@@ -70,7 +76,7 @@ export function CheckoutOrderSummary({
             <h2 className="text-base md:text-lg font-bold">
                 {`Order Summary${totalItems ? ` (${totalItems} items)` : ""}`}
             </h2>
-            <AddressSummary />
+            <AddressSummary shippingAddress={shippingAddress} />
             <div className="w-full border-b-[0.5px] border-gray-300" />
             <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Subtotal</span>

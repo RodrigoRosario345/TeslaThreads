@@ -1,8 +1,7 @@
 'use client';
 
 import { deleteAllUserAddresses, saveShippingAddress } from "@/actions/address";
-import { Button, ControllerInput, LoadingText } from "@/components";
-import { ControllerSelect } from "@/components/forms/controllers/ControllerSelect/ControllerSelect";
+import { Button, ControllerInput, ControllerSelect, LoadingText } from "@/components";
 import { schemaShippingAddress, ShippingAddressSchemaInput, ShippingAddressSchemaOutput, SelectOption, ShippingAddress } from "@/interfaces";
 import { useShippingAddressStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,7 +28,7 @@ export function CheckoutAddressForm({ selectCountryOptions, addressDefaultValues
     });
 
     useEffect(() => {
-        if (addressDefaultValues || !shippingAddress.firstName) return
+        if (addressDefaultValues || !shippingAddress.firstName) return;
         reset(shippingAddress);
     }, [shippingAddress]);
 
@@ -99,14 +98,13 @@ export function CheckoutAddressForm({ selectCountryOptions, addressDefaultValues
                     label="Country"
                     placeholder="Select country"
                     items={selectCountryOptions}
+                
                 />
                 <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
                     control={control}
                     name="phoneNumber"
                     label="Phone Number"
                     placeholder="Enter phone number"
-                // disabled={!country}
-                // helperText={!country ? "Please select a country first" : ""}
                 />
             </div>
             <ControllerInput<ShippingAddressSchemaInput, ShippingAddressSchemaOutput>
