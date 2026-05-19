@@ -685,15 +685,19 @@ export const catalogData: CatalogData = {
     categories: [
         {
             name: "shirts",
+            slug: "shirts",
         },
         {
             name: "hoodies",
+            slug: "hoodies",
         },
         {
             name: "hats",
+            slug: "hats",
         },
         {
             name: "pants",
+            slug: "pants",
         },
     ],
     products: catalogProducts.map((product, index) => ({

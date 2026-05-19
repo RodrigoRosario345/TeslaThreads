@@ -72,7 +72,6 @@ export function Modal({ status, message, clearOperationResult }: ModalProps) {
                     </p>
                     <Button
                         onClick={closeModal}
-                        variant="primary"
                         className={`${config.color}`}
                     >
                         {config.buttonText}

@@ -6,6 +6,7 @@ import { ProductQuantitySelector } from "./ProductQuantitySelector";
 import { ProductSizeSelector } from "./ProductSizeSelector";
 import { Button } from "@/components";
 import { useCartStore } from "@/store";
+import { useShallow } from "zustand/react/shallow";
 
 export interface ProductSizeQuantityProps {
     product: CatalogProduct;
@@ -14,6 +15,14 @@ export interface ProductSizeQuantityProps {
 export function ProductSizeQuantity({
     product: { id, images, title, price, sizes, inStock, slug },
 }: ProductSizeQuantityProps) {
+    const productItems = useCartStore(
+        useShallow((state) => state.items.filter((item) => item.id === id)),
+    );
+    const quantityOfProductInCart = productItems.reduce(
+        (total, item) => total + item.quantity,
+        0,
+    );
+    const currentStock = inStock - quantityOfProductInCart;
     const [selectedSize, setSelectedSize] = useState<ValidSizes | null>(null);
     const [quantity, setQuantity] = useState<string>("1");
     const [isInValidSize, setIsInValidSize] = useState<boolean>(false);
@@ -46,22 +55,28 @@ export function ProductSizeQuantity({
         });
     };
 
-    return ( 
-        <div className="space-y-5">
-            <ProductSizeSelector
-                sizes={sizes}
-                selectedSize={selectedSize}
-                isInValidSize={isInValidSize}
-                onSizeChange={handleSizeChange}
-            />
-            <ProductQuantitySelector
-                quantity={quantity}
-                inStock={inStock}
-                onQuantityChange={handleQuantityChange}
-            />
-            <Button variant="primary" onClick={handleAddToCart}>
-                Add to Cart
-            </Button>
-        </div>
+    return (
+        <>
+            {currentStock > 0 ? (
+                <div className="space-y-5">
+                    <ProductSizeSelector
+                        sizes={sizes}
+                        selectedSize={selectedSize}
+                        isInValidSize={isInValidSize}
+                        onSizeChange={handleSizeChange}
+                    />
+                    <ProductQuantitySelector
+                        quantity={quantity}
+                        inStock={currentStock}
+                        onQuantityChange={handleQuantityChange}
+                    />
+                    <Button variant="primary" onClick={handleAddToCart}>
+                        Add to Cart
+                    </Button>
+                </div>
+            ) : (
+                <p className="text-red-500 font-semibold">Out of stock</p>
+            )}
+        </>
     );
 }

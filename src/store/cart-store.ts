@@ -50,7 +50,7 @@ export const useCartStore = create<CartStore>()(
                     (total, item) => total + item.price * item.quantity,
                     0,
                 );
-                const shipping = items.length > 0 ? 5.99 : 0;
+                const shipping = subtotal > 300 ? 0 : 5.99; // Free shipping over $300
                 const tax = subtotal * 0.15;
                 const total = subtotal + shipping + tax;
                 const totalItems = items.reduce((total, item) => total + item.quantity, 0);

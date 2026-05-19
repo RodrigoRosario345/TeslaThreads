@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+
 import { SignInForm } from "../SignInForm/SignInForm";
 import { Button } from "@/components/ui/Button/Button";
 
@@ -28,9 +29,7 @@ export function SignInContainer() {
             </Button>
             <div className="flex items-center gap-2 my-9">
                 <div className="h-px w-full bg-gray-200" />
-                <p className="text-center text-sm">
-                    Or
-                </p>
+                <p className="text-center text-sm">Or</p>
                 <div className="h-px w-full bg-gray-200" />
             </div>
             <Link href="/">

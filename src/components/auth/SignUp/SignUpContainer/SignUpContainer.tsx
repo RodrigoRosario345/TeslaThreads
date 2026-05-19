@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/Button/Button";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+
 import { SignUpForm } from "../SignUpForm/SignUpForm";
+import { Button } from "@/components/ui/Button/Button";
 
 export function SignUpContainer() {
     return (

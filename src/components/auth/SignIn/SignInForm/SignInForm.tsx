@@ -1,11 +1,12 @@
 "use client";
 
-import { signInAction } from "@/actions/auth";
-import { Button, ControllerInput, LoadingText, ErrorMessage } from "@/components";
-import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+
+import { userSignInSchema, userSignInSchemaInput, userSignInSchemaOutput } from "@/interfaces";
+import { Button, ControllerInput, LoadingText, ErrorMessage, ControllerPassword } from "@/components";
+import { signInAction } from "@/actions/auth";
 
 export function SignInForm() {
     const {
@@ -21,7 +22,6 @@ export function SignInForm() {
     const callbackUrl = searchParams.get('callbackUrl') || '/';
 
     const onSubmit = async (data: userSignInSchemaOutput) => {
-        // await new Promise(((resolve) => setTimeout(resolve, 3000)));
         const result = await signInAction(data);
         if (!result.success) {
             setError("root", { message: result.message });
@@ -40,17 +40,16 @@ export function SignInForm() {
                 placeholder="Enter your email"
                 type="email"
             />
-            <ControllerInput<userSignInSchemaInput, userSignInSchemaOutput>
+            <ControllerPassword<userSignInSchemaInput, userSignInSchemaOutput>
                 control={control}
                 name="password"
                 label="Password"
                 placeholder="Enter your password"
-                type="password"
             />
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
-                variant={isSubmitting ? "primaryDisabled" : "primary"}
+                variant={isSubmitting ? "disabled" : "primary"}
                 className="w-full"
                 disabled={isSubmitting}
             >

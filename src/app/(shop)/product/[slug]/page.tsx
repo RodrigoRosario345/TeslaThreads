@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const product = await getProductBySlug(slug);
 
     return {
-        title: (product?.title || 'Product Not Found') + ' | Tesla Threads',
+        title: (product?.title || 'Product Not Found'),
         description: product?.description || 'No description available.',
         openGraph: {
             title: product?.title || 'Product Not Found',
@@ -36,7 +36,7 @@ const ProductPage: NextPage<Props> = async ({ params }) => {
         notFound();
     }
 
-    return product && <ProductDetail product={product} />;
+    return (<ProductDetail product={product} />);
 };
 
 export default ProductPage;

@@ -64,12 +64,8 @@ export function ProductDetail({ product }: ProductDetailProps) {
                     <p className="text-base md:text-lg lg:text-xl font-semibold">
                         {formatPrice(product.price)}
                     </p>
-                    <p className="text-sm text-gray-500 font-medium">In stock: {product.inStock}</p>
-                    {product.inStock > 0 ? (
-                        <ProductSizeQuantity product={product} />
-                    ) : (
-                        <p className="text-red-500 font-semibold">Out of stock</p>
-                    )}
+                    
+                    <ProductSizeQuantity product={product} />
                     <div className="text-sm">
                         <p className="font-semibold mb-3">Description</p>
                         <p>{product.description}</p>

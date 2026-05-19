@@ -62,7 +62,7 @@ export function ProductAddedModal({ onClose, itemAddedRecently }: ProductAddedMo
                     <CartItem
                         key={`${itemAddedRecently.id}-${itemAddedRecently.size}`}
                         product={itemAddedRecently}
-                        isQuantitySelector={false}
+                        isModifiable={false}
                     />
 
                     {/* Order Summary */}

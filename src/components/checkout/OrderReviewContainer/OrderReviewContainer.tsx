@@ -1,7 +1,7 @@
 "use client";
 
 import { CartEmpty } from "@/components/cart/CartEmpty/CartEmpty";
-import { useCartStore } from "@/store";
+import { useCartStore, useShippingAddressStore } from "@/store";
 import { useShallow } from "zustand/react/shallow";
 import { OrderReviewItems } from "../OrderReviewItems/OrderReviewItems";
 import { CheckoutOrderSummary } from "../CheckoutOrderSummary/CheckoutOrderSummary";
@@ -15,16 +15,17 @@ export function OrderReviewContainer() {
     const { subtotal, shipping, tax, total, totalItems } = useCartStore(
         useShallow((state) => state.getOrderSummary()),
     );
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        setIsLoading(true);
-        if (addedProducts.length < 1) {
-            router.replace("/cart");
+        if (isLoading) {
+            setIsLoading(false);
+            return;
         }
-    }, []);
+        if (addedProducts.length === 0) router.replace("/cart");
+    }, [isLoading]);
 
-    if (!isLoading) {
+    if (isLoading) {
         return <OrderReviewSkeleton />;
     }
 

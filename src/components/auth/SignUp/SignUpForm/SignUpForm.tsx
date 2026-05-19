@@ -1,20 +1,12 @@
 "use client";
 
-import { signInAction, signUpAction } from "@/actions/auth";
-import {
-    Button,
-    ControllerInput,
-    ErrorMessage,
-    LoadingText,
-} from "@/components";
-import {
-    userSignUpSchema,
-    userSignUpSchemaInput,
-    userSignUpSchemaOutput,
-} from "@/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { signInAction, signUpAction } from "@/actions/auth";
+
+import { userSignUpSchema, userSignUpSchemaInput, userSignUpSchemaOutput } from "@/interfaces";
+import { Button, ControllerInput, ControllerPassword, ErrorMessage, LoadingText } from "@/components";
 
 export function SignUpForm() {
     const {
@@ -23,29 +15,25 @@ export function SignUpForm() {
         setError,
         formState: { isSubmitting, errors },
     } = useForm<userSignUpSchemaInput, any, userSignUpSchemaOutput>({
-        mode: "onChange",
         resolver: zodResolver(userSignUpSchema),
     });
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/';
 
     const onSubmit = async (data: userSignUpSchemaOutput) => {
-        // 1. register the user using the signUpAction server action and verify if the registration was successful
+        // Register the user using the signUpAction server action and verify if the registration was successful
         const result = await signUpAction(data);
-
         if (!result.success) {
             setError("root", { message: result.message });
             return;
         }
 
-        // 3. If registration was successful, automatically sign in the user and verify if the sign-in was successful
+        // If registration was successful, automatically sign in the user and verify if the sign-in was successful
         const resultSignIn = await signInAction(data);
-
         if (!resultSignIn.success) {
             setError("root", { message: resultSignIn.message });
             return;
         }
-
         window.location.replace(callbackUrl);
     };
 
@@ -65,17 +53,17 @@ export function SignUpForm() {
                 type="email"
                 placeholder="Enter your email"
             />
-            <ControllerInput<userSignUpSchemaInput, userSignUpSchemaOutput>
+            <ControllerPassword<userSignUpSchemaInput, userSignUpSchemaOutput>
                 control={control}
                 name="password"
                 label="Password"
-                type="password"
                 placeholder="Enter your password"
+                showStrengthBar
             />
             <ErrorMessage message={errors.root?.message} />
             <Button
                 type="submit"
-                variant={isSubmitting ? "primaryDisabled" : "primary"}
+                variant={isSubmitting ? "disabled" : "primary"}
                 className="w-full mt-3 mb-3 rounded-md!"
                 disabled={isSubmitting}
             >

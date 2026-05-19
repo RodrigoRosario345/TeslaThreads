@@ -11,6 +11,9 @@ export * from './Provider/Provider';
 export * from './ui/LoadingContent/LoadingContent';
 export * from './ui/Modal/Modal';
 export * from './ui/Modal/ConfirmDeleteModal';
+export * from './ui/CountTo/CountTo';
+export * from './ui/TransitionAnimationPage/TransitionAnimationPage';
+export * from './ui/Table/Table';
 
 export * from './products/ProductList/ProductList';
 export * from './products/ProductDetail/ProductDetail';
@@ -23,11 +26,14 @@ export * from './checkout/address/CheckoutAddressForm/CheckoutAddressForm';
 export * from './checkout/OrderReviewContainer/OrderReviewContainer';
 
 export * from './forms/controllers/ControllerInput/ControllerInput';
-// export * from './forms/controllers/ControllerSelect/ControllerSelect';
+export * from './forms/controllers/ControllerPassword/ControllerPassword';
+export * from './forms/controllers/ControllerSelect/ControllerSelect';
 
 export * from './auth/SignIn/SignInContainer/SignInContainer';
 export * from './auth/SignUp/SignUpContainer/SignUpContainer';
 
 export * from './search/Pagination/Pagination';
 
+export * from './orders/OrdersContainer/OrdersContainer';
 
+export * from './account/AccountNav/AccountNav'

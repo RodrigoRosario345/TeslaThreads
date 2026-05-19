@@ -1,6 +1,6 @@
 import { Button, LoadingText, Modal } from "@/components";
 import { formatPrice } from "@/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddressSummary } from "../address/AddressSummary/AddressSummary";
 import { useCartStore, useShippingAddressStore } from "@/store";
 import { createOrder } from "@/actions/order";
@@ -28,6 +28,12 @@ export function CheckoutOrderSummary({
     const clearCart = useCartStore((state) => state.clearCart);
     const addOperationResult = useCartStore((state) => state.addOperationResult);
 
+    useEffect(() => {
+        if (!shippingAddress.firstName) {
+            router.replace("/checkout/address");
+        }
+    }, []);
+
 
     const handlePlaceOrder = async () => {
 
@@ -44,7 +50,7 @@ export function CheckoutOrderSummary({
             productsToOrder: formattedProductsToOrder,
         };
 
-        const { success, message, order } = await createOrder(orderDetails)
+        const { success, message, data: order } = await createOrder(orderDetails)
 
         setIsSubmitting(false);
 
@@ -60,8 +66,8 @@ export function CheckoutOrderSummary({
             status: "success",
             message: message,
         });
-        router.replace("/order/" + order?.id);
-        clearCart();
+        clearCart();//this carry to page the order id to show the order detailss
+        router.replace("/account/orders/" + order?.id,);
     };
 
 
@@ -70,7 +76,7 @@ export function CheckoutOrderSummary({
             <h2 className="text-base md:text-lg font-bold">
                 {`Order Summary${totalItems ? ` (${totalItems} items)` : ""}`}
             </h2>
-            <AddressSummary />
+            <AddressSummary shippingAddress={shippingAddress} />
             <div className="w-full border-b-[0.5px] border-gray-300" />
             <p className="flex justify-between items-center text-sm text-gray-600">
                 <span>Subtotal</span>
@@ -91,7 +97,7 @@ export function CheckoutOrderSummary({
             <div className="w-full fixed bottom-0 left-0 px-4 py-6 text-center shadow-[0_-2px_10px_rgba(0,0,0,0.1)] bg-white lg:static lg:shadow-none lg:p-0">
                 <Button
                     type="button"
-                    variant={isSubmitting ? "primaryDisabled" : "primary"}
+                    variant={isSubmitting ? "disabled" : "primary"}
                     className="w-full max-w-120"
                     onClick={handlePlaceOrder}
                     disabled={isSubmitting}

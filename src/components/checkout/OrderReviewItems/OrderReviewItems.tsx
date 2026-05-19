@@ -13,7 +13,7 @@ export function OrderReviewItems({ addedProducts }: OrderReviewItemsProps) {
                     <li key={`${product.id}-${product.size}`}>
                         <CartItem
                             product={product}
-                            isQuantitySelector={false}
+                            isModifiable={false}
                         />
                     </li>
                 ))}
